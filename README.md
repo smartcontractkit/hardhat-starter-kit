@@ -73,7 +73,7 @@ npx hardhat request-data --contract insert-contract-address-here
 ```
 or
 ```bash
-npx hardhat request-data --contract insert-contract-address-here --oracleAddress '0x2f90A6D021db21e1B2A077c5a37B3C7E75D15b7e' --jobId '29fa9aa13bf1468788b7cc4a500a45b8' --payment '1000000000000000000' --url 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD' --path 'USD' --times '100'
+npx hardhat request-data --contract insert-contract-address-here --oracleAddress 0x2f90A6D021db21e1B2A077c5a37B3C7E75D15b7e --jobId '29fa9aa13bf1468788b7cc4a500a45b8' --payment '1000000000000000000' --url 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD' --path 'USD' --times '100'
 ```
 
 Once you have successfully made a request for external data, you can see the result via the read-data task
