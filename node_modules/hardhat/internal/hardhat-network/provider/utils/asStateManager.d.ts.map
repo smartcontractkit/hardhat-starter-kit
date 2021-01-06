@@ -1,0 +1,1 @@
+{"version":3,"file":"asStateManager.d.ts","sourceRoot":"","sources":["../../../../src/internal/hardhat-network/provider/utils/asStateManager.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,gBAAgB,EAAE,MAAM,0BAA0B,CAAC;AAC5D,OAAO,EAAE,YAAY,EAAE,MAAM,uBAAuB,CAAC;AAErD,wBAAgB,cAAc,CAC5B,YAAY,EAAE,YAAY,GAAG,gBAAgB,GAC5C,YAAY,CAId"}

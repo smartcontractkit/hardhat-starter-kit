@@ -1,0 +1,156 @@
+{
+	"schemaVersion": "2.0.0",
+	"contractName": "Owned",
+	"compilerOutput": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferRequested",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "acceptOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {
+				"acceptOwnership()": {
+					"details": "Allows an ownership transfer to be completed by the recipient."
+				},
+				"transferOwnership(address)": {
+					"details": "Allows an owner to begin transferring ownership to a new address, pending."
+				}
+			},
+			"title": "The Owned contract"
+		},
+		"evm": {
+			"bytecode": {
+				"linkReferences": {},
+				"object": "0x608060405234801561001057600080fd5b50600080546001600160a01b03191633179055610304806100326000396000f3fe608060405234801561001057600080fd5b50600436106100415760003560e01c806379ba5097146100465780638da5cb5b14610050578063f2fde38b14610081575b600080fd5b61004e6100b4565b005b6100586101b6565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b61004e6004803603602081101561009757600080fd5b503573ffffffffffffffffffffffffffffffffffffffff166101d2565b60015473ffffffffffffffffffffffffffffffffffffffff16331461013a57604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601660248201527f4d7573742062652070726f706f736564206f776e657200000000000000000000604482015290519081900360640190fd5b60008054337fffffffffffffffffffffffff00000000000000000000000000000000000000008083168217845560018054909116905560405173ffffffffffffffffffffffffffffffffffffffff90921692909183917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a350565b60005473ffffffffffffffffffffffffffffffffffffffff1681565b60005473ffffffffffffffffffffffffffffffffffffffff16331461025857604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601660248201527f4f6e6c792063616c6c61626c65206279206f776e657200000000000000000000604482015290519081900360640190fd5b600180547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff83811691821790925560008054604051929316917fed8889f560326eb138920d842192f0eb3dd22b4f139c87a2c57538e05bae12789190a35056fea2646970667358221220407a7eb0f51b4f0a26d66ed86178e6a6399a1cdf68ae19220a79f6492108af0364736f6c63430006060033",
+				"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x0 DUP1 SLOAD PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB NOT AND CALLER OR SWAP1 SSTORE PUSH2 0x304 DUP1 PUSH2 0x32 PUSH1 0x0 CODECOPY PUSH1 0x0 RETURN INVALID PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH2 0x41 JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0x79BA5097 EQ PUSH2 0x46 JUMPI DUP1 PUSH4 0x8DA5CB5B EQ PUSH2 0x50 JUMPI DUP1 PUSH4 0xF2FDE38B EQ PUSH2 0x81 JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0x4E PUSH2 0xB4 JUMP JUMPDEST STOP JUMPDEST PUSH2 0x58 PUSH2 0x1B6 JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF SWAP1 SWAP3 AND DUP3 MSTORE MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x20 ADD SWAP1 RETURN JUMPDEST PUSH2 0x4E PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x97 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF AND PUSH2 0x1D2 JUMP JUMPDEST PUSH1 0x1 SLOAD PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF AND CALLER EQ PUSH2 0x13A JUMPI PUSH1 0x40 DUP1 MLOAD PUSH32 0x8C379A000000000000000000000000000000000000000000000000000000000 DUP2 MSTORE PUSH1 0x20 PUSH1 0x4 DUP3 ADD MSTORE PUSH1 0x16 PUSH1 0x24 DUP3 ADD MSTORE PUSH32 0x4D7573742062652070726F706F736564206F776E657200000000000000000000 PUSH1 0x44 DUP3 ADD MSTORE SWAP1 MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x64 ADD SWAP1 REVERT JUMPDEST PUSH1 0x0 DUP1 SLOAD CALLER PUSH32 0xFFFFFFFFFFFFFFFFFFFFFFFF0000000000000000000000000000000000000000 DUP1 DUP4 AND DUP3 OR DUP5 SSTORE PUSH1 0x1 DUP1 SLOAD SWAP1 SWAP2 AND SWAP1 SSTORE PUSH1 0x40 MLOAD PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF SWAP1 SWAP3 AND SWAP3 SWAP1 SWAP2 DUP4 SWAP2 PUSH32 0x8BE0079C531659141344CD1FD0A4F28419497F9722A3DAAFE3B4186F6B6457E0 SWAP2 LOG3 POP JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF AND DUP2 JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF AND CALLER EQ PUSH2 0x258 JUMPI PUSH1 0x40 DUP1 MLOAD PUSH32 0x8C379A000000000000000000000000000000000000000000000000000000000 DUP2 MSTORE PUSH1 0x20 PUSH1 0x4 DUP3 ADD MSTORE PUSH1 0x16 PUSH1 0x24 DUP3 ADD MSTORE PUSH32 0x4F6E6C792063616C6C61626C65206279206F776E657200000000000000000000 PUSH1 0x44 DUP3 ADD MSTORE SWAP1 MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x64 ADD SWAP1 REVERT JUMPDEST PUSH1 0x1 DUP1 SLOAD PUSH32 0xFFFFFFFFFFFFFFFFFFFFFFFF0000000000000000000000000000000000000000 AND PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF DUP4 DUP2 AND SWAP2 DUP3 OR SWAP1 SWAP3 SSTORE PUSH1 0x0 DUP1 SLOAD PUSH1 0x40 MLOAD SWAP3 SWAP4 AND SWAP2 PUSH32 0xED8889F560326EB138920D842192F0EB3DD22B4F139C87A2C57538E05BAE1278 SWAP2 SWAP1 LOG3 POP JUMP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 BLOCKHASH PUSH27 0x7EB0F51B4F0A26D66ED86178E6A6399A1CDF68AE19220A79F64921 ADDMOD 0xAF SUB PUSH5 0x736F6C6343 STOP MOD MOD STOP CALLER ",
+				"sourceMap": "127:1082:13:-:0;;;379:50;5:9:-1;2:2;;;27:1;24;17:12;2:2;-1:-1;406:5:13;:18;;-1:-1:-1;;;;;;406:18:13;414:10;406:18;;;127:1082;;;;;;"
+			},
+			"deployedBytecode": {
+				"immutableReferences": {},
+				"linkReferences": {},
+				"object": "0x608060405234801561001057600080fd5b50600436106100415760003560e01c806379ba5097146100465780638da5cb5b14610050578063f2fde38b14610081575b600080fd5b61004e6100b4565b005b6100586101b6565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b61004e6004803603602081101561009757600080fd5b503573ffffffffffffffffffffffffffffffffffffffff166101d2565b60015473ffffffffffffffffffffffffffffffffffffffff16331461013a57604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601660248201527f4d7573742062652070726f706f736564206f776e657200000000000000000000604482015290519081900360640190fd5b60008054337fffffffffffffffffffffffff00000000000000000000000000000000000000008083168217845560018054909116905560405173ffffffffffffffffffffffffffffffffffffffff90921692909183917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a350565b60005473ffffffffffffffffffffffffffffffffffffffff1681565b60005473ffffffffffffffffffffffffffffffffffffffff16331461025857604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601660248201527f4f6e6c792063616c6c61626c65206279206f776e657200000000000000000000604482015290519081900360640190fd5b600180547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff83811691821790925560008054604051929316917fed8889f560326eb138920d842192f0eb3dd22b4f139c87a2c57538e05bae12789190a35056fea2646970667358221220407a7eb0f51b4f0a26d66ed86178e6a6399a1cdf68ae19220a79f6492108af0364736f6c63430006060033",
+				"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH2 0x41 JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0x79BA5097 EQ PUSH2 0x46 JUMPI DUP1 PUSH4 0x8DA5CB5B EQ PUSH2 0x50 JUMPI DUP1 PUSH4 0xF2FDE38B EQ PUSH2 0x81 JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0x4E PUSH2 0xB4 JUMP JUMPDEST STOP JUMPDEST PUSH2 0x58 PUSH2 0x1B6 JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF SWAP1 SWAP3 AND DUP3 MSTORE MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x20 ADD SWAP1 RETURN JUMPDEST PUSH2 0x4E PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x97 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF AND PUSH2 0x1D2 JUMP JUMPDEST PUSH1 0x1 SLOAD PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF AND CALLER EQ PUSH2 0x13A JUMPI PUSH1 0x40 DUP1 MLOAD PUSH32 0x8C379A000000000000000000000000000000000000000000000000000000000 DUP2 MSTORE PUSH1 0x20 PUSH1 0x4 DUP3 ADD MSTORE PUSH1 0x16 PUSH1 0x24 DUP3 ADD MSTORE PUSH32 0x4D7573742062652070726F706F736564206F776E657200000000000000000000 PUSH1 0x44 DUP3 ADD MSTORE SWAP1 MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x64 ADD SWAP1 REVERT JUMPDEST PUSH1 0x0 DUP1 SLOAD CALLER PUSH32 0xFFFFFFFFFFFFFFFFFFFFFFFF0000000000000000000000000000000000000000 DUP1 DUP4 AND DUP3 OR DUP5 SSTORE PUSH1 0x1 DUP1 SLOAD SWAP1 SWAP2 AND SWAP1 SSTORE PUSH1 0x40 MLOAD PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF SWAP1 SWAP3 AND SWAP3 SWAP1 SWAP2 DUP4 SWAP2 PUSH32 0x8BE0079C531659141344CD1FD0A4F28419497F9722A3DAAFE3B4186F6B6457E0 SWAP2 LOG3 POP JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF AND DUP2 JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF AND CALLER EQ PUSH2 0x258 JUMPI PUSH1 0x40 DUP1 MLOAD PUSH32 0x8C379A000000000000000000000000000000000000000000000000000000000 DUP2 MSTORE PUSH1 0x20 PUSH1 0x4 DUP3 ADD MSTORE PUSH1 0x16 PUSH1 0x24 DUP3 ADD MSTORE PUSH32 0x4F6E6C792063616C6C61626C65206279206F776E657200000000000000000000 PUSH1 0x44 DUP3 ADD MSTORE SWAP1 MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x64 ADD SWAP1 REVERT JUMPDEST PUSH1 0x1 DUP1 SLOAD PUSH32 0xFFFFFFFFFFFFFFFFFFFFFFFF0000000000000000000000000000000000000000 AND PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF DUP4 DUP2 AND SWAP2 DUP3 OR SWAP1 SWAP3 SSTORE PUSH1 0x0 DUP1 SLOAD PUSH1 0x40 MLOAD SWAP3 SWAP4 AND SWAP2 PUSH32 0xED8889F560326EB138920D842192F0EB3DD22B4F139C87A2C57538E05BAE1278 SWAP2 SWAP1 LOG3 POP JUMP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 BLOCKHASH PUSH27 0x7EB0F51B4F0A26D66ED86178E6A6399A1CDF68AE19220A79F64921 ADDMOD 0xAF SUB PUSH5 0x736F6C6343 STOP MOD MOD STOP CALLER ",
+				"sourceMap": "127:1082:13:-:0;;;;5:9:-1;2:2;;;27:1;24;17:12;2:2;127:1082:13;;;;;;;;;;;;;;;;;;;;;;;;;;12:1:-1;9;2:12;774:254:13;;;:::i;:::-;;147:20;;;:::i;:::-;;;;;;;;;;;;;;;;;;;535:150;;;;;;15:2:-1;10:3;7:11;4:2;;;31:1;28;21:12;4:2;-1:-1;535:150:13;;;;:::i;774:254::-;844:12;;;;830:10;:26;822:61;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;890:16;909:5;;928:10;920:18;;;;;;;;-1:-1:-1;944:25:13;;;;;;;981:42;;909:5;;;;;928:10;;909:5;;981:42;;;774:254;:::o;147:20::-;;;;;;:::o;535:150::-;1162:5;;;;1148:10;:19;1140:54;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;612:12:::1;:18:::0;;;::::1;;::::0;;::::1;::::0;;::::1;::::0;;;-1:-1:-1;669:5:13;;642:38:::1;::::0;612:18;;669:5:::1;::::0;642:38:::1;::::0;-1:-1:-1;642:38:13::1;535:150:::0;:::o"
+			},
+			"methodIdentifiers": {
+				"acceptOwnership()": "79ba5097",
+				"owner()": "8da5cb5b",
+				"transferOwnership(address)": "f2fde38b"
+			}
+		},
+		"metadata": "{\"compiler\":{\"version\":\"0.6.6+commit.6c089d02\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"}],\"name\":\"OwnershipTransferRequested\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"acceptOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{\"acceptOwnership()\":{\"details\":\"Allows an ownership transfer to be completed by the recipient.\"},\"transferOwnership(address)\":{\"details\":\"Allows an owner to begin transferring ownership to a new address, pending.\"}},\"title\":\"The Owned contract\"},\"userdoc\":{\"methods\":{},\"notice\":\"A contract with helpers for basic contract ownership.\"}},\"settings\":{\"compilationTarget\":{\"/Users/steve/workspace/chainlink/evm-contracts/src/v0.6/Owned.sol\":\"Owned\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1000000},\"remappings\":[]},\"sources\":{\"/Users/steve/workspace/chainlink/evm-contracts/src/v0.6/Owned.sol\":{\"keccak256\":\"0x7d65c5d747bb2ff62d36b0081e042b8d6f7da704a777498e43502ab375b5d8fa\",\"urls\":[\"bzz-raw://0a6d3981c94e70621a87e2578365e62371d4ac55079771498873f8ab1a515664\",\"dweb:/ipfs/QmYbVyVMVeDbXJvoXnStkmKAS2LRVJn8VmzcXic19qUVB3\"]}},\"version\":1}",
+		"userdoc": {
+			"methods": {},
+			"notice": "A contract with helpers for basic contract ownership."
+		}
+	},
+	"sources": {
+		"Owned.sol": {
+			"id": 13
+		}
+	},
+	"sourceCodes": {
+		"Owned.sol": "pragma solidity ^0.6.0;\n\n/**\n * @title The Owned contract\n * @notice A contract with helpers for basic contract ownership.\n */\ncontract Owned {\n\n  address public owner;\n  address private pendingOwner;\n\n  event OwnershipTransferRequested(\n    address indexed from,\n    address indexed to\n  );\n  event OwnershipTransferred(\n    address indexed from,\n    address indexed to\n  );\n\n  constructor() public {\n    owner = msg.sender;\n  }\n\n  /**\n   * @dev Allows an owner to begin transferring ownership to a new address,\n   * pending.\n   */\n  function transferOwnership(address _to)\n    external\n    onlyOwner()\n  {\n    pendingOwner = _to;\n\n    emit OwnershipTransferRequested(owner, _to);\n  }\n\n  /**\n   * @dev Allows an ownership transfer to be completed by the recipient.\n   */\n  function acceptOwnership()\n    external\n  {\n    require(msg.sender == pendingOwner, \"Must be proposed owner\");\n\n    address oldOwner = owner;\n    owner = msg.sender;\n    pendingOwner = address(0);\n\n    emit OwnershipTransferred(oldOwner, msg.sender);\n  }\n\n  /**\n   * @dev Reverts if called by anyone other than the contract owner.\n   */\n  modifier onlyOwner() {\n    require(msg.sender == owner, \"Only callable by owner\");\n    _;\n  }\n\n}\n"
+	},
+	"sourceTreeHashHex": "0x7d65c5d747bb2ff62d36b0081e042b8d6f7da704a777498e43502ab375b5d8fa",
+	"compiler": {
+		"name": "solc",
+		"version": "soljson-v0.6.6+commit.6c089d02.js",
+		"settings": {
+			"optimizer": {
+				"runs": 1000000,
+				"enabled": true
+			},
+			"outputSelection": {
+				"*": {
+					"*": [
+						"abi",
+						"devdoc",
+						"userdoc",
+						"evm.bytecode.object",
+						"evm.bytecode.sourceMap",
+						"evm.deployedBytecode.object",
+						"evm.deployedBytecode.sourceMap",
+						"evm.methodIdentifiers",
+						"metadata"
+					]
+				}
+			},
+			"remappings": []
+		}
+	},
+	"chains": {}
+}

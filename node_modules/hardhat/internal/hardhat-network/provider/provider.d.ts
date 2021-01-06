@@ -1,0 +1,53 @@
+/// <reference types="node" />
+import { EventEmitter } from "events";
+import type { Artifacts, BoundExperimentalHardhatNetworkMessageTraceHook, EIP1193Provider, RequestArguments } from "../../../types";
+import { ForkConfig, GenesisAccount } from "./node-types";
+export declare class HardhatNetworkProvider extends EventEmitter implements EIP1193Provider {
+    private readonly _hardfork;
+    private readonly _networkName;
+    private readonly _chainId;
+    private readonly _networkId;
+    private readonly _blockGasLimit;
+    private readonly _throwOnTransactionFailures;
+    private readonly _throwOnCallFailures;
+    private readonly _genesisAccounts;
+    private readonly _artifacts?;
+    private _loggingEnabled;
+    private readonly _allowUnlimitedContractSize;
+    private readonly _initialDate?;
+    private readonly _experimentalHardhatNetworkMessageTraceHooks;
+    private _forkConfig?;
+    private readonly _forkCachePath?;
+    private _common?;
+    private _node?;
+    private _ethModule?;
+    private _netModule?;
+    private _web3Module?;
+    private _evmModule?;
+    private _hardhatModule?;
+    private readonly _mutex;
+    private readonly _logger;
+    private _methodBeingCollapsed?;
+    private _methodCollapsedCount;
+    constructor(_hardfork: string, _networkName: string, _chainId: number, _networkId: number, _blockGasLimit: number, _throwOnTransactionFailures: boolean, _throwOnCallFailures: boolean, _genesisAccounts?: GenesisAccount[], _artifacts?: Artifacts | undefined, _loggingEnabled?: boolean, _allowUnlimitedContractSize?: boolean, _initialDate?: Date | undefined, _experimentalHardhatNetworkMessageTraceHooks?: BoundExperimentalHardhatNetworkMessageTraceHook[], _forkConfig?: ForkConfig | undefined, _forkCachePath?: string | undefined);
+    request(args: RequestArguments): Promise<unknown>;
+    private _sendWithLogging;
+    private _logCollapsedMethod;
+    private _startCollapsingMethod;
+    private _stopCollapsingMethod;
+    private _shouldCollapseMethod;
+    private _send;
+    private _init;
+    private _makeTracingConfig;
+    private _reset;
+    private _forwardNodeEvents;
+    private _stopForwardingNodeEvents;
+    private _ethEventListener;
+    private _emitLegacySubscriptionEvent;
+    private _emitEip1193SubscriptionEvent;
+    private _logModuleMessages;
+    private _logError;
+    private _log;
+    private _logMetaMaskWarning;
+}
+//# sourceMappingURL=provider.d.ts.map

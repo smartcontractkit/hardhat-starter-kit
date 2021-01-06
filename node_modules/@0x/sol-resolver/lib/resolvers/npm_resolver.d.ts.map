@@ -1,0 +1,1 @@
+{"version":3,"file":"npm_resolver.d.ts","sourceRoot":"","sources":["../../src/resolvers/npm_resolver.ts"],"names":[],"mappings":"AAIA,OAAO,EAAE,cAAc,EAAE,MAAM,UAAU,CAAC;AAE1C,OAAO,EAAE,QAAQ,EAAE,MAAM,YAAY,CAAC;AAEtC,qBAAa,WAAY,SAAQ,QAAQ;IACrC,OAAO,CAAC,QAAQ,CAAC,YAAY,CAAS;gBAC1B,WAAW,EAAE,MAAM;IAIxB,eAAe,CAAC,UAAU,EAAE,MAAM,GAAG,cAAc,GAAG,SAAS;CA0BzE"}

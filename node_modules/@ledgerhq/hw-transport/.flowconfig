@@ -1,0 +1,13 @@
+[ignore]
+<PROJECT_ROOT>/lib
+
+[include]
+
+[libs]
+flow-typed
+
+[lints]
+
+[options]
+
+[strict]

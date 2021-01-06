@@ -1,0 +1,87 @@
+{
+	"schemaVersion": "2.0.0",
+	"contractName": "ENSResolver",
+	"compilerOutput": {
+		"abi": [
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "node",
+						"type": "bytes32"
+					}
+				],
+				"name": "addr",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"evm": {
+			"bytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"deployedBytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"methodIdentifiers": {
+				"addr(bytes32)": "3b3b57de"
+			}
+		},
+		"metadata": "",
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"sources": {
+		"vendor/ENSResolver.sol": {
+			"id": 35
+		}
+	},
+	"sourceCodes": {
+		"vendor/ENSResolver.sol": "pragma solidity ^0.5.0;\n\ncontract ENSResolver {\n  function addr(bytes32 node) public view returns (address);\n}\n"
+	},
+	"sourceTreeHashHex": "0x64fcf7d2fc5efc87eaf7eba4a8f69af4d28986b6e4fb3590f076eb41ce40296e",
+	"compiler": {
+		"name": "solc",
+		"version": "soljson-v0.5.0+commit.1d4f565a.js",
+		"settings": {
+			"optimizer": {
+				"runs": 1000000,
+				"enabled": true
+			},
+			"outputSelection": {
+				"*": {
+					"*": [
+						"abi",
+						"devdoc",
+						"userdoc",
+						"evm.bytecode.object",
+						"evm.bytecode.sourceMap",
+						"evm.deployedBytecode.object",
+						"evm.deployedBytecode.sourceMap",
+						"evm.methodIdentifiers",
+						"metadata"
+					]
+				}
+			},
+			"remappings": []
+		}
+	},
+	"chains": {}
+}

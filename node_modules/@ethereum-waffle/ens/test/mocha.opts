@@ -1,0 +1,4 @@
+-r ts-node/register/transpile-only
+--timeout 50000
+--no-warnings
+test/**/*.ts

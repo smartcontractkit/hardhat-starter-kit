@@ -1,0 +1,122 @@
+{
+	"schemaVersion": "2.0.0",
+	"contractName": "ConcreteSignedSafeMath",
+	"compilerOutput": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "int256",
+						"name": "_a",
+						"type": "int256"
+					},
+					{
+						"internalType": "int256",
+						"name": "_b",
+						"type": "int256"
+					}
+				],
+				"name": "testAdd",
+				"outputs": [
+					{
+						"internalType": "int256",
+						"name": "",
+						"type": "int256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "int256",
+						"name": "_a",
+						"type": "int256"
+					},
+					{
+						"internalType": "int256",
+						"name": "_b",
+						"type": "int256"
+					}
+				],
+				"name": "testAvg",
+				"outputs": [
+					{
+						"internalType": "int256",
+						"name": "",
+						"type": "int256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"evm": {
+			"bytecode": {
+				"linkReferences": {},
+				"object": "0x608060405234801561001057600080fd5b50610200806100206000396000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c806347037c901461003b5780634c64959614610070575b600080fd5b61005e6004803603604081101561005157600080fd5b5080359060200135610093565b60408051918252519081900360200190f35b61005e6004803603604081101561008657600080fd5b50803590602001356100a8565b600061009f83836100b4565b90505b92915050565b600061009f8383610133565b60008282018183128015906100c95750838112155b806100de57506000831280156100de57508381125b61009f576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260218152602001806101aa6021913960400191505060405180910390fd5b600080831280156101445750600082135b8061015a575060008313801561015a5750600082125b1561017a57600261016b84846100b4565b8161017257fe5b0590506100a2565b60006002808507818507010590506101a161019b60028605600286056100b4565b826100b4565b94935050505056fe5369676e6564536166654d6174683a206164646974696f6e206f766572666c6f77a2646970667358221220d2084dff6523b359e4d7e459d038e71759882d3ce7fe324c84966ca31ab12f4d64736f6c63430006060033",
+				"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x200 DUP1 PUSH2 0x20 PUSH1 0x0 CODECOPY PUSH1 0x0 RETURN INVALID PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH2 0x36 JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0x47037C90 EQ PUSH2 0x3B JUMPI DUP1 PUSH4 0x4C649596 EQ PUSH2 0x70 JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0x5E PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x51 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP DUP1 CALLDATALOAD SWAP1 PUSH1 0x20 ADD CALLDATALOAD PUSH2 0x93 JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD SWAP2 DUP3 MSTORE MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x20 ADD SWAP1 RETURN JUMPDEST PUSH2 0x5E PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x86 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP DUP1 CALLDATALOAD SWAP1 PUSH1 0x20 ADD CALLDATALOAD PUSH2 0xA8 JUMP JUMPDEST PUSH1 0x0 PUSH2 0x9F DUP4 DUP4 PUSH2 0xB4 JUMP JUMPDEST SWAP1 POP JUMPDEST SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 PUSH2 0x9F DUP4 DUP4 PUSH2 0x133 JUMP JUMPDEST PUSH1 0x0 DUP3 DUP3 ADD DUP2 DUP4 SLT DUP1 ISZERO SWAP1 PUSH2 0xC9 JUMPI POP DUP4 DUP2 SLT ISZERO JUMPDEST DUP1 PUSH2 0xDE JUMPI POP PUSH1 0x0 DUP4 SLT DUP1 ISZERO PUSH2 0xDE JUMPI POP DUP4 DUP2 SLT JUMPDEST PUSH2 0x9F JUMPI PUSH1 0x40 MLOAD PUSH32 0x8C379A000000000000000000000000000000000000000000000000000000000 DUP2 MSTORE PUSH1 0x4 ADD DUP1 DUP1 PUSH1 0x20 ADD DUP3 DUP2 SUB DUP3 MSTORE PUSH1 0x21 DUP2 MSTORE PUSH1 0x20 ADD DUP1 PUSH2 0x1AA PUSH1 0x21 SWAP2 CODECOPY PUSH1 0x40 ADD SWAP2 POP POP PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 REVERT JUMPDEST PUSH1 0x0 DUP1 DUP4 SLT DUP1 ISZERO PUSH2 0x144 JUMPI POP PUSH1 0x0 DUP3 SGT JUMPDEST DUP1 PUSH2 0x15A JUMPI POP PUSH1 0x0 DUP4 SGT DUP1 ISZERO PUSH2 0x15A JUMPI POP PUSH1 0x0 DUP3 SLT JUMPDEST ISZERO PUSH2 0x17A JUMPI PUSH1 0x2 PUSH2 0x16B DUP5 DUP5 PUSH2 0xB4 JUMP JUMPDEST DUP2 PUSH2 0x172 JUMPI INVALID JUMPDEST SDIV SWAP1 POP PUSH2 0xA2 JUMP JUMPDEST PUSH1 0x0 PUSH1 0x2 DUP1 DUP6 SMOD DUP2 DUP6 SMOD ADD SDIV SWAP1 POP PUSH2 0x1A1 PUSH2 0x19B PUSH1 0x2 DUP7 SDIV PUSH1 0x2 DUP7 SDIV PUSH2 0xB4 JUMP JUMPDEST DUP3 PUSH2 0xB4 JUMP JUMPDEST SWAP5 SWAP4 POP POP POP POP JUMP INVALID MSTORE8 PUSH10 0x676E6564536166654D61 PUSH21 0x683A206164646974696F6E206F766572666C6F77A2 PUSH5 0x6970667358 0x22 SLT KECCAK256 0xD2 ADDMOD 0x4D SELFDESTRUCT PUSH6 0x23B359E4D7E4 MSIZE 0xD0 CODESIZE 0xE7 OR MSIZE DUP9 0x2D EXTCODECOPY 0xE7 INVALID ORIGIN 0x4C DUP5 SWAP7 PUSH13 0xA31AB12F4D64736F6C63430006 MOD STOP CALLER ",
+				"sourceMap": "58:298:44:-:0;;;;5:9:-1;2:2;;;27:1;24;17:12;2:2;58:298:44;;;;;;;"
+			},
+			"deployedBytecode": {
+				"immutableReferences": {},
+				"linkReferences": {},
+				"object": "0x608060405234801561001057600080fd5b50600436106100365760003560e01c806347037c901461003b5780634c64959614610070575b600080fd5b61005e6004803603604081101561005157600080fd5b5080359060200135610093565b60408051918252519081900360200190f35b61005e6004803603604081101561008657600080fd5b50803590602001356100a8565b600061009f83836100b4565b90505b92915050565b600061009f8383610133565b60008282018183128015906100c95750838112155b806100de57506000831280156100de57508381125b61009f576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260218152602001806101aa6021913960400191505060405180910390fd5b600080831280156101445750600082135b8061015a575060008313801561015a5750600082125b1561017a57600261016b84846100b4565b8161017257fe5b0590506100a2565b60006002808507818507010590506101a161019b60028605600286056100b4565b826100b4565b94935050505056fe5369676e6564536166654d6174683a206164646974696f6e206f766572666c6f77a2646970667358221220d2084dff6523b359e4d7e459d038e71759882d3ce7fe324c84966ca31ab12f4d64736f6c63430006060033",
+				"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH2 0x36 JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0x47037C90 EQ PUSH2 0x3B JUMPI DUP1 PUSH4 0x4C649596 EQ PUSH2 0x70 JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0x5E PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x51 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP DUP1 CALLDATALOAD SWAP1 PUSH1 0x20 ADD CALLDATALOAD PUSH2 0x93 JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD SWAP2 DUP3 MSTORE MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x20 ADD SWAP1 RETURN JUMPDEST PUSH2 0x5E PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x86 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP DUP1 CALLDATALOAD SWAP1 PUSH1 0x20 ADD CALLDATALOAD PUSH2 0xA8 JUMP JUMPDEST PUSH1 0x0 PUSH2 0x9F DUP4 DUP4 PUSH2 0xB4 JUMP JUMPDEST SWAP1 POP JUMPDEST SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 PUSH2 0x9F DUP4 DUP4 PUSH2 0x133 JUMP JUMPDEST PUSH1 0x0 DUP3 DUP3 ADD DUP2 DUP4 SLT DUP1 ISZERO SWAP1 PUSH2 0xC9 JUMPI POP DUP4 DUP2 SLT ISZERO JUMPDEST DUP1 PUSH2 0xDE JUMPI POP PUSH1 0x0 DUP4 SLT DUP1 ISZERO PUSH2 0xDE JUMPI POP DUP4 DUP2 SLT JUMPDEST PUSH2 0x9F JUMPI PUSH1 0x40 MLOAD PUSH32 0x8C379A000000000000000000000000000000000000000000000000000000000 DUP2 MSTORE PUSH1 0x4 ADD DUP1 DUP1 PUSH1 0x20 ADD DUP3 DUP2 SUB DUP3 MSTORE PUSH1 0x21 DUP2 MSTORE PUSH1 0x20 ADD DUP1 PUSH2 0x1AA PUSH1 0x21 SWAP2 CODECOPY PUSH1 0x40 ADD SWAP2 POP POP PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 REVERT JUMPDEST PUSH1 0x0 DUP1 DUP4 SLT DUP1 ISZERO PUSH2 0x144 JUMPI POP PUSH1 0x0 DUP3 SGT JUMPDEST DUP1 PUSH2 0x15A JUMPI POP PUSH1 0x0 DUP4 SGT DUP1 ISZERO PUSH2 0x15A JUMPI POP PUSH1 0x0 DUP3 SLT JUMPDEST ISZERO PUSH2 0x17A JUMPI PUSH1 0x2 PUSH2 0x16B DUP5 DUP5 PUSH2 0xB4 JUMP JUMPDEST DUP2 PUSH2 0x172 JUMPI INVALID JUMPDEST SDIV SWAP1 POP PUSH2 0xA2 JUMP JUMPDEST PUSH1 0x0 PUSH1 0x2 DUP1 DUP6 SMOD DUP2 DUP6 SMOD ADD SDIV SWAP1 POP PUSH2 0x1A1 PUSH2 0x19B PUSH1 0x2 DUP7 SDIV PUSH1 0x2 DUP7 SDIV PUSH2 0xB4 JUMP JUMPDEST DUP3 PUSH2 0xB4 JUMP JUMPDEST SWAP5 SWAP4 POP POP POP POP JUMP INVALID MSTORE8 PUSH10 0x676E6564536166654D61 PUSH21 0x683A206164646974696F6E206F766572666C6F77A2 PUSH5 0x6970667358 0x22 SLT KECCAK256 0xD2 ADDMOD 0x4D SELFDESTRUCT PUSH6 0x23B359E4D7E4 MSIZE 0xD0 CODESIZE 0xE7 OR MSIZE DUP9 0x2D EXTCODECOPY 0xE7 INVALID ORIGIN 0x4C DUP5 SWAP7 PUSH13 0xA31AB12F4D64736F6C63430006 MOD STOP CALLER ",
+				"sourceMap": "58:298:44:-:0;;;;5:9:-1;2:2;;;27:1;24;17:12;2:2;58:298:44;;;;;;;;;;;;;;;;;;;;;12:1:-1;9;2:12;94:128:44;;;;;;15:2:-1;10:3;7:11;4:2;;;31:1;28;21:12;4:2;-1:-1;94:128:44;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;226;;;;;;15:2:-1;10:3;7:11;4:2;;;31:1;28;21:12;4:2;-1:-1;226:128:44;;;;;;;:::i;94:::-;168:6;191:26;210:2;214;191:18;:26::i;:::-;184:33;;94:128;;;;;:::o;226:::-;300:6;323:26;342:2;346;323:18;:26::i;1403:196:18:-;1459:6;1484:5;;;1504:6;;;;;;:16;;;1519:1;1514;:6;;1504:16;1503:38;;;;1530:1;1526;:5;:14;;;;;1539:1;1535;:5;1526:14;1495:84;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1828:267;1898:6;1924:1;1919:2;:6;:16;;;;;1934:1;1929:2;:6;1919:16;1918:40;;;;1946:1;1941:2;:6;:16;;;;;1956:1;1951:2;:6;1941:16;1914:83;;;1989:1;1975:11;1979:2;1983;1975:3;:11::i;:::-;:15;;;;;;1968:22;;;;1914:83;2002:16;2041:1;2022:6;;;2031;;;2022:15;2021:21;;-1:-1:-1;2055:35:18;2059:19;2068:1;2063:2;:6;2076:1;2071:2;:6;2059:3;:19::i;:::-;2080:9;2055:3;:35::i;:::-;2048:42;1828:267;-1:-1:-1;;;;1828:267:18:o"
+			},
+			"methodIdentifiers": {
+				"testAdd(int256,int256)": "47037c90",
+				"testAvg(int256,int256)": "4c649596"
+			}
+		},
+		"metadata": "{\"compiler\":{\"version\":\"0.6.6+commit.6c089d02\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"int256\",\"name\":\"_a\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"_b\",\"type\":\"int256\"}],\"name\":\"testAdd\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int256\",\"name\":\"_a\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"_b\",\"type\":\"int256\"}],\"name\":\"testAvg\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/steve/workspace/chainlink/evm-contracts/src/v0.6/tests/ConcreteSignedSafeMath.sol\":\"ConcreteSignedSafeMath\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1000000},\"remappings\":[]},\"sources\":{\"/Users/steve/workspace/chainlink/evm-contracts/src/v0.6/SignedSafeMath.sol\":{\"keccak256\":\"0x83e027df9251983d079e85187b87362d4898bc3052fd72ca365c89504b7f52ff\",\"urls\":[\"bzz-raw://3d56e6e2396d11b77828a3c6e531b525eb9d8c8a18e21aacac7284f46a74d8c0\",\"dweb:/ipfs/QmXvbrYGJVmnstRFZr3axhVT5ZCiWZSyCUnMu4p8jmNUHg\"]},\"/Users/steve/workspace/chainlink/evm-contracts/src/v0.6/tests/ConcreteSignedSafeMath.sol\":{\"keccak256\":\"0xc7b3c5b6966ad28e5a01ff9e70a58726c831dbcaa258fcca6a312de082084cbb\",\"urls\":[\"bzz-raw://feed0ce14491dd6df70b5e7c9ddaa8cd7568cce9919bba7e82cf702ede10d5c1\",\"dweb:/ipfs/QmaXD5chQebA6GnBSxV9ZKDK1mBc4Tt5ubczRPCfMpGKKh\"]}},\"version\":1}",
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"sources": {
+		"tests/ConcreteSignedSafeMath.sol": {
+			"id": 44
+		},
+		"SignedSafeMath.sol": {
+			"id": 18
+		}
+	},
+	"sourceCodes": {
+		"tests/ConcreteSignedSafeMath.sol": "pragma solidity ^0.6.0;\n\nimport \"../SignedSafeMath.sol\";\n\ncontract ConcreteSignedSafeMath {\n  function testAdd(int256 _a, int256 _b)\n    external\n    pure\n    returns (int256)\n  {\n    return SignedSafeMath.add(_a, _b);\n  }\n\n  function testAvg(int256 _a, int256 _b)\n    external\n    pure\n    returns (int256)\n  {\n    return SignedSafeMath.avg(_a, _b);\n  }\n}\n",
+		"SignedSafeMath.sol": "pragma solidity ^0.6.0;\n\nlibrary SignedSafeMath {\n  int256 constant private _INT256_MIN = -2**255;\n\n  /**\n   * @dev Multiplies two signed integers, reverts on overflow.\n   */\n  function mul(int256 a, int256 b) internal pure returns (int256) {\n    // Gas optimization: this is cheaper than requiring 'a' not being zero, but the\n    // benefit is lost if 'b' is also tested.\n    // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522\n    if (a == 0) {\n      return 0;\n    }\n\n    require(!(a == -1 && b == _INT256_MIN), \"SignedSafeMath: multiplication overflow\");\n\n    int256 c = a * b;\n    require(c / a == b, \"SignedSafeMath: multiplication overflow\");\n\n    return c;\n  }\n\n  /**\n   * @dev Integer division of two signed integers truncating the quotient, reverts on division by zero.\n   */\n  function div(int256 a, int256 b) internal pure returns (int256) {\n    require(b != 0, \"SignedSafeMath: division by zero\");\n    require(!(b == -1 && a == _INT256_MIN), \"SignedSafeMath: division overflow\");\n\n    int256 c = a / b;\n\n    return c;\n  }\n\n  /**\n   * @dev Subtracts two signed integers, reverts on overflow.\n   */\n  function sub(int256 a, int256 b) internal pure returns (int256) {\n    int256 c = a - b;\n    require((b >= 0 && c <= a) || (b < 0 && c > a), \"SignedSafeMath: subtraction overflow\");\n\n    return c;\n  }\n\n  /**\n   * @dev Adds two signed integers, reverts on overflow.\n   */\n  function add(int256 a, int256 b) internal pure returns (int256) {\n    int256 c = a + b;\n    require((b >= 0 && c >= a) || (b < 0 && c < a), \"SignedSafeMath: addition overflow\");\n\n    return c;\n  }\n\n  /**\n   * @notice Computes average of two signed integers, ensuring that the computation\n   * doesn't overflow.\n   * @dev If the result is not an integer, it is rounded towards zero. For example,\n   * avg(-3, -4) = -3\n   */\n  function avg(int256 _a, int256 _b)\n    internal\n    pure\n    returns (int256)\n  {\n    if ((_a < 0 && _b > 0) || (_a > 0 && _b < 0)) {\n      return add(_a, _b) / 2;\n    }\n    int256 remainder = (_a % 2 + _b % 2) / 2;\n    return add(add(_a / 2, _b / 2), remainder);\n  }\n}\n"
+	},
+	"sourceTreeHashHex": "0x59db649c05262849d85d470c1d3c1d1ca809b33694a5425277c4ffed5b41b977",
+	"compiler": {
+		"name": "solc",
+		"version": "soljson-v0.6.6+commit.6c089d02.js",
+		"settings": {
+			"optimizer": {
+				"runs": 1000000,
+				"enabled": true
+			},
+			"outputSelection": {
+				"*": {
+					"*": [
+						"abi",
+						"devdoc",
+						"userdoc",
+						"evm.bytecode.object",
+						"evm.bytecode.sourceMap",
+						"evm.deployedBytecode.object",
+						"evm.deployedBytecode.sourceMap",
+						"evm.methodIdentifiers",
+						"metadata"
+					]
+				}
+			},
+			"remappings": []
+		}
+	},
+	"chains": {}
+}

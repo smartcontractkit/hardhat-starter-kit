@@ -1,0 +1,180 @@
+{
+	"schemaVersion": "2.0.0",
+	"contractName": "OracleInterface",
+	"compilerOutput": {
+		"abi": [
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "requestId",
+						"type": "bytes32"
+					},
+					{
+						"name": "payment",
+						"type": "uint256"
+					},
+					{
+						"name": "callbackAddress",
+						"type": "address"
+					},
+					{
+						"name": "callbackFunctionId",
+						"type": "bytes4"
+					},
+					{
+						"name": "expiration",
+						"type": "uint256"
+					},
+					{
+						"name": "data",
+						"type": "bytes32"
+					}
+				],
+				"name": "fulfillOracleRequest",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "withdrawable",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "node",
+						"type": "address"
+					},
+					{
+						"name": "allowed",
+						"type": "bool"
+					}
+				],
+				"name": "setFulfillmentPermission",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "node",
+						"type": "address"
+					}
+				],
+				"name": "getAuthorizationStatus",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "recipient",
+						"type": "address"
+					},
+					{
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "withdraw",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"evm": {
+			"bytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"deployedBytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"methodIdentifiers": {
+				"fulfillOracleRequest(bytes32,uint256,address,bytes4,uint256,bytes32)": "4ab0d190",
+				"getAuthorizationStatus(address)": "d3e9c314",
+				"setFulfillmentPermission(address,bool)": "7fcd56db",
+				"withdraw(address,uint256)": "f3fef3a3",
+				"withdrawable()": "50188301"
+			}
+		},
+		"metadata": "",
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"sources": {
+		"interfaces/OracleInterface.sol": {
+			"id": 18
+		}
+	},
+	"sourceCodes": {
+		"interfaces/OracleInterface.sol": "pragma solidity ^0.5.0;\n\ninterface OracleInterface {\n  function fulfillOracleRequest(\n    bytes32 requestId,\n    uint256 payment,\n    address callbackAddress,\n    bytes4 callbackFunctionId,\n    uint256 expiration,\n    bytes32 data\n  ) external returns (bool);\n  function getAuthorizationStatus(address node) external view returns (bool);\n  function setFulfillmentPermission(address node, bool allowed) external;\n  function withdraw(address recipient, uint256 amount) external;\n  function withdrawable() external view returns (uint256);\n}\n"
+	},
+	"sourceTreeHashHex": "0xccb79a4ab0f1f0a3c4b9e4475dedf93bf0381b78c365eceebd409186256f8412",
+	"compiler": {
+		"name": "solc",
+		"version": "soljson-v0.5.0+commit.1d4f565a.js",
+		"settings": {
+			"optimizer": {
+				"runs": 1000000,
+				"enabled": true
+			},
+			"outputSelection": {
+				"*": {
+					"*": [
+						"abi",
+						"devdoc",
+						"userdoc",
+						"evm.bytecode.object",
+						"evm.bytecode.sourceMap",
+						"evm.deployedBytecode.object",
+						"evm.deployedBytecode.sourceMap",
+						"evm.methodIdentifiers",
+						"metadata"
+					]
+				}
+			},
+			"remappings": []
+		}
+	},
+	"chains": {}
+}

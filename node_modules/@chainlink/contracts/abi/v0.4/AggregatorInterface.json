@@ -1,0 +1,196 @@
+{
+	"schemaVersion": "2.0.0",
+	"contractName": "AggregatorInterface",
+	"compilerOutput": {
+		"abi": [
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "latestAnswer",
+				"outputs": [
+					{
+						"name": "",
+						"type": "int256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "latestRound",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "latestTimestamp",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "roundId",
+						"type": "uint256"
+					}
+				],
+				"name": "getAnswer",
+				"outputs": [
+					{
+						"name": "",
+						"type": "int256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "roundId",
+						"type": "uint256"
+					}
+				],
+				"name": "getTimestamp",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "current",
+						"type": "int256"
+					},
+					{
+						"indexed": true,
+						"name": "roundId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "AnswerUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "roundId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"name": "startedBy",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"name": "startedAt",
+						"type": "uint256"
+					}
+				],
+				"name": "NewRound",
+				"type": "event"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"evm": {
+			"bytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"deployedBytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"methodIdentifiers": {
+				"getAnswer(uint256)": "b5ab58dc",
+				"getTimestamp(uint256)": "b633620c",
+				"latestAnswer()": "50d25bcd",
+				"latestRound()": "668a0f02",
+				"latestTimestamp()": "8205bf6a"
+			}
+		},
+		"metadata": "",
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"sources": {
+		"interfaces/AggregatorInterface.sol": {
+			"id": 9
+		}
+	},
+	"sourceCodes": {
+		"interfaces/AggregatorInterface.sol": "pragma solidity >=0.4.24;\n\ninterface AggregatorInterface {\n  function latestAnswer() external view returns (int256);\n  function latestTimestamp() external view returns (uint256);\n  function latestRound() external view returns (uint256);\n  function getAnswer(uint256 roundId) external view returns (int256);\n  function getTimestamp(uint256 roundId) external view returns (uint256);\n\n  event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 timestamp);\n  event NewRound(uint256 indexed roundId, address indexed startedBy, uint256 startedAt);\n}\n"
+	},
+	"sourceTreeHashHex": "0xb21fa756e241d3fbfe7546158a7e1bb4a98f261744751c4e9dfe5f474ea46338",
+	"compiler": {
+		"name": "solc",
+		"version": "soljson-v0.4.24+commit.e67f0147.js",
+		"settings": {
+			"optimizer": {
+				"runs": 1000000,
+				"enabled": true
+			},
+			"outputSelection": {
+				"*": {
+					"*": [
+						"abi",
+						"devdoc",
+						"userdoc",
+						"evm.bytecode.object",
+						"evm.bytecode.sourceMap",
+						"evm.deployedBytecode.object",
+						"evm.deployedBytecode.sourceMap",
+						"evm.methodIdentifiers",
+						"metadata"
+					]
+				}
+			},
+			"remappings": []
+		}
+	},
+	"chains": {}
+}

@@ -1,0 +1,47 @@
+{
+  "name": "hdkey",
+  "version": "0.7.1",
+  "description": "Bitcoin BIP32 hierarchical deterministic keys",
+  "main": "lib/hdkey.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cryptocoinjs/hdkey"
+  },
+  "license": "MIT",
+  "keywords": [
+    "bitcoin",
+    "bip32",
+    "bip",
+    "key",
+    "hierarchical",
+    "deterministic",
+    "crypto"
+  ],
+  "bugs": {
+    "url": "https://github.com/cryptocoinjs/hdkey/issues"
+  },
+  "homepage": "https://github.com/cryptocoinjs/hdkey",
+  "devDependencies": {
+    "bigi": "^1.1.0",
+    "coveralls": "^2.10.0",
+    "ecurve": "^1.0.0",
+    "istanbul": "^0.3.17",
+    "mocha": "^2.2.5",
+    "mocha-lcov-reporter": "0.0.1",
+    "mochify": "^2.10.0",
+    "secure-random": "^1.0.0",
+    "standard": "^7.1.1"
+  },
+  "dependencies": {
+    "coinstring": "^2.0.0",
+    "secp256k1": "^3.0.1"
+  },
+  "scripts": {
+    "lint": "standard",
+    "browser-test": "mochify --wd -R spec",
+    "test": "standard && mocha",
+    "unit": "mocha",
+    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --reporter list test/*.js",
+    "coveralls": "npm run-script coverage && node ./node_modules/.bin/coveralls < coverage/lcov.info"
+  }
+}

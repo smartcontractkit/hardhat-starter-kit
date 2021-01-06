@@ -1,0 +1,37 @@
+{
+  "name": "u2f-api",
+  "description": "Promisified U2F API for browsers",
+  "license": "MIT",
+  "version": "0.2.7",
+  "author": "Gustaf Räntilä <g.rantila@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grantila/u2f-api.git"
+  },
+  "scripts": {
+    "test": "scripts/test.sh"
+  },
+  "pre-commit": [
+    "test"
+  ],
+  "keywords": [
+    "u2f",
+    "api",
+    "client",
+    "2-factor",
+    "authentication",
+    "fido",
+    "yubikey",
+    "promise"
+  ],
+  "types": "./index.d.ts",
+  "devDependencies": {
+    "@types/mocha": "^2.2.43",
+    "already": "^0.6.0",
+    "chai": "^4.1.2",
+    "jsdom": "^11.2.0",
+    "mocha": "^3.5.3",
+    "pre-commit": "^1.2.2",
+    "typescript": "^2.5.3"
+  }
+}

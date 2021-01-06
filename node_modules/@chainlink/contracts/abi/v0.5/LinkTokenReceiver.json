@@ -1,0 +1,118 @@
+{
+	"schemaVersion": "2.0.0",
+	"contractName": "LinkTokenReceiver",
+	"compilerOutput": {
+		"abi": [
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "getChainlinkToken",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_sender",
+						"type": "address"
+					},
+					{
+						"name": "_amount",
+						"type": "uint256"
+					},
+					{
+						"name": "_data",
+						"type": "bytes"
+					}
+				],
+				"name": "onTokenTransfer",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {
+				"onTokenTransfer(address,uint256,bytes)": {
+					"details": "The data payload's first 2 words will be overwritten by the `_sender` and `_amount` values to ensure correctness. Calls oracleRequest.",
+					"params": {
+						"_amount": "Amount of LINK sent (specified in wei)",
+						"_data": "Payload of the transaction",
+						"_sender": "Address of the sender"
+					}
+				}
+			}
+		},
+		"evm": {
+			"bytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"deployedBytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"methodIdentifiers": {
+				"getChainlinkToken()": "165d35e1",
+				"onTokenTransfer(address,uint256,bytes)": "a4c0ed36"
+			}
+		},
+		"metadata": "",
+		"userdoc": {
+			"methods": {
+				"onTokenTransfer(address,uint256,bytes)": {
+					"notice": "Called when LINK is sent to the contract via `transferAndCall`"
+				}
+			}
+		}
+	},
+	"sources": {
+		"LinkTokenReceiver.sol": {
+			"id": 2
+		}
+	},
+	"sourceCodes": {
+		"LinkTokenReceiver.sol": "pragma solidity ^0.5.0;\n\ncontract LinkTokenReceiver {\n\n  bytes4 constant private ORACLE_REQUEST_SELECTOR = 0x40429946;\n  uint256 constant private SELECTOR_LENGTH = 4;\n  uint256 constant private EXPECTED_REQUEST_WORDS = 2;\n  uint256 constant private MINIMUM_REQUEST_LENGTH = SELECTOR_LENGTH + (32 * EXPECTED_REQUEST_WORDS);\n  /**\n   * @notice Called when LINK is sent to the contract via `transferAndCall`\n   * @dev The data payload's first 2 words will be overwritten by the `_sender` and `_amount`\n   * values to ensure correctness. Calls oracleRequest.\n   * @param _sender Address of the sender\n   * @param _amount Amount of LINK sent (specified in wei)\n   * @param _data Payload of the transaction\n   */\n  function onTokenTransfer(\n    address _sender,\n    uint256 _amount,\n    bytes memory _data\n  )\n    public\n    onlyLINK\n    validRequestLength(_data)\n    permittedFunctionsForLINK(_data)\n  {\n    assembly {\n      // solhint-disable-next-line avoid-low-level-calls\n      mstore(add(_data, 36), _sender) // ensure correct sender is passed\n      // solhint-disable-next-line avoid-low-level-calls\n      mstore(add(_data, 68), _amount)    // ensure correct amount is passed\n    }\n    // solhint-disable-next-line avoid-low-level-calls\n    (bool success, ) = address(this).delegatecall(_data); // calls oracleRequest\n    require(success, \"Unable to create request\");\n  }\n\n  function getChainlinkToken() public view returns (address);\n\n  /**\n   * @dev Reverts if not sent from the LINK token\n   */\n  modifier onlyLINK() {\n    require(msg.sender == getChainlinkToken(), \"Must use LINK token\");\n    _;\n  }\n\n  /**\n   * @dev Reverts if the given data does not begin with the `oracleRequest` function selector\n   * @param _data The data payload of the request\n   */\n  modifier permittedFunctionsForLINK(bytes memory _data) {\n    bytes4 funcSelector;\n    assembly {\n      // solhint-disable-next-line avoid-low-level-calls\n      funcSelector := mload(add(_data, 32))\n    }\n    require(funcSelector == ORACLE_REQUEST_SELECTOR, \"Must use whitelisted functions\");\n    _;\n  }\n\n  /**\n   * @dev Reverts if the given payload is less than needed to create a request\n   * @param _data The request payload\n   */\n  modifier validRequestLength(bytes memory _data) {\n    require(_data.length >= MINIMUM_REQUEST_LENGTH, \"Invalid request length\");\n    _;\n  }\n}"
+	},
+	"sourceTreeHashHex": "0x7aea15111145093a05ed12403c1dc1a615abb1a629bfc32043a4f43cee1ff929",
+	"compiler": {
+		"name": "solc",
+		"version": "soljson-v0.5.0+commit.1d4f565a.js",
+		"settings": {
+			"optimizer": {
+				"runs": 1000000,
+				"enabled": true
+			},
+			"outputSelection": {
+				"*": {
+					"*": [
+						"abi",
+						"devdoc",
+						"userdoc",
+						"evm.bytecode.object",
+						"evm.bytecode.sourceMap",
+						"evm.deployedBytecode.object",
+						"evm.deployedBytecode.sourceMap",
+						"evm.methodIdentifiers",
+						"metadata"
+					]
+				}
+			},
+			"remappings": []
+		}
+	},
+	"chains": {}
+}

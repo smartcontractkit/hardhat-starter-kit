@@ -1,0 +1,90 @@
+{
+	"schemaVersion": "2.0.0",
+	"contractName": "ERC677Receiver",
+	"compilerOutput": {
+		"abi": [
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_sender",
+						"type": "address"
+					},
+					{
+						"name": "_value",
+						"type": "uint256"
+					},
+					{
+						"name": "_data",
+						"type": "bytes"
+					}
+				],
+				"name": "onTokenTransfer",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"evm": {
+			"bytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"deployedBytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"methodIdentifiers": {
+				"onTokenTransfer(address,uint256,bytes)": "a4c0ed36"
+			}
+		},
+		"metadata": "",
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"sources": {
+		"interfaces/ERC677Receiver.sol": {
+			"id": 16
+		}
+	},
+	"sourceCodes": {
+		"interfaces/ERC677Receiver.sol": "pragma solidity ^0.4.8;\n\n\ncontract ERC677Receiver {\n  function onTokenTransfer(address _sender, uint _value, bytes _data);\n}\n"
+	},
+	"sourceTreeHashHex": "0x52941220da118a31f512cef775e8123339380e50fcac039d7b057f035634ddaa",
+	"compiler": {
+		"name": "solc",
+		"version": "soljson-v0.4.24+commit.e67f0147.js",
+		"settings": {
+			"optimizer": {
+				"runs": 1000000,
+				"enabled": true
+			},
+			"outputSelection": {
+				"*": {
+					"*": [
+						"abi",
+						"devdoc",
+						"userdoc",
+						"evm.bytecode.object",
+						"evm.bytecode.sourceMap",
+						"evm.deployedBytecode.object",
+						"evm.deployedBytecode.sourceMap",
+						"evm.methodIdentifiers",
+						"metadata"
+					]
+				}
+			},
+			"remappings": []
+		}
+	},
+	"chains": {}
+}

@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - "4"
+  - "6"
+env:
+  - CHAI_VERSION=^2.1.2
+  - CHAI_VERSION=^3.0.0
+  - CHAI_VERSION=^4.0.0
+before_install:
+    npm install -g grunt-cli
+before_script:
+    npm install chai@$CHAI_VERSION
+script:
+    grunt ci

@@ -1,0 +1,2 @@
+console.log(network.name)
+console.log(network)

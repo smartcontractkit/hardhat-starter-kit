@@ -1,0 +1,305 @@
+{
+	"schemaVersion": "2.0.0",
+	"contractName": "ERC677",
+	"compilerOutput": {
+		"abi": [
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "approve",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "totalSupply",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "transferFrom",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"name": "value",
+						"type": "uint256"
+					},
+					{
+						"name": "data",
+						"type": "bytes"
+					}
+				],
+				"name": "transferAndCall",
+				"outputs": [
+					{
+						"name": "success",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "who",
+						"type": "address"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "transfer",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"name": "spender",
+						"type": "address"
+					}
+				],
+				"name": "allowance",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"name": "value",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"name": "data",
+						"type": "bytes"
+					}
+				],
+				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "Approval",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "Transfer",
+				"type": "event"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"evm": {
+			"bytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"deployedBytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"methodIdentifiers": {
+				"allowance(address,address)": "dd62ed3e",
+				"approve(address,uint256)": "095ea7b3",
+				"balanceOf(address)": "70a08231",
+				"totalSupply()": "18160ddd",
+				"transfer(address,uint256)": "a9059cbb",
+				"transferAndCall(address,uint256,bytes)": "4000aea0",
+				"transferFrom(address,address,uint256)": "23b872dd"
+			}
+		},
+		"metadata": "",
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"sources": {
+		"interfaces/ERC677.sol": {
+			"id": 15
+		},
+		"interfaces/ERC20.sol": {
+			"id": 13
+		}
+	},
+	"sourceCodes": {
+		"interfaces/ERC677.sol": "pragma solidity ^0.4.8;\n\nimport { ERC20 as linkERC20 } from \"./ERC20.sol\";\n\ncontract ERC677 is linkERC20 {\n  function transferAndCall(address to, uint value, bytes data) returns (bool success);\n\n  event Transfer(address indexed from, address indexed to, uint value, bytes data);\n}\n",
+		"interfaces/ERC20.sol": "pragma solidity ^0.4.11;\n\n\nimport { ERC20Basic as linkERC20Basic } from './ERC20Basic.sol';\n\n\n/**\n * @title ERC20 interface\n * @dev see https://github.com/ethereum/EIPs/issues/20\n */\ncontract ERC20 is linkERC20Basic {\n  function allowance(address owner, address spender) constant returns (uint256);\n  function transferFrom(address from, address to, uint256 value) returns (bool);\n  function approve(address spender, uint256 value) returns (bool);\n  event Approval(address indexed owner, address indexed spender, uint256 value);\n}\n"
+	},
+	"sourceTreeHashHex": "0x092b5544bc7a955380f76a985d46af932a1810e299bfa8f81d593c3093ffb245",
+	"compiler": {
+		"name": "solc",
+		"version": "soljson-v0.4.24+commit.e67f0147.js",
+		"settings": {
+			"optimizer": {
+				"runs": 1000000,
+				"enabled": true
+			},
+			"outputSelection": {
+				"*": {
+					"*": [
+						"abi",
+						"devdoc",
+						"userdoc",
+						"evm.bytecode.object",
+						"evm.bytecode.sourceMap",
+						"evm.deployedBytecode.object",
+						"evm.deployedBytecode.sourceMap",
+						"evm.methodIdentifiers",
+						"metadata"
+					]
+				}
+			},
+			"remappings": []
+		}
+	},
+	"chains": {}
+}

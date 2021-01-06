@@ -1,0 +1,1 @@
+{"version":3,"file":"fs_resolver.d.ts","sourceRoot":"","sources":["../../src/resolvers/fs_resolver.ts"],"names":[],"mappings":"AAGA,OAAO,EAAE,cAAc,EAAE,MAAM,UAAU,CAAC;AAE1C,OAAO,EAAE,QAAQ,EAAE,MAAM,YAAY,CAAC;AAEtC,qBAAa,UAAW,SAAQ,QAAQ;IAE7B,eAAe,CAAC,UAAU,EAAE,MAAM,GAAG,cAAc,GAAG,SAAS;CAQzE"}

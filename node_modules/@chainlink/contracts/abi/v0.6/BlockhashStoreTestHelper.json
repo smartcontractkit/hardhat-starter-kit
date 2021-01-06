@@ -1,0 +1,182 @@
+{
+	"schemaVersion": "2.0.0",
+	"contractName": "BlockhashStoreTestHelper",
+	"compilerOutput": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "n",
+						"type": "uint256"
+					}
+				],
+				"name": "getBlockhash",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "n",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "h",
+						"type": "bytes32"
+					}
+				],
+				"name": "godmodeSetHash",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "n",
+						"type": "uint256"
+					}
+				],
+				"name": "store",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "storeEarliest",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "n",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "header",
+						"type": "bytes"
+					}
+				],
+				"name": "storeVerifyHeader",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {
+				"getBlockhash(uint256)": {
+					"params": {
+						"n": "the number of the block whose blockhash should be returned"
+					}
+				},
+				"store(uint256)": {
+					"params": {
+						"n": "the number of the block whose blockhash should be stored"
+					}
+				},
+				"storeVerifyHeader(uint256,bytes)": {
+					"params": {
+						"header": "the rlp-encoded blockheader of block n+1. We verify its correctness by checking  that it hashes to a stored blockhash, and then extract parentHash to get the n-th blockhash.",
+						"n": "the number of the block whose blockhash should be stored"
+					}
+				}
+			}
+		},
+		"evm": {
+			"bytecode": {
+				"linkReferences": {},
+				"object": "0x608060405234801561001057600080fd5b50610378806100206000396000f3fe608060405234801561001057600080fd5b50600436106100675760003560e01c8063898faab211610050578063898faab214610093578063e9413d38146100b6578063fadff0e1146100e557610067565b80636057361d1461006c57806383b6d6b71461008b575b600080fd5b6100896004803603602081101561008257600080fd5b5035610192565b005b610089610212565b610089600480360360408110156100a957600080fd5b5080359060200135610200565b6100d3600480360360208110156100cc57600080fd5b5035610221565b60408051918252519081900360200190f35b610089600480360360408110156100fb57600080fd5b8135919081019060408101602082013564010000000081111561011d57600080fd5b82018360208201111561012f57600080fd5b8035906020019184600183028401116401000000008311171561015157600080fd5b91908080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152509295506102a2945050505050565b80408061020057604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601360248201527f626c6f636b68617368286e29206661696c656400000000000000000000000000604482015290519081900360640190fd5b60009182526020829052604090912055565b61021f6101004303610192565b565b6000818152602081905260408120548061029c57604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601c60248201527f626c6f636b68617368206e6f7420666f756e6420696e2073746f726500000000604482015290519081900360640190fd5b92915050565b6000808360010181526020019081526020016000205481805190602001201461032c57604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601c60248201527f6865616465722068617320756e6b6e6f776e20626c6f636b6861736800000000604482015290519081900360640190fd5b602401516000918252602082905260409091205556fea264697066735822122062c177291d74fb47f4b1696ed7dac099f2aaffe808dcb0475c0478496b19e5a764736f6c63430006060033",
+				"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x378 DUP1 PUSH2 0x20 PUSH1 0x0 CODECOPY PUSH1 0x0 RETURN INVALID PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH2 0x67 JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0x898FAAB2 GT PUSH2 0x50 JUMPI DUP1 PUSH4 0x898FAAB2 EQ PUSH2 0x93 JUMPI DUP1 PUSH4 0xE9413D38 EQ PUSH2 0xB6 JUMPI DUP1 PUSH4 0xFADFF0E1 EQ PUSH2 0xE5 JUMPI PUSH2 0x67 JUMP JUMPDEST DUP1 PUSH4 0x6057361D EQ PUSH2 0x6C JUMPI DUP1 PUSH4 0x83B6D6B7 EQ PUSH2 0x8B JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0x89 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x82 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH2 0x192 JUMP JUMPDEST STOP JUMPDEST PUSH2 0x89 PUSH2 0x212 JUMP JUMPDEST PUSH2 0x89 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0xA9 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP DUP1 CALLDATALOAD SWAP1 PUSH1 0x20 ADD CALLDATALOAD PUSH2 0x200 JUMP JUMPDEST PUSH2 0xD3 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0xCC JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH2 0x221 JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD SWAP2 DUP3 MSTORE MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x20 ADD SWAP1 RETURN JUMPDEST PUSH2 0x89 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0xFB JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP2 CALLDATALOAD SWAP2 SWAP1 DUP2 ADD SWAP1 PUSH1 0x40 DUP2 ADD PUSH1 0x20 DUP3 ADD CALLDATALOAD PUSH5 0x100000000 DUP2 GT ISZERO PUSH2 0x11D JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP3 ADD DUP4 PUSH1 0x20 DUP3 ADD GT ISZERO PUSH2 0x12F JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP1 CALLDATALOAD SWAP1 PUSH1 0x20 ADD SWAP2 DUP5 PUSH1 0x1 DUP4 MUL DUP5 ADD GT PUSH5 0x100000000 DUP4 GT OR ISZERO PUSH2 0x151 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST SWAP2 SWAP1 DUP1 DUP1 PUSH1 0x1F ADD PUSH1 0x20 DUP1 SWAP2 DIV MUL PUSH1 0x20 ADD PUSH1 0x40 MLOAD SWAP1 DUP2 ADD PUSH1 0x40 MSTORE DUP1 SWAP4 SWAP3 SWAP2 SWAP1 DUP2 DUP2 MSTORE PUSH1 0x20 ADD DUP4 DUP4 DUP1 DUP3 DUP5 CALLDATACOPY PUSH1 0x0 SWAP3 ADD SWAP2 SWAP1 SWAP2 MSTORE POP SWAP3 SWAP6 POP PUSH2 0x2A2 SWAP5 POP POP POP POP POP JUMP JUMPDEST DUP1 BLOCKHASH DUP1 PUSH2 0x200 JUMPI PUSH1 0x40 DUP1 MLOAD PUSH32 0x8C379A000000000000000000000000000000000000000000000000000000000 DUP2 MSTORE PUSH1 0x20 PUSH1 0x4 DUP3 ADD MSTORE PUSH1 0x13 PUSH1 0x24 DUP3 ADD MSTORE PUSH32 0x626C6F636B68617368286E29206661696C656400000000000000000000000000 PUSH1 0x44 DUP3 ADD MSTORE SWAP1 MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x64 ADD SWAP1 REVERT JUMPDEST PUSH1 0x0 SWAP2 DUP3 MSTORE PUSH1 0x20 DUP3 SWAP1 MSTORE PUSH1 0x40 SWAP1 SWAP2 KECCAK256 SSTORE JUMP JUMPDEST PUSH2 0x21F PUSH2 0x100 NUMBER SUB PUSH2 0x192 JUMP JUMPDEST JUMP JUMPDEST PUSH1 0x0 DUP2 DUP2 MSTORE PUSH1 0x20 DUP2 SWAP1 MSTORE PUSH1 0x40 DUP2 KECCAK256 SLOAD DUP1 PUSH2 0x29C JUMPI PUSH1 0x40 DUP1 MLOAD PUSH32 0x8C379A000000000000000000000000000000000000000000000000000000000 DUP2 MSTORE PUSH1 0x20 PUSH1 0x4 DUP3 ADD MSTORE PUSH1 0x1C PUSH1 0x24 DUP3 ADD MSTORE PUSH32 0x626C6F636B68617368206E6F7420666F756E6420696E2073746F726500000000 PUSH1 0x44 DUP3 ADD MSTORE SWAP1 MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x64 ADD SWAP1 REVERT JUMPDEST SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 DUP1 DUP4 PUSH1 0x1 ADD DUP2 MSTORE PUSH1 0x20 ADD SWAP1 DUP2 MSTORE PUSH1 0x20 ADD PUSH1 0x0 KECCAK256 SLOAD DUP2 DUP1 MLOAD SWAP1 PUSH1 0x20 ADD KECCAK256 EQ PUSH2 0x32C JUMPI PUSH1 0x40 DUP1 MLOAD PUSH32 0x8C379A000000000000000000000000000000000000000000000000000000000 DUP2 MSTORE PUSH1 0x20 PUSH1 0x4 DUP3 ADD MSTORE PUSH1 0x1C PUSH1 0x24 DUP3 ADD MSTORE PUSH32 0x6865616465722068617320756E6B6E6F776E20626C6F636B6861736800000000 PUSH1 0x44 DUP3 ADD MSTORE SWAP1 MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x64 ADD SWAP1 REVERT JUMPDEST PUSH1 0x24 ADD MLOAD PUSH1 0x0 SWAP2 DUP3 MSTORE PUSH1 0x20 DUP3 SWAP1 MSTORE PUSH1 0x40 SWAP1 SWAP2 KECCAK256 SSTORE JUMP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 PUSH3 0xC17729 SAR PUSH21 0xFB47F4B1696ED7DAC099F2AAFFE808DCB0475C0478 0x49 PUSH12 0x19E5A764736F6C6343000606 STOP CALLER ",
+				"sourceMap": "61:142:42:-:0;;;;5:9:-1;2:2;;;27:1;24;17:12;2:2;61:142:42;;;;;;;"
+			},
+			"deployedBytecode": {
+				"immutableReferences": {},
+				"linkReferences": {},
+				"object": "0x608060405234801561001057600080fd5b50600436106100675760003560e01c8063898faab211610050578063898faab214610093578063e9413d38146100b6578063fadff0e1146100e557610067565b80636057361d1461006c57806383b6d6b71461008b575b600080fd5b6100896004803603602081101561008257600080fd5b5035610192565b005b610089610212565b610089600480360360408110156100a957600080fd5b5080359060200135610200565b6100d3600480360360208110156100cc57600080fd5b5035610221565b60408051918252519081900360200190f35b610089600480360360408110156100fb57600080fd5b8135919081019060408101602082013564010000000081111561011d57600080fd5b82018360208201111561012f57600080fd5b8035906020019184600183028401116401000000008311171561015157600080fd5b91908080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152509295506102a2945050505050565b80408061020057604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601360248201527f626c6f636b68617368286e29206661696c656400000000000000000000000000604482015290519081900360640190fd5b60009182526020829052604090912055565b61021f6101004303610192565b565b6000818152602081905260408120548061029c57604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601c60248201527f626c6f636b68617368206e6f7420666f756e6420696e2073746f726500000000604482015290519081900360640190fd5b92915050565b6000808360010181526020019081526020016000205481805190602001201461032c57604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601c60248201527f6865616465722068617320756e6b6e6f776e20626c6f636b6861736800000000604482015290519081900360640190fd5b602401516000918252602082905260409091205556fea264697066735822122062c177291d74fb47f4b1696ed7dac099f2aaffe808dcb0475c0478496b19e5a764736f6c63430006060033",
+				"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH2 0x67 JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0x898FAAB2 GT PUSH2 0x50 JUMPI DUP1 PUSH4 0x898FAAB2 EQ PUSH2 0x93 JUMPI DUP1 PUSH4 0xE9413D38 EQ PUSH2 0xB6 JUMPI DUP1 PUSH4 0xFADFF0E1 EQ PUSH2 0xE5 JUMPI PUSH2 0x67 JUMP JUMPDEST DUP1 PUSH4 0x6057361D EQ PUSH2 0x6C JUMPI DUP1 PUSH4 0x83B6D6B7 EQ PUSH2 0x8B JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0x89 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x82 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH2 0x192 JUMP JUMPDEST STOP JUMPDEST PUSH2 0x89 PUSH2 0x212 JUMP JUMPDEST PUSH2 0x89 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0xA9 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP DUP1 CALLDATALOAD SWAP1 PUSH1 0x20 ADD CALLDATALOAD PUSH2 0x200 JUMP JUMPDEST PUSH2 0xD3 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0xCC JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH2 0x221 JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD SWAP2 DUP3 MSTORE MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x20 ADD SWAP1 RETURN JUMPDEST PUSH2 0x89 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0xFB JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP2 CALLDATALOAD SWAP2 SWAP1 DUP2 ADD SWAP1 PUSH1 0x40 DUP2 ADD PUSH1 0x20 DUP3 ADD CALLDATALOAD PUSH5 0x100000000 DUP2 GT ISZERO PUSH2 0x11D JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP3 ADD DUP4 PUSH1 0x20 DUP3 ADD GT ISZERO PUSH2 0x12F JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP1 CALLDATALOAD SWAP1 PUSH1 0x20 ADD SWAP2 DUP5 PUSH1 0x1 DUP4 MUL DUP5 ADD GT PUSH5 0x100000000 DUP4 GT OR ISZERO PUSH2 0x151 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST SWAP2 SWAP1 DUP1 DUP1 PUSH1 0x1F ADD PUSH1 0x20 DUP1 SWAP2 DIV MUL PUSH1 0x20 ADD PUSH1 0x40 MLOAD SWAP1 DUP2 ADD PUSH1 0x40 MSTORE DUP1 SWAP4 SWAP3 SWAP2 SWAP1 DUP2 DUP2 MSTORE PUSH1 0x20 ADD DUP4 DUP4 DUP1 DUP3 DUP5 CALLDATACOPY PUSH1 0x0 SWAP3 ADD SWAP2 SWAP1 SWAP2 MSTORE POP SWAP3 SWAP6 POP PUSH2 0x2A2 SWAP5 POP POP POP POP POP JUMP JUMPDEST DUP1 BLOCKHASH DUP1 PUSH2 0x200 JUMPI PUSH1 0x40 DUP1 MLOAD PUSH32 0x8C379A000000000000000000000000000000000000000000000000000000000 DUP2 MSTORE PUSH1 0x20 PUSH1 0x4 DUP3 ADD MSTORE PUSH1 0x13 PUSH1 0x24 DUP3 ADD MSTORE PUSH32 0x626C6F636B68617368286E29206661696C656400000000000000000000000000 PUSH1 0x44 DUP3 ADD MSTORE SWAP1 MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x64 ADD SWAP1 REVERT JUMPDEST PUSH1 0x0 SWAP2 DUP3 MSTORE PUSH1 0x20 DUP3 SWAP1 MSTORE PUSH1 0x40 SWAP1 SWAP2 KECCAK256 SSTORE JUMP JUMPDEST PUSH2 0x21F PUSH2 0x100 NUMBER SUB PUSH2 0x192 JUMP JUMPDEST JUMP JUMPDEST PUSH1 0x0 DUP2 DUP2 MSTORE PUSH1 0x20 DUP2 SWAP1 MSTORE PUSH1 0x40 DUP2 KECCAK256 SLOAD DUP1 PUSH2 0x29C JUMPI PUSH1 0x40 DUP1 MLOAD PUSH32 0x8C379A000000000000000000000000000000000000000000000000000000000 DUP2 MSTORE PUSH1 0x20 PUSH1 0x4 DUP3 ADD MSTORE PUSH1 0x1C PUSH1 0x24 DUP3 ADD MSTORE PUSH32 0x626C6F636B68617368206E6F7420666F756E6420696E2073746F726500000000 PUSH1 0x44 DUP3 ADD MSTORE SWAP1 MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x64 ADD SWAP1 REVERT JUMPDEST SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 DUP1 DUP4 PUSH1 0x1 ADD DUP2 MSTORE PUSH1 0x20 ADD SWAP1 DUP2 MSTORE PUSH1 0x20 ADD PUSH1 0x0 KECCAK256 SLOAD DUP2 DUP1 MLOAD SWAP1 PUSH1 0x20 ADD KECCAK256 EQ PUSH2 0x32C JUMPI PUSH1 0x40 DUP1 MLOAD PUSH32 0x8C379A000000000000000000000000000000000000000000000000000000000 DUP2 MSTORE PUSH1 0x20 PUSH1 0x4 DUP3 ADD MSTORE PUSH1 0x1C PUSH1 0x24 DUP3 ADD MSTORE PUSH32 0x6865616465722068617320756E6B6E6F776E20626C6F636B6861736800000000 PUSH1 0x44 DUP3 ADD MSTORE SWAP1 MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x64 ADD SWAP1 REVERT JUMPDEST PUSH1 0x24 ADD MLOAD PUSH1 0x0 SWAP2 DUP3 MSTORE PUSH1 0x20 DUP3 SWAP1 MSTORE PUSH1 0x40 SWAP1 SWAP2 KECCAK256 SSTORE JUMP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 PUSH3 0xC17729 SAR PUSH21 0xFB47F4B1696ED7DAC099F2AAFFE808DCB0475C0478 0x49 PUSH12 0x19E5A764736F6C6343000606 STOP CALLER ",
+				"sourceMap": "61:142:42:-:0;;;;5:9:-1;2:2;;;27:1;24;17:12;2:2;61:142:42;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;12:1:-1;9;2:12;767:140:25;;;;;;15:2:-1;10:3;7:11;4:2;;;31:1;28;21:12;4:2;-1:-1;767:140:25;;:::i;:::-;;1011:70;;;:::i;117:84:42:-;;;;;;15:2:-1;10:3;7:11;4:2;;;31:1;28;21:12;4:2;-1:-1;117:84:42;;;;;;;:::i;2832:173:25:-;;;;;;15:2:-1;10:3;7:11;4:2;;;31:1;28;21:12;4:2;-1:-1;2832:173:25;;:::i;:::-;;;;;;;;;;;;;;;;1451:1202;;;;;;15:2:-1;10:3;7:11;4:2;;;31:1;28;21:12;4:2;1451:1202:25;;;;;;;;;;;;;;27:11:-1;11:28;;8:2;;;52:1;49;42:12;8:2;1451:1202:25;;41:9:-1;34:4;18:14;14:25;11:40;8:2;;;64:1;61;54:12;8:2;1451:1202:25;;;;;;100:9:-1;95:1;81:12;77:20;67:8;63:35;60:50;39:11;25:12;22:29;11:107;8:2;;;131:1;128;121:12;8:2;1451:1202:25;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;30:3:-1;22:6;14;1:33;99:1;81:16;;74:27;;;;-1:-1;1451:1202:25;;-1:-1:-1;1451:1202:25;;-1:-1:-1;;;;;1451:1202:25:i;767:140::-;818:12;;844:8;836:40;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;882:13;:16;;;;;;;;;;;:20;767:140::o;1011:70::-;1051:25;1072:3;1057:12;:18;1051:5;:25::i;:::-;1011:70::o;2832:173::-;2888:7;2915:16;;;;;;;;;;;2945:8;2937:49;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2999:1;2832:173;-1:-1:-1;;2832:173:25:o;1451:1202::-;1552:13;:20;1566:1;1570;1566:5;1552:20;;;;;;;;;;;;1541:6;1531:17;;;;;;:41;1523:82;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2449:2;2437:15;2431:22;2376:18;2619:16;;;;;;;;;;;:29;1451:1202::o"
+			},
+			"methodIdentifiers": {
+				"getBlockhash(uint256)": "e9413d38",
+				"godmodeSetHash(uint256,bytes32)": "898faab2",
+				"store(uint256)": "6057361d",
+				"storeEarliest()": "83b6d6b7",
+				"storeVerifyHeader(uint256,bytes)": "fadff0e1"
+			}
+		},
+		"metadata": "{\"compiler\":{\"version\":\"0.6.6+commit.6c089d02\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"n\",\"type\":\"uint256\"}],\"name\":\"getBlockhash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"n\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"h\",\"type\":\"bytes32\"}],\"name\":\"godmodeSetHash\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"n\",\"type\":\"uint256\"}],\"name\":\"store\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"storeEarliest\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"n\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"header\",\"type\":\"bytes\"}],\"name\":\"storeVerifyHeader\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{\"getBlockhash(uint256)\":{\"params\":{\"n\":\"the number of the block whose blockhash should be returned\"}},\"store(uint256)\":{\"params\":{\"n\":\"the number of the block whose blockhash should be stored\"}},\"storeVerifyHeader(uint256,bytes)\":{\"params\":{\"header\":\"the rlp-encoded blockheader of block n+1. We verify its correctness by checking  that it hashes to a stored blockhash, and then extract parentHash to get the n-th blockhash.\",\"n\":\"the number of the block whose blockhash should be stored\"}}}},\"userdoc\":{\"methods\":{\"getBlockhash(uint256)\":{\"notice\":\"gets a blockhash from the store. If no hash is known, this function reverts.\"},\"store(uint256)\":{\"notice\":\"stores blockhash of a given block, assuming it is available through BLOCKHASH\"},\"storeEarliest()\":{\"notice\":\"stores blockhash of the earliest block still available through BLOCKHASH.\"},\"storeVerifyHeader(uint256,bytes)\":{\"notice\":\"stores blockhash after verifying blockheader of child/subsequent block\"}}}},\"settings\":{\"compilationTarget\":{\"/Users/steve/workspace/chainlink/evm-contracts/src/v0.6/tests/BlockhashStoreTestHelper.sol\":\"BlockhashStoreTestHelper\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1000000},\"remappings\":[]},\"sources\":{\"/Users/steve/workspace/chainlink/evm-contracts/src/v0.6/dev/BlockhashStore.sol\":{\"keccak256\":\"0x559d327bdd114753b60d2f53428f32e1d7308176ea0157d52b582542df548858\",\"urls\":[\"bzz-raw://fc0a1f5c150a67574681b16726b060b34734a74ac7f5c1e494f64c735da05e79\",\"dweb:/ipfs/QmUqzLcdRrm4zoUAVxALagiNJHWewzZmjPiTEw5weV8Tjk\"]},\"/Users/steve/workspace/chainlink/evm-contracts/src/v0.6/tests/BlockhashStoreTestHelper.sol\":{\"keccak256\":\"0x1d1684610f388b31213ad8b6b9da4fbc99cd41125ea35c12e522e3fc7a414c2d\",\"urls\":[\"bzz-raw://2f97f02b7d28e7670a1c7078476935d863d943152dd24e6fcfba563951dcf9ed\",\"dweb:/ipfs/QmSFde9N4ZAGwazhLFdS3MggxDB8ubTQ1JbMK7v598hzKE\"]}},\"version\":1}",
+		"userdoc": {
+			"methods": {
+				"getBlockhash(uint256)": {
+					"notice": "gets a blockhash from the store. If no hash is known, this function reverts."
+				},
+				"store(uint256)": {
+					"notice": "stores blockhash of a given block, assuming it is available through BLOCKHASH"
+				},
+				"storeEarliest()": {
+					"notice": "stores blockhash of the earliest block still available through BLOCKHASH."
+				},
+				"storeVerifyHeader(uint256,bytes)": {
+					"notice": "stores blockhash after verifying blockheader of child/subsequent block"
+				}
+			}
+		}
+	},
+	"sources": {
+		"tests/BlockhashStoreTestHelper.sol": {
+			"id": 42
+		},
+		"dev/BlockhashStore.sol": {
+			"id": 25
+		}
+	},
+	"sourceCodes": {
+		"tests/BlockhashStoreTestHelper.sol": "pragma solidity 0.6.6;\n\nimport \"../dev/BlockhashStore.sol\";\n\ncontract BlockhashStoreTestHelper is BlockhashStore {\n  function godmodeSetHash(uint256 n, bytes32 h) public {\n    s_blockhashes[n] = h;\n  }\n}\n",
+		"dev/BlockhashStore.sol": "pragma solidity 0.6.6;\n\n/**\n * @title BlockhashStore\n * @notice This contract provides a way to access blockhashes older than\n *   the 256 block limit imposed by the BLOCKHASH opcode.\n *   You may assume that any blockhash stored by the contract is correct.\n *   Note that the contract depends on the format of serialized Ethereum\n *   blocks. If a future hardfork of Ethereum changes that format, the \n *   logic in this contract may become incorrect and an updated version \n *   would have to be deployed.\n */\ncontract BlockhashStore {\n\n  mapping(uint => bytes32) internal s_blockhashes;\n\n  /**\n   * @notice stores blockhash of a given block, assuming it is available through BLOCKHASH\n   * @param n the number of the block whose blockhash should be stored\n   */\n  function store(uint256 n) public {\n    bytes32 h = blockhash(n);\n    require(h != 0x0, \"blockhash(n) failed\");\n    s_blockhashes[n] = h;\n  }\n\n\n  /**\n   * @notice stores blockhash of the earliest block still available through BLOCKHASH.\n   */\n  function storeEarliest() external {\n    store(block.number - 256);\n  }\n\n  /**\n   * @notice stores blockhash after verifying blockheader of child/subsequent block\n   * @param n the number of the block whose blockhash should be stored\n   * @param header the rlp-encoded blockheader of block n+1. We verify its correctness by checking\n   *   that it hashes to a stored blockhash, and then extract parentHash to get the n-th blockhash.\n   */\n  function storeVerifyHeader(uint256 n, bytes memory header) public {\n    require(keccak256(header) == s_blockhashes[n + 1], \"header has unknown blockhash\");\n\n    // At this point, we know that header is the correct blockheader for block n+1.\n\n    // The header is an rlp-encoded list. The head item of that list is the 32-byte blockhash of the parent block.\n    // Based on how rlp works, we know that blockheaders always have the following form:\n    // 0xf9____a0PARENTHASH...\n    //   ^ ^   ^\n    //   | |   |\n    //   | |   +--- PARENTHASH is 32 bytes. rlpenc(PARENTHASH) is 0xa || PARENTHASH.\n    //   | |\n    //   | +--- 2 bytes containing the sum of the lengths of the encoded list items\n    //   |\n    //   +--- 0xf9 because we have a list and (sum of lengths of encoded list items) fits exactly into two bytes.\n    //\n    // As a consequence, the PARENTHASH is always at offset 4 of the rlp-encoded block header.\n\n    bytes32 parentHash;\n    assembly {\n      parentHash := mload(add(header, 36)) // 36 = 32 byte offset for length prefix of ABI-encoded array\n                                           //    +  4 byte offset of PARENTHASH (see above)\n    }\n\n    s_blockhashes[n] = parentHash;\n  }\n\n  /**\n   * @notice gets a blockhash from the store. If no hash is known, this function reverts.\n   * @param n the number of the block whose blockhash should be returned\n   */\n  function getBlockhash(uint256 n) external view returns (bytes32) {\n    bytes32 h = s_blockhashes[n];\n    require(h != 0x0, \"blockhash not found in store\");\n    return h;\n  }\n}\n"
+	},
+	"sourceTreeHashHex": "0xd1296447b618c6f7b367f7bda726ed9bd3faf5c30636ec13ec15b4fb1d9e4b43",
+	"compiler": {
+		"name": "solc",
+		"version": "soljson-v0.6.6+commit.6c089d02.js",
+		"settings": {
+			"optimizer": {
+				"runs": 1000000,
+				"enabled": true
+			},
+			"outputSelection": {
+				"*": {
+					"*": [
+						"abi",
+						"devdoc",
+						"userdoc",
+						"evm.bytecode.object",
+						"evm.bytecode.sourceMap",
+						"evm.deployedBytecode.object",
+						"evm.deployedBytecode.sourceMap",
+						"evm.methodIdentifiers",
+						"metadata"
+					]
+				}
+			},
+			"remappings": []
+		}
+	},
+	"chains": {}
+}

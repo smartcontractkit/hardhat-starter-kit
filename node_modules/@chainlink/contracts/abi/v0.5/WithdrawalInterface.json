@@ -1,0 +1,115 @@
+{
+	"schemaVersion": "2.0.0",
+	"contractName": "WithdrawalInterface",
+	"compilerOutput": {
+		"abi": [
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "withdrawable",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "recipient",
+						"type": "address"
+					},
+					{
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "withdraw",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {
+				"withdraw(address,uint256)": {
+					"params": {
+						"amount": "is the amount of LINK to send",
+						"recipient": "is the address to send the LINK to"
+					}
+				}
+			}
+		},
+		"evm": {
+			"bytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"deployedBytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"methodIdentifiers": {
+				"withdraw(address,uint256)": "f3fef3a3",
+				"withdrawable()": "50188301"
+			}
+		},
+		"metadata": "",
+		"userdoc": {
+			"methods": {
+				"withdraw(address,uint256)": {
+					"notice": "transfer LINK held by the contract belonging to msg.sender to another address"
+				},
+				"withdrawable()": {
+					"notice": "query the available amount of LINK to withdraw by msg.sender"
+				}
+			}
+		}
+	},
+	"sources": {
+		"interfaces/WithdrawalInterface.sol": {
+			"id": 20
+		}
+	},
+	"sourceCodes": {
+		"interfaces/WithdrawalInterface.sol": "pragma solidity ^0.5.0;\n\ninterface WithdrawalInterface {\n  /**\n   * @notice transfer LINK held by the contract belonging to msg.sender to\n   * another address\n   * @param recipient is the address to send the LINK to\n   * @param amount is the amount of LINK to send\n   */\n  function withdraw(address recipient, uint256 amount) external;\n\n  /**\n   * @notice query the available amount of LINK to withdraw by msg.sender\n   */\n  function withdrawable() external view returns (uint256);\n}\n"
+	},
+	"sourceTreeHashHex": "0x39d6b613dafa8377db39b9fe3a05e83652579ba60ff4609229f0b65a034d80e3",
+	"compiler": {
+		"name": "solc",
+		"version": "soljson-v0.5.0+commit.1d4f565a.js",
+		"settings": {
+			"optimizer": {
+				"runs": 1000000,
+				"enabled": true
+			},
+			"outputSelection": {
+				"*": {
+					"*": [
+						"abi",
+						"devdoc",
+						"userdoc",
+						"evm.bytecode.object",
+						"evm.bytecode.sourceMap",
+						"evm.deployedBytecode.object",
+						"evm.deployedBytecode.sourceMap",
+						"evm.methodIdentifiers",
+						"metadata"
+					]
+				}
+			},
+			"remappings": []
+		}
+	},
+	"chains": {}
+}

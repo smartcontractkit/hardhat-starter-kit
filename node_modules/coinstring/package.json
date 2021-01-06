@@ -1,0 +1,42 @@
+{
+  "name": "coinstring",
+  "version": "2.3.0",
+  "description": "Create and parse crypto currency addresses and wallet import formats.",
+  "keywords": [
+    "cryptography",
+    "crypto",
+    "bitcoin",
+    "litecoin",
+    "dogecoin",
+    "currency",
+    "cryptocurrency",
+    "address",
+    "wif",
+    "base58",
+    "bip32"
+  ],
+  "devDependencies": {
+    "coveralls": "^2.10.0",
+    "istanbul": "^0.2.10",
+    "mocha": "^2.2.5",
+    "mocha-lcov-reporter": "0.0.1",
+    "mochify": "^2.1.0",
+    "standard": "4.x"
+  },
+  "repository": {
+    "url": "https://github.com/cryptocoinjs/coinstring",
+    "type": "git"
+  },
+  "main": "./lib/coinstring.js",
+  "dependencies": {
+    "bs58": "^2.0.1",
+    "create-hash": "^1.1.1"
+  },
+  "scripts": {
+    "browser-test": "mochify --wd -R spec",
+    "test": "standard && mocha --ui bdd",
+    "unit": "mocha",
+    "coverage": "istanbul cover _mocha -- --reporter list test/*.js",
+    "coveralls": "npm run-script coverage && node coveralls < coverage/lcov.info"
+  }
+}

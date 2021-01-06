@@ -1,0 +1,1 @@
+{"version":3,"file":"resolver.d.ts","sourceRoot":"","sources":["../../src/resolvers/resolver.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,cAAc,EAAE,MAAM,UAAU,CAAC;AAE1C,8BAAsB,QAAQ;aACV,eAAe,CAAC,UAAU,EAAE,MAAM,GAAG,cAAc,GAAG,SAAS;IACxE,OAAO,CAAC,UAAU,EAAE,MAAM,GAAG,cAAc;CAOrD"}

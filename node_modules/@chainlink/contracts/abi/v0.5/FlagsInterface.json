@@ -1,0 +1,167 @@
+{
+	"schemaVersion": "2.0.0",
+	"contractName": "FlagsInterface",
+	"compilerOutput": {
+		"abi": [
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"name": "lowerFlags",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "getFlag",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "setRaisingAccessController",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"name": "raiseFlags",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"name": "getFlags",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool[]"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "raiseFlag",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"evm": {
+			"bytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"deployedBytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"methodIdentifiers": {
+				"getFlag(address)": "357e47fe",
+				"getFlags(address[])": "7d723cac",
+				"lowerFlags(address[])": "28286596",
+				"raiseFlag(address)": "d74af263",
+				"raiseFlags(address[])": "760bc82d",
+				"setRaisingAccessController(address)": "517e89fe"
+			}
+		},
+		"metadata": "",
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"sources": {
+		"interfaces/FlagsInterface.sol": {
+			"id": 16
+		}
+	},
+	"sourceCodes": {
+		"interfaces/FlagsInterface.sol": "pragma solidity >=0.5.0;\n\ninterface FlagsInterface {\n  function getFlag(address) external view returns (bool);\n  function getFlags(address[] calldata) external view returns (bool[] memory);\n  function raiseFlag(address) external;\n  function raiseFlags(address[] calldata) external;\n  function lowerFlags(address[] calldata) external;\n  function setRaisingAccessController(address) external;\n}\n"
+	},
+	"sourceTreeHashHex": "0xe0394ba89d39b0241ed57fafe061b64dcd1310e07c9e3dd9f994352aba45e7bb",
+	"compiler": {
+		"name": "solc",
+		"version": "soljson-v0.5.0+commit.1d4f565a.js",
+		"settings": {
+			"optimizer": {
+				"runs": 1000000,
+				"enabled": true
+			},
+			"outputSelection": {
+				"*": {
+					"*": [
+						"abi",
+						"devdoc",
+						"userdoc",
+						"evm.bytecode.object",
+						"evm.bytecode.sourceMap",
+						"evm.deployedBytecode.object",
+						"evm.deployedBytecode.sourceMap",
+						"evm.methodIdentifiers",
+						"metadata"
+					]
+				}
+			},
+			"remappings": []
+		}
+	},
+	"chains": {}
+}

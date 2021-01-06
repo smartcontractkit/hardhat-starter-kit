@@ -1,0 +1,1 @@
+{"version":3,"file":"asPStateManager.d.ts","sourceRoot":"","sources":["../../../../src/internal/hardhat-network/provider/utils/asPStateManager.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,qCAAqC,CAAC;AAGnE,OAAO,EAAE,gBAAgB,EAAE,MAAM,0BAA0B,CAAC;AAC5D,OAAO,EAAE,aAAa,EAAE,MAAM,wBAAwB,CAAC;AAEvD,wBAAgB,eAAe,CAC7B,YAAY,EAAE,YAAY,GAAG,gBAAgB,GAC5C,aAAa,CAIf"}

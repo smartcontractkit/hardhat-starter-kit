@@ -1,0 +1,21 @@
+{
+  "name": "dirty-chai",
+  "description": "Extends Chai with lint-friendly terminating assertions.",
+  "main": "./lib/dirty-chai.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/prodatakey/dirty-chai"
+  },
+  "ignore": [
+    "Gruntfile.js",
+    "package.json",
+    "test/"
+  ],
+  "keywords": [
+    "chai",
+    "testing"
+  ],
+  "dependencies": {
+    "chai": "<1.10.0 || >1.10.0 <4"
+  }
+}

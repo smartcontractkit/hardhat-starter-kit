@@ -1,0 +1,43 @@
+{
+  "name": "dirty-chai",
+  "version": "2.0.1",
+  "description": "Extends Chai with lint-friendly terminating assertions.",
+  "main": "./lib/dirty-chai.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/prodatakey/dirty-chai"
+  },
+  "keywords": [
+    "chai",
+    "chai-plugin",
+    "browser",
+    "testing"
+  ],
+  "author": "Joshua Perry <josh@pdk.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/prodatakey/dirty-chai/issues"
+  },
+  "homepage": "https://github.com/prodatakey/dirty-chai",
+  "devDependencies": {
+    "chai": "^4.0.0",
+    "chai-as-promised": "^7.0.0",
+    "es6-promise": "^4.0.0",
+    "grunt": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-mocha-test": "^0.13.0",
+    "jshint": "^2.9.0",
+    "jshint-stylish": "^2.0.0",
+    "load-grunt-tasks": "^3.0.0",
+    "mocha": "^3.4.2",
+    "require-uncached": "^1.0.2"
+  },
+  "peerDependencies": {
+    "chai": ">=2.2.1 <5"
+  },
+  "dependencies": {}
+}

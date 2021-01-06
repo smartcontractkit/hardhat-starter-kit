@@ -1,0 +1,280 @@
+{
+	"schemaVersion": "2.0.0",
+	"contractName": "ENSInterface",
+	"compilerOutput": {
+		"abi": [
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "node",
+						"type": "bytes32"
+					}
+				],
+				"name": "resolver",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "node",
+						"type": "bytes32"
+					}
+				],
+				"name": "owner",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "node",
+						"type": "bytes32"
+					},
+					{
+						"name": "label",
+						"type": "bytes32"
+					},
+					{
+						"name": "_owner",
+						"type": "address"
+					}
+				],
+				"name": "setSubnodeOwner",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "node",
+						"type": "bytes32"
+					},
+					{
+						"name": "_ttl",
+						"type": "uint64"
+					}
+				],
+				"name": "setTTL",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "node",
+						"type": "bytes32"
+					}
+				],
+				"name": "ttl",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint64"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "node",
+						"type": "bytes32"
+					},
+					{
+						"name": "_resolver",
+						"type": "address"
+					}
+				],
+				"name": "setResolver",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "node",
+						"type": "bytes32"
+					},
+					{
+						"name": "_owner",
+						"type": "address"
+					}
+				],
+				"name": "setOwner",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "node",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"name": "label",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "NewOwner",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "node",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "node",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"name": "resolver",
+						"type": "address"
+					}
+				],
+				"name": "NewResolver",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "node",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"name": "ttl",
+						"type": "uint64"
+					}
+				],
+				"name": "NewTTL",
+				"type": "event"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"evm": {
+			"bytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"deployedBytecode": {
+				"linkReferences": {},
+				"object": "0x",
+				"opcodes": "",
+				"sourceMap": ""
+			},
+			"methodIdentifiers": {
+				"owner(bytes32)": "02571be3",
+				"resolver(bytes32)": "0178b8bf",
+				"setOwner(bytes32,address)": "5b0fc9c3",
+				"setResolver(bytes32,address)": "1896f70a",
+				"setSubnodeOwner(bytes32,bytes32,address)": "06ab5923",
+				"setTTL(bytes32,uint64)": "14ab9038",
+				"ttl(bytes32)": "16a25cbd"
+			}
+		},
+		"metadata": "",
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"sources": {
+		"interfaces/ENSInterface.sol": {
+			"id": 15
+		}
+	},
+	"sourceCodes": {
+		"interfaces/ENSInterface.sol": "pragma solidity ^0.5.0;\n\ninterface ENSInterface {\n\n  // Logged when the owner of a node assigns a new owner to a subnode.\n  event NewOwner(bytes32 indexed node, bytes32 indexed label, address owner);\n\n  // Logged when the owner of a node transfers ownership to a new account.\n  event Transfer(bytes32 indexed node, address owner);\n\n  // Logged when the resolver for a node changes.\n  event NewResolver(bytes32 indexed node, address resolver);\n\n  // Logged when the TTL of a node changes\n  event NewTTL(bytes32 indexed node, uint64 ttl);\n\n\n  function setSubnodeOwner(bytes32 node, bytes32 label, address _owner) external;\n  function setResolver(bytes32 node, address _resolver) external;\n  function setOwner(bytes32 node, address _owner) external;\n  function setTTL(bytes32 node, uint64 _ttl) external;\n  function owner(bytes32 node) external view returns (address);\n  function resolver(bytes32 node) external view returns (address);\n  function ttl(bytes32 node) external view returns (uint64);\n\n}\n"
+	},
+	"sourceTreeHashHex": "0x87607c12cc84c57afbcb38f00d96ae67c433474c1310a0c2798e2a728f41750d",
+	"compiler": {
+		"name": "solc",
+		"version": "soljson-v0.5.0+commit.1d4f565a.js",
+		"settings": {
+			"optimizer": {
+				"runs": 1000000,
+				"enabled": true
+			},
+			"outputSelection": {
+				"*": {
+					"*": [
+						"abi",
+						"devdoc",
+						"userdoc",
+						"evm.bytecode.object",
+						"evm.bytecode.sourceMap",
+						"evm.deployedBytecode.object",
+						"evm.deployedBytecode.sourceMap",
+						"evm.methodIdentifiers",
+						"metadata"
+					]
+				}
+			},
+			"remappings": []
+		}
+	},
+	"chains": {}
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../src/browser/index.ts"],"names":[],"mappings":";AAAA,mDAAkD;AAAzC,0CAAA,cAAc,CAAA","sourcesContent":["export { BrowserTracing } from './browsertracing';\n"]}

@@ -1,0 +1,643 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/contracts/APIConsumer.sol": {
+      "lastModificationDate": 1609930763014,
+      "contentHash": "e061e11a26045da231a17087c07a70a3",
+      "sourceName": "contracts/APIConsumer.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@chainlink/contracts/src/v0.6/ChainlinkClient.sol",
+        "@openzeppelin/contracts/access/Ownable.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.7"
+      ],
+      "artifacts": [
+        "APIConsumer"
+      ]
+    },
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/node_modules/@chainlink/contracts/src/v0.6/ChainlinkClient.sol": {
+      "lastModificationDate": 1609380456692,
+      "contentHash": "9104bbbac4bb6b57f820f647a50496e8",
+      "sourceName": "@chainlink/contracts/src/v0.6/ChainlinkClient.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Chainlink.sol",
+        "./interfaces/ENSInterface.sol",
+        "./interfaces/LinkTokenInterface.sol",
+        "./interfaces/ChainlinkRequestInterface.sol",
+        "./interfaces/PointerInterface.sol",
+        "./vendor/ENSResolver.sol",
+        "./vendor/SafeMathChainlink.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "ChainlinkClient"
+      ]
+    },
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/node_modules/@chainlink/contracts/src/v0.6/Chainlink.sol": {
+      "lastModificationDate": 1609380456690,
+      "contentHash": "9d74868adb9c32a5a3ada33670d976c6",
+      "sourceName": "@chainlink/contracts/src/v0.6/Chainlink.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./vendor/CBORChainlink.sol",
+        "./vendor/BufferChainlink.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "Chainlink"
+      ]
+    },
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/node_modules/@chainlink/contracts/src/v0.6/interfaces/ENSInterface.sol": {
+      "lastModificationDate": 1609380456855,
+      "contentHash": "80772d8a43b031a295c4f833329e8d00",
+      "sourceName": "@chainlink/contracts/src/v0.6/interfaces/ENSInterface.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "ENSInterface"
+      ]
+    },
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/node_modules/@chainlink/contracts/src/v0.6/interfaces/LinkTokenInterface.sol": {
+      "lastModificationDate": 1609380456856,
+      "contentHash": "ac0c594c3db465d48e3a56d510b2447f",
+      "sourceName": "@chainlink/contracts/src/v0.6/interfaces/LinkTokenInterface.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "LinkTokenInterface"
+      ]
+    },
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/node_modules/@chainlink/contracts/src/v0.6/interfaces/ChainlinkRequestInterface.sol": {
+      "lastModificationDate": 1609380456855,
+      "contentHash": "c610d8ab810921779c582395fabc0ea8",
+      "sourceName": "@chainlink/contracts/src/v0.6/interfaces/ChainlinkRequestInterface.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "ChainlinkRequestInterface"
+      ]
+    },
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/node_modules/@chainlink/contracts/src/v0.6/interfaces/PointerInterface.sol": {
+      "lastModificationDate": 1609380456856,
+      "contentHash": "249ee1a1738569d70ea0c717b49911c4",
+      "sourceName": "@chainlink/contracts/src/v0.6/interfaces/PointerInterface.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "PointerInterface"
+      ]
+    },
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/node_modules/@chainlink/contracts/src/v0.6/vendor/ENSResolver.sol": {
+      "lastModificationDate": 1609380456873,
+      "contentHash": "f045d4f73163716e8a1e6e03c0fd9f38",
+      "sourceName": "@chainlink/contracts/src/v0.6/vendor/ENSResolver.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "ENSResolver"
+      ]
+    },
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/node_modules/@chainlink/contracts/src/v0.6/vendor/SafeMathChainlink.sol": {
+      "lastModificationDate": 1609380456874,
+      "contentHash": "17c5f2133a4ec2a8a7ab5e39aac71a03",
+      "sourceName": "@chainlink/contracts/src/v0.6/vendor/SafeMathChainlink.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "SafeMathChainlink"
+      ]
+    },
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/node_modules/@chainlink/contracts/src/v0.6/vendor/CBORChainlink.sol": {
+      "lastModificationDate": 1609380456873,
+      "contentHash": "41aeff760ca5154d3a211241ff7ec170",
+      "sourceName": "@chainlink/contracts/src/v0.6/vendor/CBORChainlink.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./BufferChainlink.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "CBORChainlink"
+      ]
+    },
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/node_modules/@chainlink/contracts/src/v0.6/vendor/BufferChainlink.sol": {
+      "lastModificationDate": 1609380456873,
+      "contentHash": "8be5b6767ed8aa15e0477af2348e4614",
+      "sourceName": "@chainlink/contracts/src/v0.6/vendor/BufferChainlink.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "BufferChainlink"
+      ]
+    },
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/node_modules/@chainlink/contracts/src/v0.6/VRFConsumerBase.sol": {
+      "lastModificationDate": 1609380456698,
+      "contentHash": "3f3bd9a111e3150be5854df5580ebba2",
+      "sourceName": "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./vendor/SafeMathChainlink.sol",
+        "./interfaces/LinkTokenInterface.sol",
+        "./VRFRequestIDBase.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "VRFConsumerBase"
+      ]
+    },
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/node_modules/@chainlink/contracts/src/v0.6/VRFRequestIDBase.sol": {
+      "lastModificationDate": 1609380456699,
+      "contentHash": "a86b2358785bce84b14f4f647e5c42f4",
+      "sourceName": "@chainlink/contracts/src/v0.6/VRFRequestIDBase.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.0"
+      ],
+      "artifacts": [
+        "VRFRequestIDBase"
+      ]
+    },
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/contracts/RandomNumberConsumer.sol": {
+      "lastModificationDate": 1609934902304,
+      "contentHash": "5b9176cbde01a8e27528c4337f0b09da",
+      "sourceName": "contracts/RandomNumberConsumer.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol"
+      ],
+      "versionPragmas": [
+        "0.6.7"
+      ],
+      "artifacts": [
+        "RandomNumberConsumer"
+      ]
+    },
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/contracts/PriceConsumerV3.sol": {
+      "lastModificationDate": 1609936865506,
+      "contentHash": "1e348c8ff952afb3c3eeda14a0be3825",
+      "sourceName": "contracts/PriceConsumerV3.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.7"
+      ],
+      "artifacts": [
+        "PriceConsumerV3"
+      ]
+    },
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/node_modules/@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol": {
+      "lastModificationDate": 1609380456855,
+      "contentHash": "6ca7c0a2b2781ff8bc828928a354c9df",
+      "sourceName": "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0"
+      ],
+      "artifacts": [
+        "AggregatorV3Interface"
+      ]
+    },
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
+      "lastModificationDate": 1609380569352,
+      "contentHash": "38c56382c57a9e9dab92cee051155870",
+      "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../GSN/Context.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "Ownable"
+      ]
+    },
+    "/Users/pappas99/GitHub/chainlink-hardhat-box/node_modules/@openzeppelin/contracts/GSN/Context.sol": {
+      "lastModificationDate": 1609380569337,
+      "contentHash": "2adbd82f6d055a4751566d4671512b03",
+      "sourceName": "@openzeppelin/contracts/GSN/Context.sol",
+      "solcConfig": {
+        "version": "0.6.7",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "Context"
+      ]
+    }
+  }
+}

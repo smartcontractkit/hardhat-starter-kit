@@ -1,0 +1,21 @@
+version: 2
+
+workflows:
+  version: 2
+  full_test:
+    jobs:
+      - npm-test
+
+jobs:
+  npm-test:
+    docker:
+      - image: circleci/node:8.15.1-browsers
+    steps:
+      - checkout
+      - run:
+          name: Install npm 6 + deps via npm
+          command: |
+           sudo npm install -g npm@6 && npm install --no-save --no-audit
+      - run:
+          name: npm test
+          command: npm test
