@@ -17,6 +17,8 @@ export KOVAN_RPC_URL='www.infura.io/asdfadsfafdadf'
 export PK='abcdef'
 ```
 
+Then you can install all the dependencies
+
 ```bash
 npm install
 ```
@@ -54,7 +56,17 @@ The APIConsumer contract has two tasks, one to request external data based on a 
 npx hardhat fund-link --contract insert-contract-address-here
 ```
 
-Once it's funded, you can request external data by passing in a number of parameters to the request-data task
+Once it's funded, you can request external data by passing in a number of parameters to the request-data task. The contract parameter is mandatory, the rest are optional
+
+| Parameter     | Description                               | Default Value                                                   |
+| ------------- |:------------------------------------------| :---------------------------------------------------------------|
+| contract      | The address of the API Consumer contract  |                                                                 |
+| oracleAddress | Oracle contract address                   | 0x2f90A6D021db21e1B2A077c5a37B3C7E75D15b7e                      |
+| jobId         | Job Id of the job you wish to use         | 29fa9aa13bf1468788b7cc4a500a45b8                                |
+| payment       | Payment in LINK tokens required           | 1000000000000000000                                             |
+| url           | URL to access                             | https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD |
+| path          | JSON path to traverse                     | USD                                                             |
+| times         | Multiplier if using an integer            | 100                                                             |
 
 ```bash
 npx hardhat request-data --contract insert-contract-address-here
