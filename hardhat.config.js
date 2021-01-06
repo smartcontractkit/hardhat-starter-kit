@@ -68,7 +68,7 @@ task("fund-link", "Funds a contract with LINK")
 
   task("request-data", "Calls an API Consumer Contract to request external data")
   .addParam("contract", "The address of the API Consumer contract that you want to call")
-  .addOptionalParam("oracleAddress","Oracle contract address",'0x2f90A6D021db21e1B2A077c5a37B3C7E75D15b7e')
+  .addOptionalParam("oracle","Oracle contract address",'0x2f90A6D021db21e1B2A077c5a37B3C7E75D15b7e')
   .addOptionalParam("jobId","Job Id of the job you wish to use","29fa9aa13bf1468788b7cc4a500a45b8")
   .addOptionalParam("payment","Payment in LINK tokens required",'1000000000000000000')
   .addOptionalParam("url","URL to access",'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD')
@@ -87,7 +87,7 @@ task("fund-link", "Funds a contract with LINK")
 
     //Create connection to API Consumer Contract and call the createRequestTo function
     const apiConsumerContract =  new ethers.Contract(contractAddr, API_CONSUMER_ABI, signer);
-    var result = await apiConsumerContract.createRequestTo(taskArgs.oracleAddress,
+    var result = await apiConsumerContract.createRequestTo(taskArgs.oracle,
                                                           ethers.utils.toUtf8Bytes(taskArgs.jobId),
                                                           taskArgs.payment,
                                                           taskArgs.url,
