@@ -6,6 +6,8 @@
 require("@nomiclabs/hardhat-waffle")
 require ("@nomiclabs/hardhat-ethers")
 require("@nomiclabs/hardhat-web3");
+require("hardhat-deploy");
+//import 'hardhat-deploy';
 
 
 task("accounts", "Prints the list of accounts", async () => {
@@ -93,7 +95,10 @@ task("fund-link", "Funds a contract with LINK")
                                                           taskArgs.url,
                                                           taskArgs.path,
                                                           taskArgs.times).then(function(transaction) {
-      console.log('contract ', contractAddr, ' external data request successfully called. Transaction Hash: ', transaction.hash);
+      console.log('Contract ', contractAddr, ' external data request successfully called. Transaction Hash: ', transaction.hash);
+      console.log("Run the following to read the returned result:")
+      console.log("npx hardhat read-data --contract ",contractAddr);
+  
     });
   });
 
@@ -135,7 +140,9 @@ task("fund-link", "Funds a contract with LINK")
     //Create connection to VRF Contract and call the getRandomNumber function
     const vrfConsumerContract =  new ethers.Contract(contractAddr, RANDOM_NUMBER_CONSUMER_ABI, signer);
     var result = await vrfConsumerContract.getRandomNumber(seed).then(function(transaction) {
-      console.log('contract ', contractAddr, ' external data request successfully called. Transaction Hash: ', transaction.hash);
+      console.log('Contract ', contractAddr, ' external data request successfully called. Transaction Hash: ', transaction.hash);
+      console.log("Run the following to read the returned random number:")
+      console.log("npx hardhat read-random-number --contract ",contractAddr);
     });
   });
 
@@ -196,7 +203,8 @@ module.exports = {
   networks: {
     kovan: {
       url: process.env.KOVAN_RPC_URL,
-      accounts: [process.env.PK]
+      accounts: [process.env.PK],
+      saveDeployments: true
     }
   },
   solidity: "0.6.7",
