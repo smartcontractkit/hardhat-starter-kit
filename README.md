@@ -31,10 +31,10 @@ yarn install
 
 ## Deploy
 
-If needed, edit the [deploy.js](https://github.com/pappas999/chainlink-hardhat-box/blob/main/scripts/deploy.js) file to set the desired environment specific parameters on each contract, or to comment out contracts that you don't want to deploy, then run the deployment script:
+Deployment scripts are in the [deploy](https://github.com/pappas999/chainlink-hardhat-box/tree/main/deploy) directory. If required, edit the desired environment specific variables or constructor parameters in each script, then run the hardhat deployment plugin:
 
 ```bash
-npx hardhat run --network kovan scripts/deploy.js  
+npx hardhat deploy 
 ```
 
 ## Run
