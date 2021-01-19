@@ -15,7 +15,7 @@ module.exports = async ({
 
     //console.log('signer:',signer.address)
     //console.log('deployer:',deployer)
-  
+    console.log("----------------------------------------------------")
     console.log('Deploying PriceConsumerV3');
       const priceConsumerV3 = await deploy('PriceConsumerV3', {
       from: signer.address,
@@ -25,5 +25,6 @@ module.exports = async ({
 
     //await priceConsumerV3.deployed()
     console.log("PriceConsumerV3 deployed to: ", priceConsumerV3.address)
-    console.log("Run Price Feed contract with command: npx hardhat read-price-feed --contract ",priceConsumerV3.address)
+    console.log("Run Price Feed contract with command:")
+    console.log("npx hardhat read-price-feed --contract ",priceConsumerV3.address)
   };

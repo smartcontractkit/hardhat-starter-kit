@@ -12,7 +12,7 @@ module.exports = async ({
     const accounts = await hre.ethers.getSigners();
     const signer = accounts[0];
 
-  
+    console.log("----------------------------------------------------")
     console.log('Deploying APIConsumer');
       const apiConsumer = await deploy('APIConsumer', {
       from: signer.address,
@@ -21,7 +21,9 @@ module.exports = async ({
     });
 
     console.log("APIConsumer deployed to: ", apiConsumer.address)
-    console.log("Run the following to fund contract with LINK: npx hardhat fund-link --contract ",apiConsumer.address);
-    console.log("Then run API Consumer contract with command: npx hardhat request-data --contract ",apiConsumer.address)
+    console.log("Run the following to fund contract with LINK:")
+    console.log("npx hardhat fund-link --contract ",apiConsumer.address);
+    console.log("Then run API Consumer contract with following command:")
+    console.log("npx hardhat request-data --contract ",apiConsumer.address)
 
   };
