@@ -17,13 +17,13 @@
     "ethereum-waffle": "^3.2.1",
     "ethers": "^5.0.24",
     "hardhat": "^2.0.6",
+    "hardhat-deploy": "^0.7.0-beta.39",
     "web3": "^1.2.9"
   },
   "dependencies": {
     "@chainlink/contracts": "^0.0.11",
     "@chainlink/test-helpers": "0.0.5",
     "@openzeppelin/contracts": "^3.2.0",
-    "@openzeppelin/test-helpers": "^0.5.9",
-    "hardhat-deploy": "^0.7.0-beta.28"
+    "@openzeppelin/test-helpers": "^0.5.9"
   }
 }
