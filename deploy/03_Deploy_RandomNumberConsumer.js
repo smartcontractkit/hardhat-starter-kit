@@ -25,9 +25,9 @@ module.exports = async ({
     });
 
     console.log("RandomNumberConsumer deployed to: ", randomNumberConsumer.address)
-    console.log("Run the following to fund contract with LINK:")
+    console.log("Run the following command to fund contract with LINK:")
     console.log("npx hardhat fund-link --contract ",randomNumberConsumer.address);
-    console.log("Then run RandomNumberConsumer contract with command, replacing '777' with your chosen seed number:")
+    console.log("Then run RandomNumberConsumer contract with the following command, replacing '777' with your chosen seed number:")
     console.log("npx hardhat request-random-number --contract ",randomNumberConsumer.address," --seed '777'")
     console.log("----------------------------------------------------")
   };

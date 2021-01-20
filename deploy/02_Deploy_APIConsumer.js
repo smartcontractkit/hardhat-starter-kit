@@ -21,7 +21,7 @@ module.exports = async ({
     });
 
     console.log("APIConsumer deployed to: ", apiConsumer.address)
-    console.log("Run the following to fund contract with LINK:")
+    console.log("Run the following command to fund contract with LINK:")
     console.log("npx hardhat fund-link --contract ",apiConsumer.address);
     console.log("Then run API Consumer contract with following command:")
     console.log("npx hardhat request-data --contract ",apiConsumer.address)
