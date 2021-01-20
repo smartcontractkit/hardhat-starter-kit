@@ -36,6 +36,8 @@ Deployment scripts are in the [deploy](https://github.com/pappas999/chainlink-ha
 ```bash
 npx hardhat deploy 
 ```
+## Test
+Tests to be added soon
 
 ## Run
 
