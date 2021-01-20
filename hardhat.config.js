@@ -34,7 +34,7 @@ task("fund-link", "Funds a contract with LINK")
   .setAction(async taskArgs => {
     const contractAddr = taskArgs.contract;
     const networkId = network.name
-    console.log("funding contract ",contractAddr," on network ", networkId);
+    console.log("Funding contract ",contractAddr," on network ", networkId);
     const LINK_TOKEN_ABI=[{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"}]
     
     //set the LINK token contract address according to the environment
@@ -64,7 +64,7 @@ task("fund-link", "Funds a contract with LINK")
     //Create connection to LINK token contract and initiate the transfer
     const linkTokenContract =  new ethers.Contract(linkContractAddr, LINK_TOKEN_ABI, signer);
     var result = await linkTokenContract.transfer(contractAddr, amount).then(function(transaction) {
-      console.log('contract ', contractAddr, ' funded with 1 LINK. Transaction Hash: ', transaction.hash);
+      console.log('Contract ', contractAddr, ' funded with 1 LINK. Transaction Hash: ', transaction.hash);
     });
   });
 
