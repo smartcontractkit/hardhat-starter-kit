@@ -8,7 +8,7 @@ module.exports = async ({
     const {deployer} = await getNamedAccounts()
 
     //Price Feed Address, values can be obtained at https://docs.chain.link/docs/reference-contracts
-    //Default one below is ETH/USD contract on Kovan testnet
+    //Default one below is ETH/USD contract on Kovan
     const PRICE_FEED_CONTRACT="0x9326BFA02ADD2366b30bacB125260Af641031331";
 
     console.log("----------------------------------------------------")
