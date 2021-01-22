@@ -5,17 +5,15 @@ module.exports = async ({
     getUnnamedAccounts,
   }) => {
     const {deploy} = deployments;
+    const {deployer} = await getNamedAccounts()
     
     //LINK Token address set to Kovan address. Can get other values at https://docs.chain.link/docs/link-token-contracts
     const LINK_TOKEN_ADDR="0xa36085F69e2889c224210F603D836748e7dC0088";
 
-    const accounts = await hre.ethers.getSigners();
-    const signer = accounts[0];
-
     console.log("----------------------------------------------------")
     console.log('Deploying APIConsumer');
       const apiConsumer = await deploy('APIConsumer', {
-      from: signer.address,
+      from: deployer,
       gasLimit: 4000000,
       args: [LINK_TOKEN_ADDR],
     });

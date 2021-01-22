@@ -5,6 +5,7 @@ module.exports = async ({
     getUnnamedAccounts,
   }) => {
     const {deploy} = deployments;
+    const {deployer} = await getNamedAccounts()
     
     //LINK Token address set to Kovan address. Can get other values at https://docs.chain.link/docs/link-token-contracts
     //VRF Details set for Kovan environment, can get other values at https://docs.chain.link/docs/vrf-contracts#config
@@ -13,13 +14,10 @@ module.exports = async ({
     const VRF_FEE="100000000000000000"
     const VRF_KEYHASH="0x6c3699283bda56ad74f6b855546325b68d482e983852a7a82979cc4807b641f4"
 
-    const accounts = await hre.ethers.getSigners();
-    const signer = accounts[0];
-
     console.log("----------------------------------------------------")
     console.log('Deploying RandomNumberConsumer');
       const randomNumberConsumer = await deploy('RandomNumberConsumer', {
-      from: signer.address,
+      from: deployer,
       gasLimit: 4000000,
       args: [VRF_COORDINATOR,LINK_TOKEN_ADDR,VRF_KEYHASH,VRF_FEE],
     });
