@@ -11,11 +11,12 @@
 ## Installation
 
 Set your `KOVAN_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). You can get one for free at [Infura's site.](https://infura.io/). You'll also need to set the variable `PRIVATE_KEY` which is your private key from you wallet, ie metamask. 
-If you plan on deploying to a local [Hardhat network](https://hardhat.org/hardhat-network/), you'll need to set your `ALCHEMY_MAINNET_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). You can get one for free at [Alchemy's site.](https://alchemyapi.io/).
+If you plan on deploying to a local [Hardhat network](https://hardhat.org/hardhat-network/) instead of a public network like Kovan, you'll also need to set your `ALCHEMY_MAINNET_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). You can get one for free at [Alchemy's site.](https://alchemyapi.io/). 
 
 ```
 export KOVAN_RPC_URL='www.infura.io/asdfadsfafdadf'
 export PRIVATE_KEY='abcdef'
+export ALCHEMY_MAINNET_RPC_URL="https://eth-mainnet.alchemyapi.io/v2/your-api-key"
 ```
 
 Then you can install all the dependencies
@@ -32,11 +33,17 @@ yarn install
 
 ## Deploy
 
-Deployment scripts are in the [deploy](https://github.com/pappas999/chainlink-hardhat-box/tree/main/deploy) directory. If required, edit the desired environment specific variables or constructor parameters in each script, then run the hardhat deployment plugin:
+Deployment scripts are in the [deploy](https://github.com/pappas999/chainlink-hardhat-box/tree/main/deploy) directory. If required, edit the desired environment specific variables or constructor parameters in each script, then run the hardhat deployment plugin as follows. If no network is specified, it will default to the Kovan network.
 
 ```bash
 npx hardhat deploy 
 ```
+
+To deploy to a local hardhat network:
+```bash
+npx hardhat --network hardhat deploy
+```
+
 ## Test
 Tests to be added soon
 
