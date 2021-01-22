@@ -10,11 +10,12 @@
 
 ## Installation
 
-Set your `KOVAN_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). You can get one for free at [Infura's site.](https://infura.io/). You'll also need to set the variable `PK` which is your private key from you wallet, ie metamask. 
+Set your `KOVAN_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). You can get one for free at [Infura's site.](https://infura.io/). You'll also need to set the variable `PRIVATE_KEY` which is your private key from you wallet, ie metamask. 
+If you plan on deploying to a local [Hardhat network](https://hardhat.org/hardhat-network/), you'll need to set your `ALCHEMY_MAINNET_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). You can get one for free at [Alchemy's site.](https://alchemyapi.io/).
 
 ```
 export KOVAN_RPC_URL='www.infura.io/asdfadsfafdadf'
-export PK='abcdef'
+export PRIVATE_KEY='abcdef'
 ```
 
 Then you can install all the dependencies

@@ -201,9 +201,14 @@ task("fund-link", "Funds a contract with LINK")
 module.exports = {
   defaultNetwork: "kovan",
   networks: {
+    hardhat: {
+      forking: {
+        url: process.env.ALCHEMY_MAINNET_RPC_URL
+      }
+    },
     kovan: {
       url: process.env.KOVAN_RPC_URL,
-      accounts: [process.env.PK],
+      accounts: [process.env.PRIVATE_KEY],
       saveDeployments: true
     }
   },
