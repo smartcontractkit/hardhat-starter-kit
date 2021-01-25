@@ -45,7 +45,11 @@ npx hardhat --network hardhat deploy
 ```
 
 ## Test
-Tests to be added soon
+Tests are located in the [test](https://github.com/pappas999/chainlink-hardhat-box/tree/main/test) directory and can be modified as required. To run them:
+
+```bash
+npx hardhat test
+```
 
 ## Run
 
