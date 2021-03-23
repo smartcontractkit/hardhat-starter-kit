@@ -21,9 +21,11 @@
     "web3": "^1.2.9"
   },
   "dependencies": {
-    "@chainlink/contracts": "^0.0.11",
+    "@chainlink/contracts": "^0.1.6",
     "@chainlink/test-helpers": "0.0.5",
+    "@nomiclabs/hardhat-truffle5": "^2.0.0",
     "@openzeppelin/contracts": "^3.2.0",
-    "@openzeppelin/test-helpers": "^0.5.9"
+    "@openzeppelin/test-helpers": "^0.5.9",
+    "dotenv": "^8.2.0"
   }
 }
