@@ -1,4 +1,12 @@
+# truffle stuff
+artifacts
+cache
+
+# don't push the environment vars!
+.env
+
 # Built application files
+.DS*
 *.apk
 *.ap_
 *.aab
