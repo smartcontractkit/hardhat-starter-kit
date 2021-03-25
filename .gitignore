@@ -1,6 +1,7 @@
-# truffle stuff
+# hardhat
 artifacts
 cache
+deployments
 
 # don't push the environment vars!
 .env

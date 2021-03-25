@@ -2,6 +2,8 @@
 pragma solidity ^0.6.6;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+// import "@chainlink/token/contracts/LinkToken.sol";
+// Refactor the contracts to use the LinkToken package
 
 abstract contract ERC677Receiver {
   function onTokenTransfer(address _sender, uint _value, bytes memory _data) public virtual;
