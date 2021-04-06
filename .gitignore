@@ -2,6 +2,7 @@
 artifacts
 cache
 deployments
+node_modules
 
 # don't push the environment vars!
 .env
