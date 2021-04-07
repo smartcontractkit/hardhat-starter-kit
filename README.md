@@ -34,6 +34,12 @@ You can also use a `PRIVATE_KEY` instead of a `MNEMONIC` environment variable by
 Then you can install all the dependencies
 
 ```bash
+git clone https://github.com/smartcontractkit/chainlink-hardhat-box
+cd chainlink-hardhat-box
+```
+then
+
+```bash
 npm install
 ```
 
