@@ -4,13 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.1",
+    "@nomiclabs/hardhat-etherscan": "^2.1.1",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@nomiclabs/hardhat-web3": "^2.0.0",
     "chai": "^4.2.0",
@@ -23,9 +26,13 @@
   "dependencies": {
     "@chainlink/contracts": "^0.1.6",
     "@chainlink/test-helpers": "0.0.5",
+    "@chainlink/token": "^1.1.0",
     "@nomiclabs/hardhat-truffle5": "^2.0.0",
     "@openzeppelin/contracts": "^3.2.0",
     "@openzeppelin/test-helpers": "^0.5.9",
-    "dotenv": "^8.2.0"
+    "babel-eslint": "^10.1.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.22.0",
+    "transform": "^1.1.2"
   }
 }
