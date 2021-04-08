@@ -1,3 +1,11 @@
+<br/>
+<p align="center">
+<a href="https://chain.link" target="_blank">
+<img src="https://raw.githubusercontent.com/smartcontractkit/chainlink-hardhat-box/master/box-img-lg.png" width="225" alt="Chainlink Hardhat logo">
+</a>
+</p>
+<br/>
+
 # Chainlink Hardhat Box
  Implementation of the following 3 Chainlink features using the [Hardhat](https://hardhat.org/) development environment:
  - [Request & Receive data](https://docs.chain.link/docs/request-and-receive-data)
