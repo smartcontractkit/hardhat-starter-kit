@@ -1,4 +1,4 @@
-let { networkConfig, deployMock } = require('../helper-hardhat-config')
+let { networkConfig } = require('../helper-hardhat-config')
 
 
 module.exports = async ({
@@ -6,7 +6,7 @@ module.exports = async ({
   deployments,
   getChainId
 }) => {
-  const { deploy } = deployments
+  const { deploy, get, log } = deployments
   const { deployer } = await getNamedAccounts()
   let chainId = await getChainId()
   let linkTokenAddress
@@ -14,8 +14,10 @@ module.exports = async ({
   let additionalMessage = ""
 
   if (chainId == 31337) {
-    linkTokenAddress = await deployMock('LinkToken')
-    vrfCoordinatorAddress = await deployMock('VRFCoordinatorMock', [linkTokenAddress])
+    linkToken = await get('LinkToken')
+    VRFCoordinatorMock = await get('VRFCoordinatorMock')
+    linkTokenAddress = linkToken.address
+    vrfCoordinatorAddress = VRFCoordinatorMock.address
     additionalMessage = " --linkaddress " + linkTokenAddress
   } else {
     linkTokenAddress = networkConfig[chainId]['linkToken']
@@ -24,18 +26,20 @@ module.exports = async ({
   let keyHash = networkConfig[chainId]['keyHash']
   let fee = networkConfig[chainId]['fee']
 
-  console.log("----------------------------------------------------")
-  console.log('Deploying RandomNumberConsumer')
+  log("----------------------------------------------------")
+  log('Deploying RandomNumberConsumer')
   const randomNumberConsumer = await deploy('RandomNumberConsumer', {
     from: deployer,
     args: [vrfCoordinatorAddress, linkTokenAddress, keyHash, fee],
     log: true
   })
 
-  console.log("RandomNumberConsumer deployed to: ", randomNumberConsumer.address)
-  console.log("Run the following command to fund contract with LINK:")
-  console.log("npx hardhat fund-link --contract " + randomNumberConsumer.address + " --network " + networkConfig[chainId]['name'] + additionalMessage)
-  console.log("Then run RandomNumberConsumer contract with the following command, replacing '777' with your chosen seed number:")
-  console.log("npx hardhat request-random-number --contract " + randomNumberConsumer.address, " --seed '777'" + " --network " + networkConfig[chainId]['name'])
-  console.log("----------------------------------------------------")
+  log("RandomNumberConsumer deployed to: ", randomNumberConsumer.address)
+  log("Run the following command to fund contract with LINK:")
+  log("npx hardhat fund-link --contract " + randomNumberConsumer.address + " --network " + networkConfig[chainId]['name'] + additionalMessage)
+  log("Then run RandomNumberConsumer contract with the following command, replacing '777' with your chosen seed number:")
+  log("npx hardhat request-random-number --contract " + randomNumberConsumer.address, " --seed '777'" + " --network " + networkConfig[chainId]['name'])
+  log("----------------------------------------------------")
 }
+// This line means we need to wait for mocks to run first
+module.exports.dependencies = ['Mocks']

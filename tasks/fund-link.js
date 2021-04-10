@@ -1,12 +1,12 @@
 require("@nomiclabs/hardhat-web3")
-let { networkConfig, getNetworkId } = require('../helper-hardhat-config')
+let { networkConfig, getNetworkIdFromName } = require('../helper-hardhat-config')
 
 task("fund-link", "Funds a contract with LINK")
     .addParam("contract", "The address of the contract that requires LINK")
     .addOptionalParam("linkaddress", "Set the LINK token address")
     .setAction(async (taskArgs) => {
         const contractAddr = taskArgs.contract
-        let networkId = await getNetworkId(network.name)
+        let networkId = await getNetworkIdFromName(network.name)
         console.log("Funding contract ", contractAddr, " on network ", network.name)
         let linkTokenAddress = networkConfig[networkId]['linkToken'] || taskArgs.linkaddress
         const LinkToken = await ethers.getContractFactory("LinkToken")

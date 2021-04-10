@@ -34,5 +34,8 @@
     "dotenv": "^8.2.0",
     "eslint": "^7.22.0",
     "transform": "^1.1.2"
+  },
+  "mocha": {
+    "timeout": 10000000
   }
 }
