@@ -1,12 +1,12 @@
 require("@nomiclabs/hardhat-web3")
-let { networkConfig, getNetworkId } = require('../../helper-hardhat-config')
+let { networkConfig, getNetworkIdFromName } = require('../../helper-hardhat-config')
 
 task("request-data", "Calls an API Consumer Contract to request external data")
     .addParam("contract", "The address of the API Consumer contract that you want to call")
     .setAction(async taskArgs => {
 
         const contractAddr = taskArgs.contract
-        let networkId = await getNetworkId(network.name)
+        let networkId = await getNetworkIdFromName(network.name)
         console.log("Calling API Consumer contract ", contractAddr, " on network ", network.name)
         const APIConsumer = await ethers.getContractFactory("APIConsumer")
 
