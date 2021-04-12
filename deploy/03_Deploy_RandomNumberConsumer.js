@@ -8,7 +8,7 @@ module.exports = async ({
 }) => {
   const { deploy, get, log } = deployments
   const { deployer } = await getNamedAccounts()
-  let chainId = await getChainId()
+  const chainId = await getChainId()
   let linkTokenAddress
   let vrfCoordinatorAddress
   let additionalMessage = ""
@@ -23,23 +23,20 @@ module.exports = async ({
     linkTokenAddress = networkConfig[chainId]['linkToken']
     vrfCoordinatorAddress = networkConfig[chainId]['vrfCoordinator']
   }
-  let keyHash = networkConfig[chainId]['keyHash']
-  let fee = networkConfig[chainId]['fee']
+  const keyHash = networkConfig[chainId]['keyHash']
+  const fee = networkConfig[chainId]['fee']
 
-  log("----------------------------------------------------")
-  log('Deploying RandomNumberConsumer')
   const randomNumberConsumer = await deploy('RandomNumberConsumer', {
     from: deployer,
     args: [vrfCoordinatorAddress, linkTokenAddress, keyHash, fee],
     log: true
   })
 
-  log("RandomNumberConsumer deployed to: ", randomNumberConsumer.address)
   log("Run the following command to fund contract with LINK:")
   log("npx hardhat fund-link --contract " + randomNumberConsumer.address + " --network " + networkConfig[chainId]['name'] + additionalMessage)
   log("Then run RandomNumberConsumer contract with the following command, replacing '777' with your chosen seed number:")
   log("npx hardhat request-random-number --contract " + randomNumberConsumer.address, " --seed '777'" + " --network " + networkConfig[chainId]['name'])
   log("----------------------------------------------------")
 }
-// This line means we need to wait for mocks to run first
-module.exports.dependencies = ['Mocks']
+
+module.exports.tags = ['all', 'vrf']
