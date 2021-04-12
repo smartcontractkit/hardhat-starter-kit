@@ -41,7 +41,6 @@ const networkConfig = {
     }
 }
 
-
 const getNetworkIdFromName = async (networkIdName) => {
     for (const id in networkConfig) {
         if (networkConfig[id]['name'] == networkIdName) {
@@ -50,17 +49,6 @@ const getNetworkIdFromName = async (networkIdName) => {
     }
     return null
 }
-
-// // unnecessary
-// const deployMock = async (mockToDeploy, mockArgs) => {
-//     mockArgs = mockArgs || []
-//     console.log(mockToDeploy)
-//     const Mock = await ethers.getContractFactory(mockToDeploy)
-//     console.log("Deploying mock " + mockToDeploy)
-//     const mock = await Mock.deploy(...mockArgs)
-//     return mock.address
-// }
-
 
 module.exports = {
     networkConfig,
