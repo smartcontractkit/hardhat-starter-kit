@@ -10,7 +10,7 @@ describe('PriceConsumer', async function () {
     await deployments.fixture(['mocks', 'feed'])
 
     // Then, we can get the contracts that were just deployed
-    PriceConsumerV3 = await deployments.get('PriceConsumerV3')
+    const PriceConsumerV3 = await deployments.get('PriceConsumerV3')
     priceConsumerV3 = await ethers.getContractAt('PriceConsumerV3', PriceConsumerV3.address)
     const EthUsdAggregator = await deployments.get('EthUsdAggregator')
     ethUsdAggregator = await ethers.getContractAt('MockV3Aggregator', EthUsdAggregator.address)
