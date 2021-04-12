@@ -41,12 +41,7 @@ const networkConfig = {
     }
 }
 
-// const getConfigValue = async (key) => {
-//     let chainId = await getChainId()
-//     return networkConfig[chainId][key]
-// }
-
-const getNetworkId = async (networkIdName) => {
+const getNetworkIdFromName = async (networkIdName) => {
     for (const id in networkConfig) {
         if (networkConfig[id]['name'] == networkIdName) {
             return id
@@ -55,30 +50,8 @@ const getNetworkId = async (networkIdName) => {
     return null
 }
 
-const deployMock = async (mockToDeploy, mockArgs) => {
-    mockArgs = mockArgs || []
-    console.log(mockToDeploy)
-    const Mock = await ethers.getContractFactory(mockToDeploy)
-    console.log("Deploying mock " + mockToDeploy)
-    const mock = await Mock.deploy(...mockArgs)
-    return mock.address
-}
-
-// const getConfigAddress = async (key, mockArgs, deployMock) => {
-//     mockArgs = mockArgs || []
-//     let chainId = await getChainId()
-//     if ((!networkConfig.hasOwnProperty(chainId) && !networkConfig['default'].hasOwnProperty(key)) || chainId == 31337) {
-//         mockAddress = await deployMock(key, mockArgs)
-//         return mockAddress
-//     } else if (networkConfig.hasOwnProperty(chainId) && networkConfig[chainId].hasOwnProperty(key)) {
-//         return networkConfig[chainId][key]
-//     }
-//     return networkConfig['default'][key]
-// }
-
 module.exports = {
-    deployMock,
     networkConfig,
-    getNetworkId
+    getNetworkIdFromName
 }
 

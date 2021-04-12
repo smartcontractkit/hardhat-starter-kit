@@ -2,15 +2,12 @@
   "name": "chainlink-hardhat-box",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "hardhat test",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.1",
     "@nomiclabs/hardhat-etherscan": "^2.1.1",
@@ -28,11 +25,12 @@
     "@chainlink/test-helpers": "0.0.5",
     "@chainlink/token": "^1.1.0",
     "@nomiclabs/hardhat-truffle5": "^2.0.0",
-    "@openzeppelin/contracts": "^3.2.0",
-    "@openzeppelin/test-helpers": "^0.5.9",
     "babel-eslint": "^10.1.0",
     "dotenv": "^8.2.0",
     "eslint": "^7.22.0",
     "transform": "^1.1.2"
+  },
+  "mocha": {
+    "timeout": 10000000
   }
 }

@@ -1,30 +1,29 @@
-let { networkConfig, deployMock } = require('../helper-hardhat-config')
+let { networkConfig } = require('../helper-hardhat-config')
 
 module.exports = async ({
     getNamedAccounts,
     deployments,
     getChainId
 }) => {
-    const { deploy } = deployments
+    const { deploy, log } = deployments
     const { deployer } = await getNamedAccounts()
-    let chainId = await getChainId()
+    const chainId = await getChainId()
     let ethUsdPriceFeedAddress
     if (chainId == 31337) {
-        ethUsdPriceFeedAddress = await deployMock('MockV3Aggregator', ['18', '200000000000000000000'])
+        const EthUsdAggregator = await deployments.get('EthUsdAggregator')
+        ethUsdPriceFeedAddress = EthUsdAggregator.address
     } else {
         ethUsdPriceFeedAddress = networkConfig[chainId]['ethUsdPriceFeed']
     }
-    //Price Feed Address, values can be obtained at https://docs.chain.link/docs/reference-contracts
-    //Default one below is ETH/USD contract on Kovan
-    console.log("----------------------------------------------------")
-    console.log('Deploying PriceConsumerV3')
+    // Price Feed Address, values can be obtained at https://docs.chain.link/docs/reference-contracts
+    // Default one below is ETH/USD contract on Kovan
     const priceConsumerV3 = await deploy('PriceConsumerV3', {
         from: deployer,
         args: [ethUsdPriceFeedAddress],
         log: true
     })
-    console.log("PriceConsumerV3 deployed to: ", priceConsumerV3.address)
-    console.log("Run Price Feed contract with command:")
-    console.log("npx hardhat read-price-feed --contract " + priceConsumerV3.address + " --network " + networkConfig[chainId]['name'])
+    log("Run Price Feed contract with command:")
+    log("npx hardhat read-price-feed --contract " + priceConsumerV3.address + " --network " + networkConfig[chainId]['name'])
 }
-module.exports.tags = ['PriceConsumerV3']
+
+module.exports.tags = ['all', 'feed']

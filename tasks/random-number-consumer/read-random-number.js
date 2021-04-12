@@ -18,7 +18,7 @@ task("read-random-number", "Reads the random number returned to a contract by Ch
         const vrfConsumerContract = new ethers.Contract(contractAddr, RandomNumberConsumer.interface, signer)
         let result = BigInt(await vrfConsumerContract.randomResult()).toString()
         console.log('Random Number is: ', result)
-        if (result == 0) {
+        if (result == 0 && ['hardhat', 'localhost', 'ganache'].indexOf(network.name) == 0) {
             console.log("You'll either need to wait another minute, or fix something!")
         }
         if (['hardhat', 'localhost', 'ganache'].indexOf(network.name) >= 0) {

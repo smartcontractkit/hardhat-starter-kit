@@ -1,21 +1,23 @@
+const { expect } = require('chai')
+const { deployments, getChainId } = require('hardhat')
+const { networkConfig } = require('../helper-hardhat-config')
 
-const { expect } = require("chai")
-
-
-describe("PriceConsumer", async function () {
-  //Price Feed Address, values can be obtained at https://docs.chain.link/docs/reference-contracts
-  let mockPriceFeed, priceConsumerV3, price, PriceConsumerV3, MockV3Aggregator
+describe('PriceConsumer', async function () {
+  // Price Feed Address, values can be obtained at https://docs.chain.link/docs/reference-contracts
+  let priceConsumerV3, ethUsdAggregator
 
   beforeEach(async () => {
-    // cant do anything in the above describe, don't try it!
-    MockV3Aggregator = await ethers.getContractFactory("MockV3Aggregator")
-    PriceConsumerV3 = await ethers.getContractFactory("PriceConsumerV3")
-    price = '200000000000000000000'
-    mockPriceFeed = await MockV3Aggregator.deploy(18, price)
-    priceConsumerV3 = await PriceConsumerV3.deploy(mockPriceFeed.address)
+    await deployments.fixture(['mocks', 'feed'])
+
+    // Then, we can get the contracts that were just deployed
+    const PriceConsumerV3 = await deployments.get('PriceConsumerV3')
+    priceConsumerV3 = await ethers.getContractAt('PriceConsumerV3', PriceConsumerV3.address)
+    const EthUsdAggregator = await deployments.get('EthUsdAggregator')
+    ethUsdAggregator = await ethers.getContractAt('MockV3Aggregator', EthUsdAggregator.address)
   })
-  it("should return a positive value", async () => {
-    let latestPrice = await priceConsumerV3.getLatestPrice()
-    expect(latestPrice).to.equal(price)
+
+  it('should return a positive value', async () => {
+    expect(await priceConsumerV3.getLatestPrice())
+      .to.equal((await ethUsdAggregator.latestRoundData())[1])
   })
 })
