@@ -4,7 +4,7 @@ describe('APIConsumer', async function () {
   let apiConsumer, mockOracle, linkToken
 
   beforeEach(async () => {
-    await deployments.fixture('api')
+    await deployments.fixture(['mocks', 'api'])
 
     // Then, we can get the contracts like normal
     const LinkToken = await deployments.get('LinkToken')

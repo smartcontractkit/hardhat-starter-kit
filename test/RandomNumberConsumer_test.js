@@ -4,7 +4,7 @@ describe('RandomNumberConsumer', async function () {
   let randomNumberConsumer, vrfCoordinatorMock, seed
 
   beforeEach(async () => {
-    await deployments.fixture('vrf')
+    await deployments.fixture(['mocks', 'vrf'])
 
     seed = 123
     const LinkToken = await deployments.get('LinkToken')

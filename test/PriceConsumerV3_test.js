@@ -7,7 +7,7 @@ describe('PriceConsumer', async function () {
   let priceConsumerV3, ethUsdAggregator
 
   beforeEach(async () => {
-    await deployments.fixture('feed')
+    await deployments.fixture(['mocks', 'feed'])
 
     // Then, we can get the contracts that were just deployed
     PriceConsumerV3 = await deployments.get('PriceConsumerV3')
