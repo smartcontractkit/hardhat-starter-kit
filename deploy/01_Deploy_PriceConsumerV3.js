@@ -10,8 +10,8 @@ module.exports = async ({
     const chainId = await getChainId()
     let ethUsdPriceFeedAddress
     if (chainId == 31337) {
-        const MockV3Aggregator = await deployments.get('EthUsdAggregator')
-        ethUsdPriceFeedAddress = MockV3Aggregator.address
+        const EthUsdAggregator = await deployments.get('EthUsdAggregator')
+        ethUsdPriceFeedAddress = EthUsdAggregator.address
     } else {
         ethUsdPriceFeedAddress = networkConfig[chainId]['ethUsdPriceFeed']
     }
