@@ -6,7 +6,7 @@ module.exports = async ({
 }) => {
   const { deploy, log, get } = deployments
   const { deployer } = await getNamedAccounts()
-  let chainId = await getChainId()
+  const chainId = await getChainId()
   let linkTokenAddress
   let oracle
   let additionalMessage = ""
@@ -21,22 +21,19 @@ module.exports = async ({
     linkTokenAddress = networkConfig[chainId]['linkToken']
     oracle = networkConfig[chainId]['oracle']
   }
-  let jobId = networkConfig[chainId]['jobId']
-  let fee = networkConfig[chainId]['fee']
+  const jobId = networkConfig[chainId]['jobId']
+  const fee = networkConfig[chainId]['fee']
 
-  log("----------------------------------------------------")
-  log('Deploying APIConsumer')
   const apiConsumer = await deploy('APIConsumer', {
     from: deployer,
     args: [oracle, jobId, fee, linkTokenAddress],
     log: true
   })
 
-  log("APIConsumer deployed to: ", apiConsumer.address)
   log("Run the following command to fund contract with LINK:")
   log("npx hardhat fund-link --contract " + apiConsumer.address + " --network " + networkConfig[chainId]['name'] + additionalMessage)
   log("Then run API Consumer contract with following command:")
   log("npx hardhat request-data --contract " + apiConsumer.address + " --network " + networkConfig[chainId]['name'])
 }
-// This line means we need to wait for mocks to run first
-module.exports.dependencies = ['Mocks']
+
+module.exports.tags = ['all', 'api']
