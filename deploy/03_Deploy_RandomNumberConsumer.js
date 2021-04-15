@@ -1,11 +1,11 @@
-let { networkConfig } = require('../helper-hardhat-config')
-
+let { networkConfig, autoFundCheck } = require('../helper-hardhat-config')
 
 module.exports = async ({
   getNamedAccounts,
   deployments,
   getChainId
 }) => {
+  
   const { deploy, get, log } = deployments
   const { deployer } = await getNamedAccounts()
   const chainId = await getChainId()
@@ -25,6 +25,7 @@ module.exports = async ({
   }
   const keyHash = networkConfig[chainId]['keyHash']
   const fee = networkConfig[chainId]['fee']
+  const networkName = networkConfig[chainId]['name']
 
   const randomNumberConsumer = await deploy('RandomNumberConsumer', {
     from: deployer,
@@ -32,11 +33,9 @@ module.exports = async ({
     log: true
   })
 
-  log("Run the following command to fund contract with LINK:")
-  log("npx hardhat fund-link --contract " + randomNumberConsumer.address + " --network " + networkConfig[chainId]['name'] + additionalMessage)
-  log("Then run RandomNumberConsumer contract with the following command, replacing '777' with your chosen seed number:")
-  log("npx hardhat request-random-number --contract " + randomNumberConsumer.address, " --seed '777'" + " --network " + networkConfig[chainId]['name'])
+  log("Run RandomNumberConsumer contract with the following command, replacing '777' with your chosen seed number:")
+  log("npx hardhat request-random-number --contract " + randomNumberConsumer.address, " --seed '777'" + " --network " + networkName)
   log("----------------------------------------------------")
 }
 
-module.exports.tags = ['all', 'vrf']
+module.exports.tags = ['all', 'vrf', 'main']

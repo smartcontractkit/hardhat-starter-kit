@@ -6,7 +6,7 @@
 </p>
 <br/>
 
-# Chainlink Hardhat Box
+# Chainlink Hardhat Starter Kit
  Implementation of the following 3 Chainlink features using the [Hardhat](https://hardhat.org/) development environment:
  - [Request & Receive data](https://docs.chain.link/docs/request-and-receive-data)
  - [Chainlink Price Feeds](https://docs.chain.link/docs/using-chainlink-reference-contracts)
@@ -57,6 +57,21 @@ Or
 yarn
 ```
 
+## Auto-Funding
+
+This Starter Kit is configured by default to attempt to auto-fund any newly deployed contract that uses Any-API or Chainlink VRF, to save having to manually fund them after each deployment. The amount in LINK to send as part of this process can be modified in the [Starter Kit Config](https://github.com/smartcontractkit/chainlink-hardhat-box/blob/main/helper-hardhat-config.js), and are configurable per network.
+
+| Parameter  | Description                                                      | Default Value |
+| -----------|:-----------------------------------------------------------------| :-------------|
+| fundAmount | Amount of LINK to transfer when funding contracts                | 1 LINK        |
+
+If you wish to deploy the smart contracts without performing the auto-funding, run the following command when doing your deployment:
+
+```bash
+npx hardhat deploy --tags main
+```
+
+
 ## Deploy
 
 Deployment scripts are in the [deploy](https://github.com/pappas999/chainlink-hardhat-box/tree/main/deploy) directory. If required, edit the desired environment specific variables or constructor parameters in each script, then run the hardhat deployment plugin as follows. If no network is specified, it will default to the Kovan network.
@@ -73,10 +88,18 @@ npx hardhat deploy --network kovan
 ```
 
 ## Test
-Tests are located in the [test](https://github.com/pappas999/chainlink-hardhat-box/tree/main/test) directory and can be modified as required. To run them:
+Tests are located in the [test](https://github.com/pappas999/chainlink-hardhat-box/tree/main/test) directory, and are split between unit tests and integration tests. Unit tests should only be run on local environments, and integration tests should only run on live environments. 
+
+To run unit tests:
 
 ```bash
-npx hardhat test
+yarn test
+```
+
+To run integration tests:
+
+```bash
+yarn test-integration
 ```
 
 ## Run

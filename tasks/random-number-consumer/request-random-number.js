@@ -1,4 +1,4 @@
-require("@nomiclabs/hardhat-web3")
+
 
 task("request-random-number", "Requests a random number for a Chainlink VRF enabled smart contract")
     .addParam("contract", "The address of the API Consumer contract that you want to call")

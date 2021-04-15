@@ -2,7 +2,9 @@
 pragma solidity 0.6.6;
 
 import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
-contract RandomNumberConsumer is VRFConsumerBase {
+import "@chainlink/contracts/src/v0.6/vendor/Ownable.sol";
+
+contract RandomNumberConsumer is VRFConsumerBase, Ownable {
     
     bytes32 internal keyHash;
     uint256 internal fee;
@@ -48,10 +50,8 @@ contract RandomNumberConsumer is VRFConsumerBase {
     /**
      * Withdraw LINK from this contract
      * 
-     * DO NOT USE THIS IN PRODUCTION AS IT CAN BE CALLED BY ANY ADDRESS.
-     * THIS IS PURELY FOR EXAMPLE PURPOSES.
      */
-    function withdrawLink() external {
+    function withdrawLink() external onlyOwner {
         require(LINK.transfer(msg.sender, LINK.balanceOf(address(this))), "Unable to transfer");
     }
 }

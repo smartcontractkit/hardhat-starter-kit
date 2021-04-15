@@ -1,4 +1,4 @@
-let { networkConfig } = require('../helper-hardhat-config')
+let { networkConfig, autoFundCheck } = require('../helper-hardhat-config')
 
 module.exports = async ({
   getNamedAccounts,
@@ -10,6 +10,8 @@ module.exports = async ({
   let linkTokenAddress
   let oracle
   let additionalMessage = ""
+  //set log level to ignore non errors
+  ethers.utils.Logger.setLogLevel(ethers.utils.Logger.levels.ERROR);
 
   if (chainId == 31337) {
     linkToken = await get('LinkToken')
@@ -23,6 +25,7 @@ module.exports = async ({
   }
   const jobId = networkConfig[chainId]['jobId']
   const fee = networkConfig[chainId]['fee']
+  const networkName = networkConfig[chainId]['name']
 
   const apiConsumer = await deploy('APIConsumer', {
     from: deployer,
@@ -30,11 +33,8 @@ module.exports = async ({
     log: true
   })
 
-  log("Run the following command to fund contract with LINK:")
-  log("npx hardhat fund-link --contract " + apiConsumer.address + " --network " + networkConfig[chainId]['name'] + additionalMessage)
-  log("Then run API Consumer contract with following command:")
-  log("npx hardhat request-data --contract " + apiConsumer.address + " --network " + networkConfig[chainId]['name'])
+  log("Run API Consumer contract with following command:")
+  log("npx hardhat request-data --contract " + apiConsumer.address + " --network " + networkName)
   log("----------------------------------------------------")
 }
-
-module.exports.tags = ['all', 'api']
+module.exports.tags = ['all', 'api', 'main']

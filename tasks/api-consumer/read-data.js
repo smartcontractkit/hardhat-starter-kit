@@ -1,4 +1,4 @@
-require("@nomiclabs/hardhat-web3")
+
 
 
 task("read-data", "Calls an API Consumer Contract to read data obtained from an external API")

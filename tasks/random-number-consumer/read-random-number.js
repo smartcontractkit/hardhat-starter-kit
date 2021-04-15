@@ -1,4 +1,4 @@
-require("@nomiclabs/hardhat-web3")
+
 
 
 task("read-random-number", "Reads the random number returned to a contract by Chainlink VRF")
