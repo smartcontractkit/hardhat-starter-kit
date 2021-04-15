@@ -1,4 +1,4 @@
-require("@nomiclabs/hardhat-web3")
+
 let { networkConfig, getNetworkIdFromName } = require('../helper-hardhat-config')
 
 task("fund-link", "Funds a contract with LINK")
