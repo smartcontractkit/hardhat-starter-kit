@@ -1,8 +1,9 @@
 pragma solidity ^0.6.6;
 
 import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
+import "@chainlink/contracts/src/v0.6/vendor/Ownable.sol";
 
-contract APIConsumer is ChainlinkClient {
+contract APIConsumer is ChainlinkClient, Ownable {
   
     uint256 public volume;
     
@@ -67,6 +68,15 @@ contract APIConsumer is ChainlinkClient {
     function fulfill(bytes32 _requestId, uint256 _volume) public recordChainlinkFulfillment(_requestId)
     {
         volume = _volume;
+    }
+
+    /**
+     * Withdraw LINK from this contract
+     * 
+     */
+    function withdrawLink() external onlyOwner {
+        LinkTokenInterface linkToken = LinkTokenInterface(chainlinkTokenAddress());
+        require(linkToken.transfer(msg.sender, linkToken.balanceOf(address(this))), "Unable to transfer");
     }
 
     function stringToBytes32(string memory source) public pure returns (bytes32 result) {
