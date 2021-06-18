@@ -1,6 +1,3 @@
-
-
-
 task("read-data", "Calls an API Consumer Contract to read data obtained from an external API")
     .addParam("contract", "The address of the API Consumer contract that you want to call")
     .setAction(async taskArgs => {

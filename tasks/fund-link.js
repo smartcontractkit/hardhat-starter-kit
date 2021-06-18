@@ -17,12 +17,12 @@ task("fund-link", "Funds a contract with LINK")
         //Get signer information
         const accounts = await ethers.getSigners()
         const signer = accounts[0]
-        
+
         //Create connection to LINK token contract and initiate the transfer
         const linkTokenContract = new ethers.Contract(linkTokenAddress, LinkToken.interface, signer)
-        var result = await linkTokenContract.transfer(contractAddr, fundAmount).then(function (transaction) {
-            console.log('Contract ' + contractAddr + ' funded with ' + fundAmount / Math.pow(10,18) + ' LINK. Transaction Hash: ' + transaction.hash)
-        })
+        var result = await linkTokenContract.transfer(contractAddr, fundAmount)
+        console.log('Contract ' + contractAddr + ' funded with ' + fundAmount / Math.pow(10,18) + ' LINK. Transaction Hash: ' + result.hash)
+
     })
 
 module.exports = {}

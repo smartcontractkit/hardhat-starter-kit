@@ -1,4 +1,3 @@
-
 let { networkConfig, getNetworkIdFromName } = require('../../helper-hardhat-config')
 
 task("request-data", "Calls an API Consumer Contract to request external data")

@@ -1,4 +1,4 @@
-let { networkConfig, autoFundCheck } = require('../helper-hardhat-config')
+let { networkConfig} = require('../helper-hardhat-config')
 
 module.exports = async ({
   getNamedAccounts,
@@ -11,7 +11,7 @@ module.exports = async ({
   let oracle
   let additionalMessage = ""
   //set log level to ignore non errors
-  ethers.utils.Logger.setLogLevel(ethers.utils.Logger.levels.ERROR);
+  ethers.utils.Logger.setLogLevel(ethers.utils.Logger.levels.ERROR)
 
   if (chainId == 31337) {
     linkToken = await get('LinkToken')

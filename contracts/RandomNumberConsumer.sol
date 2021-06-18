@@ -5,15 +5,15 @@ import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
 import "@chainlink/contracts/src/v0.6/vendor/Ownable.sol";
 
 contract RandomNumberConsumer is VRFConsumerBase, Ownable {
-    
+
     bytes32 internal keyHash;
     uint256 internal fee;
     uint256 public randomResult;
     event RequestedRandomness(bytes32 requestId);
-    
+
     /**
      * Constructor inherits VRFConsumerBase
-     * 
+     *
      * Network: Kovan
      * Chainlink VRF Coordinator address: 0xdD3782915140c8f3b190B5D67eAc6dc5760C46E9
      * LINK token address:                0xa36085F69e2889c224210F603D836748e7dC0088
@@ -22,17 +22,17 @@ contract RandomNumberConsumer is VRFConsumerBase, Ownable {
     constructor(address _vrfCoordinator,
                 address _link,
                 bytes32 _keyHash,
-                uint _fee) 
+                uint _fee)
         VRFConsumerBase(
             _vrfCoordinator, // VRF Coordinator
             _link  // LINK Token
         ) public
     {
         keyHash = _keyHash;
-        fee = _fee; 
+        fee = _fee;
     }
-    
-    /** 
+
+    /**
      * Requests randomness from a user-provided seed
      */
     function getRandomNumber(uint256 userProvidedSeed) public returns (bytes32 requestId) {
@@ -46,10 +46,10 @@ contract RandomNumberConsumer is VRFConsumerBase, Ownable {
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
         randomResult = randomness;
     }
-    
+
     /**
      * Withdraw LINK from this contract
-     * 
+     *
      */
     function withdrawLink() external onlyOwner {
         require(LINK.transfer(msg.sender, LINK.balanceOf(address(this))), "Unable to transfer");

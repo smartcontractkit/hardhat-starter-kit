@@ -15,7 +15,7 @@ contract MockOracle is ChainlinkRequestInterface, LinkTokenReceiver {
 
   uint256 constant public EXPIRY_TIME = 5 minutes;
   uint256 constant private MINIMUM_CONSUMER_GAS_LIMIT = 400000;
-  
+
   struct Request {
       address callbackAddr;
       bytes4 callbackFunctionId;

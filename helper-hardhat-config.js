@@ -65,16 +65,15 @@ const autoFundCheck = async (contractAddr, networkName, linkTokenAddress, additi
     const signer = accounts[0]
     const LinkToken = await ethers.getContractFactory("LinkToken")
     const linkTokenContract = new ethers.Contract(linkTokenAddress, LinkToken.interface, signer)
-    let balanceHex = await linkTokenContract.balanceOf(signer.address);
-    let balance = await web3.utils.toBN(balanceHex._hex).toString();   
-            
+    const balanceHex = await linkTokenContract.balanceOf(signer.address)
+    const balance = await web3.utils.toBN(balanceHex._hex).toString()
     if (balance > amount && amount > 0)  { //user has enough LINK to auto-fund
-        return true;
+        return true
     } else { //user doesn't have enough LINK, print a warning
         console.log("Account doesn't have enough LINK to fund contracts, or you're deploying to a network where auto funding isnt' done by default")
         console.log("Please obtain LINK via the faucet at https://"+ networkName + ".chain.link/, then run the following command to fund contract with LINK:")
         console.log("npx hardhat fund-link --contract " + contractAddr + " --network " + networkName + additionalMessage)
-        return false;
+        return false
     }
 }
 
@@ -83,4 +82,3 @@ module.exports = {
     getNetworkIdFromName,
     autoFundCheck
 }
-

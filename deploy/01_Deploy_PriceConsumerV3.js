@@ -5,7 +5,7 @@ module.exports = async ({
     deployments,
     getChainId
 }) => {
-    
+
     const { deploy, log } = deployments
     const { deployer } = await getNamedAccounts()
     const chainId = await getChainId()
@@ -27,7 +27,7 @@ module.exports = async ({
     log("Run Price Feed contract with command:")
     log("npx hardhat read-price-feed --contract " + priceConsumerV3.address + " --network " + networkConfig[chainId]['name'])
     log("----------------------------------------------------")
-    
+
 }
 
 module.exports.tags = ['all', 'feed', 'main']

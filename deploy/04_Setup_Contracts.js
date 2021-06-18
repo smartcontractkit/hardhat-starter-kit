@@ -1,5 +1,5 @@
 const { networkConfig, autoFundCheck } = require('../helper-hardhat-config')
-const {ethers, getNamedAccounts} = require('hardhat');
+const {ethers, getNamedAccounts} = require('hardhat')
 
 module.exports = async ({
   getNamedAccounts,
@@ -26,10 +26,9 @@ module.exports = async ({
 
   //Try Auto-fund APIConsumer contract with LINK
   const APIConsumer = await deployments.get('APIConsumer')
-  let apiConsumer = await ethers.getContractAt('APIConsumer', APIConsumer.address)  
+  const apiConsumer = await ethers.getContractAt('APIConsumer', APIConsumer.address)
 
-  let autoFund = await autoFundCheck(apiConsumer.address, networkName, linkTokenAddress, additionalMessage)
-  if (autoFund == true) {
+  if (await autoFundCheck(apiConsumer.address, networkName, linkTokenAddress, additionalMessage)) {
     await hre.run("fund-link",{contract: apiConsumer.address, linkaddress: linkTokenAddress})
   } else {
     log("Then run API Consumer contract with following command:")
@@ -39,18 +38,17 @@ module.exports = async ({
 
 
   //Now try Auto-fund VRFConsumer contract
-  
-  const RandomNumberConsumer = await deployments.get('RandomNumberConsumer')
-  let randomNumberConsumer = await ethers.getContractAt('RandomNumberConsumer', RandomNumberConsumer.address)
 
-  autoFund = await autoFundCheck(randomNumberConsumer.address, networkName, linkTokenAddress, additionalMessage)
-  if (autoFund == true) {
+  const RandomNumberConsumer = await deployments.get('RandomNumberConsumer')
+  const randomNumberConsumer = await ethers.getContractAt('RandomNumberConsumer', RandomNumberConsumer.address)
+
+  if (await autoFundCheck(apiConsumer.address, networkName, linkTokenAddress, additionalMessage)) {
     await hre.run("fund-link",{contract: randomNumberConsumer.address, linkaddress: linkTokenAddress})
   } else {
     log("Then run RandomNumberConsumer contract with the following command, replacing '777' with your chosen seed number:")
     log("npx hardhat request-random-number --contract " + randomNumberConsumer.address, " --seed '777'" + " --network " + networkName)
   }
   log("----------------------------------------------------")
-  
+
 }
 module.exports.tags = ['all']

@@ -1,5 +1,3 @@
-
-
 task("request-random-number", "Requests a random number for a Chainlink VRF enabled smart contract")
     .addParam("contract", "The address of the API Consumer contract that you want to call")
     .addParam("seed", "The seed to be used in the requst for randomness", 777, types.int)

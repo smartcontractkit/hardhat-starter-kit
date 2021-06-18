@@ -1,6 +1,3 @@
-
-
-
 task("read-random-number", "Reads the random number returned to a contract by Chainlink VRF")
     .addParam("contract", "The address of the VRF contract that you want to read")
     .setAction(async taskArgs => {
