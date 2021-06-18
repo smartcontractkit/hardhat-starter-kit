@@ -26,4 +26,3 @@ task("fund-link", "Funds a contract with LINK")
     })
 
 module.exports = {}
-

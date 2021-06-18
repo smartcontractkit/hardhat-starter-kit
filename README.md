@@ -76,9 +76,12 @@ If you wish to deploy the smart contracts without performing the auto-funding, r
 npx hardhat deploy --tags main
 ```
 
+
 ## Deploy
 
 Deployment scripts are in the [deploy](https://github.com/smartcontractkit/hardhat-starter-kit/tree/main/deploy) directory. If required, edit the desired environment specific variables or constructor parameters in each script, then run the hardhat deployment plugin as follows. If no network is specified, it will default to the Kovan network.
+
+This will deploy to a local hardhat network
 
 This will deploy to a local hardhat network
 
