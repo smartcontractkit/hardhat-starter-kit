@@ -5,7 +5,7 @@ task("withdraw-link", "Returns any LINK left in deployed contract")
     .addOptionalParam("linkaddress", "Set the LINK token address")
     .setAction(async (taskArgs) => {
         const contractAddr = taskArgs.contract
-        let networkId = await getNetworkIdFromName(network.name)
+        const networkId = await getNetworkIdFromName(network.name)
 
         //Get signer information
         const accounts = await hre.ethers.getSigners()

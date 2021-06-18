@@ -6,7 +6,7 @@ chai.use(require('chai-bn')(BN))
 
 describe('RandomNumberConsumer Unit Tests', async function () {
 
-  let randomNumberConsumer, vrfCoordinatorMock, seed
+  let randomNumberConsumer, seed
 
   beforeEach(async () => {
     const chainId = await getChainId()

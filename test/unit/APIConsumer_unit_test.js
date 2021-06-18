@@ -10,7 +10,7 @@ describe('APIConsumer Unit Tests', async function () {
   let apiConsumer, linkToken
 
   beforeEach(async () => {
-    let chainId = await getChainId()
+    const chainId = await getChainId()
     await deployments.fixture(['mocks', 'api'])
     const LinkToken = await deployments.get('LinkToken')
     linkToken = await ethers.getContractAt('LinkToken', LinkToken.address)
@@ -22,8 +22,7 @@ describe('APIConsumer Unit Tests', async function () {
     const APIConsumer = await deployments.get('APIConsumer')
     apiConsumer = await ethers.getContractAt('APIConsumer', APIConsumer.address)
 
-    let autoFund = await autoFundCheck(apiConsumer.address, networkName, linkTokenAddress, additionalMessage)
-    if (autoFund == true) {
+    if (await autoFundCheck(apiConsumer.address, networkName, linkTokenAddress, additionalMessage)) {
         await hre.run("fund-link",{contract: apiConsumer.address, linkaddress: linkTokenAddress})
     }
   })

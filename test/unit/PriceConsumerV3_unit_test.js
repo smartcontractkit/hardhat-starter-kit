@@ -7,7 +7,7 @@ const { networkConfig } = require('../../helper-hardhat-config')
 
 describe('PriceConsumer Unit Tests', async function () {
   // Price Feed Address, values can be obtained at https://docs.chain.link/docs/reference-contracts
-  let priceConsumerV3, ethUsdAggregator, PriceConsumerV3, MockV3Aggregator
+  let priceConsumerV3
 
   beforeEach(async () => {
     await deployments.fixture(['mocks', 'feed'])
