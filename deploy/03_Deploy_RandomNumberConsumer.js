@@ -34,8 +34,8 @@ module.exports = async ({
 
   log("Run the following command to fund contract with LINK:")
   log("npx hardhat fund-link --contract " + randomNumberConsumer.address + " --network " + networkConfig[chainId]['name'] + additionalMessage)
-  log("Then run RandomNumberConsumer contract with the following command, replacing '777' with your chosen seed number:")
-  log("npx hardhat request-random-number --contract " + randomNumberConsumer.address, " --seed '777'" + " --network " + networkConfig[chainId]['name'])
+  log("Then run RandomNumberConsumer contract with the following command")
+  log("npx hardhat request-random-number --contract " + randomNumberConsumer.address + " --network " + networkConfig[chainId]['name'])
   log("----------------------------------------------------")
 }
 

@@ -31,10 +31,10 @@ contract RandomNumberConsumer is VRFConsumerBase {
     }
     
     /** 
-     * Requests randomness from a user-provided seed
+     * Requests randomness
      */
-    function getRandomNumber(uint256 userProvidedSeed) public returns (bytes32 requestId) {
-        requestId = requestRandomness(keyHash, fee, userProvidedSeed);
+    function getRandomNumber() public returns (bytes32 requestId) {
+        requestId = requestRandomness(keyHash, fee);
         emit RequestedRandomness(requestId);
     }
 
