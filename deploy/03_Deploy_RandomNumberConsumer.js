@@ -25,7 +25,6 @@ module.exports = async ({
   }
   const keyHash = networkConfig[chainId]['keyHash']
   const fee = networkConfig[chainId]['fee']
-  const networkName = networkConfig[chainId]['name']
 
   const randomNumberConsumer = await deploy('RandomNumberConsumer', {
     from: deployer,
@@ -33,9 +32,11 @@ module.exports = async ({
     log: true
   })
 
-  log("Run RandomNumberConsumer contract with the following command, replacing '777' with your chosen seed number:")
-  log("npx hardhat request-random-number --contract " + randomNumberConsumer.address, " --seed '777'" + " --network " + networkName)
+  log("Run the following command to fund contract with LINK:")
+  log("npx hardhat fund-link --contract " + randomNumberConsumer.address + " --network " + networkConfig[chainId]['name'] + additionalMessage)
+  log("Then run RandomNumberConsumer contract with the following command")
+  log("npx hardhat request-random-number --contract " + randomNumberConsumer.address + " --network " + networkConfig[chainId]['name'])
   log("----------------------------------------------------")
 }
 
-module.exports.tags = ['all', 'vrf', 'main']
+module.exports.tags = ['all', 'vrf']

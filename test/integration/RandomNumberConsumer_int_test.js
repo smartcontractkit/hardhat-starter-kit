@@ -5,16 +5,15 @@ chai.use(require('chai-bn')(BN))
 
 describe('RandomNumberConsumer Integration Tests', async function () {
 
-  let randomNumberConsumer, seed
+  let randomNumberConsumer
 
   beforeEach(async () => {
-      seed = 123
       const RandomNumberConsumer = await deployments.get('RandomNumberConsumer')
       randomNumberConsumer = await ethers.getContractAt('RandomNumberConsumer', RandomNumberConsumer.address)
   })
 
   it('Should successfully make a VRF request and get a result', async () => {
-    const transaction = await randomNumberConsumer.getRandomNumber(seed)
+    const transaction = await randomNumberConsumer.getRandomNumber()
     const tx_receipt = await transaction.wait()
     const requestId = tx_receipt.events[2].topics[1]
 

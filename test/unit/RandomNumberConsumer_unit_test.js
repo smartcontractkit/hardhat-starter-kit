@@ -6,7 +6,7 @@ chai.use(require('chai-bn')(BN))
 
 describe('RandomNumberConsumer Unit Tests', async function () {
 
-  let randomNumberConsumer, seed
+  let randomNumberConsumer
 
   beforeEach(async () => {
     const chainId = await getChainId()
@@ -18,8 +18,6 @@ describe('RandomNumberConsumer Unit Tests', async function () {
     linkTokenAddress = linkToken.address
     additionalMessage = " --linkaddress " + linkTokenAddress
 
-    // We always need to set a seed and set the RandomNumberConsumer contract
-    seed = 123
     const RandomNumberConsumer = await deployments.get('RandomNumberConsumer')
     randomNumberConsumer = await ethers.getContractAt('RandomNumberConsumer', RandomNumberConsumer.address)
 
@@ -29,7 +27,7 @@ describe('RandomNumberConsumer Unit Tests', async function () {
   })
 
   it('Should successfully make an external random number request', async () => {
-    const transaction = await randomNumberConsumer.getRandomNumber(seed)
+    const transaction = await randomNumberConsumer.getRandomNumber()
     const tx_receipt = await transaction.wait()
     const requestId = tx_receipt.events[2].topics[1]
 
