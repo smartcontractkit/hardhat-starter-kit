@@ -147,10 +147,10 @@ The VRFConsumer contract has two tasks, one to request a random number, and one 
 npx hardhat fund-link --contract insert-contract-address-here --network network
 ```
 
-Once it's funded, you can perform a VRF request with the request-random-number task, passing in the required seed number:
+Once it's funded, you can perform a VRF request with the request-random-number task:
 
 ```bash
-npx hardhat request-random-number --contract insert-contract-address-here --seed '777777' --network network
+npx hardhat request-random-number --contract insert-contract-address-here --network network
 ```
 
 Once you have successfully made a request for a random number, you can see the result via the read-random-number task:
