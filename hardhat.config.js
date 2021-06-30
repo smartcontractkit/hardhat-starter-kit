@@ -9,6 +9,7 @@ require("hardhat-deploy")
 require("./tasks/accounts")
 require("./tasks/balance")
 require("./tasks/fund-link")
+require("./tasks/withdraw-link")
 require("./tasks/block-number")
 require("./tasks/block-number")
 require("./tasks/random-number-consumer")
@@ -88,3 +89,4 @@ module.exports = {
         timeout: 100000
     }
 }
+

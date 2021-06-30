@@ -5,6 +5,7 @@ module.exports = async ({
     deployments,
     getChainId
 }) => {
+
     const { deploy, log } = deployments
     const { deployer } = await getNamedAccounts()
     const chainId = await getChainId()
@@ -17,6 +18,7 @@ module.exports = async ({
     }
     // Price Feed Address, values can be obtained at https://docs.chain.link/docs/reference-contracts
     // Default one below is ETH/USD contract on Kovan
+    log("----------------------------------------------------")
     const priceConsumerV3 = await deploy('PriceConsumerV3', {
         from: deployer,
         args: [ethUsdPriceFeedAddress],
@@ -25,6 +27,7 @@ module.exports = async ({
     log("Run Price Feed contract with command:")
     log("npx hardhat read-price-feed --contract " + priceConsumerV3.address + " --network " + networkConfig[chainId]['name'])
     log("----------------------------------------------------")
+
 }
 
-module.exports.tags = ['all', 'feed']
+module.exports.tags = ['all', 'feed', 'main']

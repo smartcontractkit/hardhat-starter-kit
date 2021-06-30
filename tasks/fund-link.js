@@ -1,4 +1,3 @@
-
 let { networkConfig, getNetworkIdFromName } = require('../helper-hardhat-config')
 
 task("fund-link", "Funds a contract with LINK")
@@ -7,12 +6,13 @@ task("fund-link", "Funds a contract with LINK")
     .setAction(async (taskArgs) => {
         const contractAddr = taskArgs.contract
         let networkId = await getNetworkIdFromName(network.name)
-        console.log("Funding contract ", contractAddr, " on network ", network.name)
+
+        //Fund with LINK based on network config
+        const fundAmount = networkConfig[networkId]['fundAmount']
+
+        console.log("Funding contract " + contractAddr + " on network " + network.name)
         let linkTokenAddress = networkConfig[networkId]['linkToken'] || taskArgs.linkaddress
         const LinkToken = await ethers.getContractFactory("LinkToken")
-
-        //Fund with 1 LINK token
-        const amount = web3.utils.toHex(1e18)
 
         //Get signer information
         const accounts = await ethers.getSigners()
@@ -20,10 +20,10 @@ task("fund-link", "Funds a contract with LINK")
 
         //Create connection to LINK token contract and initiate the transfer
         const linkTokenContract = new ethers.Contract(linkTokenAddress, LinkToken.interface, signer)
-        var result = await linkTokenContract.transfer(contractAddr, amount).then(function (transaction) {
-            console.log('Contract ', contractAddr, ' funded with 1 LINK. Transaction Hash: ', transaction.hash)
-        })
+        var transferTransaction = await linkTokenContract.transfer(contractAddr, fundAmount)
+        transferTransaction.wait(1)
+        console.log('Contract ' + contractAddr + ' funded with ' + fundAmount / Math.pow(10, 18) + ' LINK. Transaction Hash: ' + transferTransaction.hash)
+
     })
 
 module.exports = {}
-

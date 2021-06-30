@@ -35,4 +35,4 @@ module.exports = async ({
         log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     }
 }
-module.exports.tags = ['all', 'mocks']
+module.exports.tags = ['all', 'mocks', 'main']

@@ -3009,6 +3009,11 @@ chai-bignumber@^3.0.0:
   resolved "https://registry.yarnpkg.com/chai-bignumber/-/chai-bignumber-3.0.0.tgz#e90cf1f468355bbb11a9acd051222586cd2648a9"
   integrity sha512-SubOtaSI2AILWTWe2j0c6i2yFT/f9J6UBjeVGDuwDiPLkF/U5+/eTWUE3sbCZ1KgcPF6UJsDVYbIxaYA097MQA==
 
+chai-bn@^0.2.1:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/chai-bn/-/chai-bn-0.2.2.tgz#4dcf30dbc79db2378a00781693bc749c972bf34f"
+  integrity sha512-MzjelH0p8vWn65QKmEq/DLBG1Hle4WeyqT79ANhXZhn/UxRWO0OogkAxi5oGGtfzwU9bZR8mvbvYdoqNVWQwFg==
+
 chai@^4.0.1, chai@^4.2.0:
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/chai/-/chai-4.3.4.tgz#b55e655b31e1eac7099be4c08c21964fce2e6c49"
@@ -7314,6 +7319,11 @@ mnemonist@^0.38.0:
   integrity sha512-2K9QYubXx/NAjv4VLq1d1Ly8pWNC5L3BrixtdkyTegXWJIqY+zLNDhhX/A+ZwWt70tB1S8H4BE8FLYEFyNoOBw==
   dependencies:
     obliterator "^1.6.1"
+
+mocha-skip-if@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/mocha-skip-if/-/mocha-skip-if-0.0.3.tgz#6789b6725d93b8f30418346bb0c19677f0d49a3e"
+  integrity sha512-MFv2uymlrAl4q0kd55Bn/dyhvSP+jg14lWFTL6KFY2uBtzJWbwhHG1RcR+wZEIE2OnAFUX9dyJq+t3GGZwK3YQ==
 
 mocha@^7.1.2:
   version "7.2.0"

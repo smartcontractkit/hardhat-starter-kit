@@ -1,5 +1,3 @@
-
-
 task("read-price-feed", "Gets the latest price from a Chainlink Price Feed")
     .addParam("contract", "The address of the Price Feed consumer contract that you want to read")
     .setAction(async taskArgs => {

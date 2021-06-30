@@ -1,11 +1,11 @@
-let { networkConfig } = require('../helper-hardhat-config')
-
+let { networkConfig} = require('../helper-hardhat-config')
 
 module.exports = async ({
   getNamedAccounts,
   deployments,
   getChainId
 }) => {
+
   const { deploy, get, log } = deployments
   const { deployer } = await getNamedAccounts()
   const chainId = await getChainId()
