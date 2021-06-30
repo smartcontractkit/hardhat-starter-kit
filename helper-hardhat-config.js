@@ -47,7 +47,7 @@ const networkConfig = {
     }
 }
 
-const integrationChains = ['goerli', 'kovan', 'mainnet', 'rinkeby']
+const developmentChains = ["hardhat", "localhost"]
 
 const getNetworkIdFromName = async (networkIdName) => {
     for (const id in networkConfig) {
@@ -87,5 +87,5 @@ module.exports = {
     networkConfig,
     getNetworkIdFromName,
     autoFundCheck,
-    integrationChains
+    developmentChains
 }

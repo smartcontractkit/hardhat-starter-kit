@@ -1,4 +1,4 @@
-const { networkConfig, autoFundCheck, integrationChains } = require('../../helper-hardhat-config')
+const { networkConfig, autoFundCheck, developmentChains } = require('../../helper-hardhat-config')
 const skipIf = require('mocha-skip-if')
 const chai = require('chai')
 const { expect } = require('chai')
@@ -6,7 +6,7 @@ const BN = require('bn.js')
 const { getChainId } = require('hardhat')
 chai.use(require('chai-bn')(BN))
 
-skip.if(integrationChains.includes(network.name)).
+skip.if(!developmentChains.includes(network.name)).
   describe('APIConsumer Unit Tests', async function () {
 
     let apiConsumer, linkToken

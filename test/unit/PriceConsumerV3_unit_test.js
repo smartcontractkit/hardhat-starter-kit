@@ -4,9 +4,9 @@ const BN = require('bn.js')
 const skipIf = require('mocha-skip-if')
 chai.use(require('chai-bn')(BN))
 const { deployments, getChainId } = require('hardhat')
-const { networkConfig, integrationChains } = require('../../helper-hardhat-config')
+const { networkConfig, developmentChains } = require('../../helper-hardhat-config')
 
-skip.if(integrationChains.includes(network.name)).
+skip.if(!developmentChains.includes(network.name)).
   describe('PriceConsumer Unit Tests', async function () {
     // Price Feed Address, values can be obtained at https://docs.chain.link/docs/reference-contracts
     let priceConsumerV3

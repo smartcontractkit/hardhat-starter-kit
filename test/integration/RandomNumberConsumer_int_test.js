@@ -3,9 +3,9 @@ const { expect } = require('chai')
 const skipIf = require('mocha-skip-if')
 const BN = require('bn.js')
 chai.use(require('chai-bn')(BN))
-const { integrationChains } = require('../../helper-hardhat-config')
+const { developmentChains } = require('../../helper-hardhat-config')
 
-skip.if(!integrationChains.includes(network.name)).
+skip.if(developmentChains.includes(network.name)).
   describe('RandomNumberConsumer Integration Tests', async function () {
 
     let randomNumberConsumer
