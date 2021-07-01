@@ -42,7 +42,7 @@ module.exports = async ({
   const RandomNumberConsumer = await deployments.get('RandomNumberConsumer')
   const randomNumberConsumer = await ethers.getContractAt('RandomNumberConsumer', RandomNumberConsumer.address)
 
-  if (await autoFundCheck(apiConsumer.address, networkName, linkTokenAddress, additionalMessage)) {
+  if (await autoFundCheck(randomNumberConsumer.address, networkName, linkTokenAddress, additionalMessage)) {
     await hre.run("fund-link", { contract: randomNumberConsumer.address, linkaddress: linkTokenAddress })
   } else {
     log("Then run RandomNumberConsumer contract with the following command:")
