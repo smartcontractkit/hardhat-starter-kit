@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "hardhat test test/unit/PriceConsumerV3_unit_test.js --network hardhat; hardhat test test/unit/APIConsumer_unit_test.js --network hardhat; hardhat test test/unit/RandomNumberConsumer_unit_test.js --network hardhat",
-    "test-integration": "hardhat test test/integration/APIConsumer_int_test.js --network kovan; hardhat test test/integration/RandomNumberConsumer_int_test.js --network kovan",
+    "test": "hardhat test test/unit/PriceConsumerV3_unit_test.js --network hardhat && hardhat test test/unit/APIConsumer_unit_test.js --network hardhat && hardhat test test/unit/RandomNumberConsumer_unit_test.js --network hardhat",
+    "test-integration": "hardhat test test/integration/APIConsumer_int_test.js --network kovan && hardhat test test/integration/RandomNumberConsumer_int_test.js --network kovan",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
