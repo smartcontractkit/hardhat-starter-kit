@@ -59,7 +59,15 @@ module.exports = {
             accounts: {
                 mnemonic: MNEMONIC,
             }
-        }
+        },
+        mainnet: {
+            url: MAINNET_RPC_URL,
+            // accounts: [PRIVATE_KEY],
+            accounts: {
+                mnemonic: MNEMONIC,
+            },
+            saveDeployments: true,
+        },
     },
     etherscan: {
         // Your API key for Etherscan
