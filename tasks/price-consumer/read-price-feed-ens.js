@@ -1,4 +1,4 @@
-// This script only works with '--network mainnet' or 'mainnet-fork'
+// This script only works with --network 'mainnet', or 'hardhat' when running a fork of mainnet 
 task("read-price-feed-ens", "Gets the latest price from a Chainlink Price Feed")
     .addParam("pair", "The token pair that you want to read, ie 'btc-usd'")
     .setAction(async taskArgs => {
