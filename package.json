@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.0.1",
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
     "@nomiclabs/hardhat-etherscan": "^2.1.1",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "chai": "^4.2.0",
@@ -23,6 +23,9 @@
     "web3": "^1.2.9"
   },
   "dependencies": {
+    "@appliedblockchain/chainlink-plugins-api-consumer": "0.0.4",
+    "@appliedblockchain/chainlink-plugins-price-consumer": "0.0.3",
+    "@appliedblockchain/chainlink-plugins-random-number-consumer": "0.0.3",
     "@chainlink/contracts": "^0.1.9",
     "@chainlink/test-helpers": "0.0.5",
     "@chainlink/token": "^1.1.0",
