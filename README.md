@@ -18,7 +18,7 @@
 
 ## Installation
 
-Set your `KOVAN_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). You can get one for free at [Infura's site.](https://infura.io/) You'll also need to set the variable `PRIVATE_KEY` which is your private key from you wallet, ie MetaMask. This is needed for deploying contracts to public networks.
+Set your `KOVAN_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). You can get one for free at [Infura's site.](https://infura.io/) You'll also need to set the variable `MNEMONIC` which is your mnemonic from your wallet, ie MetaMask. This is needed for deploying contracts to public networks. You can optionally set your `PRIVATE_KEY` instead with some changes to the `hardhat.config.js`.
 
 You can set these in your `.env` file if you're unfamiliar with how setting environment variables work. Check out our [.env example](https://github.com/smartcontractkit/hardhat-starter-kit/blob/main/.env.example). If you wish to use this method to set these variables, update the values in the .env.example file, and then rename it to '.env'
 
@@ -29,7 +29,7 @@ Don't commit and push any changes to .env files that may contain sensitive infor
 `.env` example:
 ```
 KOVAN_RPC_URL='www.infura.io/asdfadsfafdadf'
-PRIVATE_KEY='abcdef'
+MNEMONIC='cat dog frog...'
 MAINNET_RPC_URL="https://eth-mainnet.alchemyapi.io/v2/your-api-key"
 ```
 `bash` example
@@ -66,9 +66,9 @@ yarn
 
 This Starter Kit is configured by default to attempt to auto-fund any newly deployed contract that uses Any-API or Chainlink VRF, to save having to manually fund them after each deployment. The amount in LINK to send as part of this process can be modified in the [Starter Kit Config](https://github.com/smartcontractkit/chainlink-hardhat-box/blob/main/helper-hardhat-config.js), and are configurable per network.
 
-| Parameter  | Description                                                      | Default Value |
-| -----------|:-----------------------------------------------------------------| :-------------|
-| fundAmount | Amount of LINK to transfer when funding contracts                | 1 LINK        |
+| Parameter  | Description                                       | Default Value |
+| ---------- | :------------------------------------------------ | :------------ |
+| fundAmount | Amount of LINK to transfer when funding contracts | 1 LINK        |
 
 If you wish to deploy the smart contracts without performing the auto-funding, run the following command when doing your deployment:
 
