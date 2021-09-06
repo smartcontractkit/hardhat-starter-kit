@@ -18,8 +18,13 @@
 
 ## Installation
 
+### Kovan Ethereum Testnet
 Set your `KOVAN_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). You can get one for free at [Infura's site.](https://infura.io/) You'll also need to set the variable `MNEMONIC` which is your mnemonic from your wallet, ie MetaMask. This is needed for deploying contracts to public networks. You can optionally set your `PRIVATE_KEY` instead with some changes to the `hardhat.config.js`.
 
+### Matic Mumbai Testnet
+Set your `MUMBAI_RPC_URL` [environment variable](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). You can get one from the [Matic docs](https://docs.matic.network/docs/develop/network-details/network). You'll also need to set the variable `PRIVATE_KEY` which is your private key from your wallet, ie MetaMask. This is needed for deploying contracts to public networks. You can obtain testnet MATIC and LINK via the [MATIC Faucet](https://faucet.matic.network/)
+
+### Setting Environment Variables
 You can set these in your `.env` file if you're unfamiliar with how setting environment variables work. Check out our [.env example](https://github.com/smartcontractkit/hardhat-starter-kit/blob/main/.env.example). If you wish to use this method to set these variables, update the values in the .env.example file, and then rename it to '.env'
 
 ![WARNING](https://via.placeholder.com/15/f03c15/000000?text=+) **WARNING** ![WARNING](https://via.placeholder.com/15/f03c15/000000?text=+)
@@ -31,12 +36,16 @@ Don't commit and push any changes to .env files that may contain sensitive infor
 KOVAN_RPC_URL='www.infura.io/asdfadsfafdadf'
 MNEMONIC='cat dog frog...'
 MAINNET_RPC_URL="https://eth-mainnet.alchemyapi.io/v2/your-api-key"
+MUMBAI_RPC_URL='https://rpc-mumbai.maticvigil.com'
+POLYGON_MAINNET_RPC_URL='https://rpc-mainnet.maticvigil.com'
 ```
 `bash` example
 ```
 export KOVAN_RPC_URL='www.infura.io/asdfadsfafdadf'
 export MNEMONIC='cat dog frog...'
-export MAINNET_RPC_URL="https://eth-mainnet.alchemyapi.io/v2/your-api-key"
+export MAINNET_RPC_URL='https://eth-mainnet.alchemyapi.io/v2/your-api-key'
+export MUMBAI_RPC_URL='https://rpc-mumbai.maticvigil.com'
+export POLYGON_MAINNET_RPC_URL='https://rpc-mainnet.maticvigil.com'
 ```
 
 If you plan on deploying to a local [Hardhat network](https://hardhat.org/hardhat-network/) that's a fork of the Ethereum mainnet instead of a public test network like Kovan, you'll also need to set your `MAINNET_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) and uncomment the `forking` section in `hardhat.config.js`. You can get one for free at [Alchemy's site.](https://alchemyapi.io/).
