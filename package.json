@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@appliedblockchain/chainlink-plugins-api-consumer": "0.0.4",
+    "@appliedblockchain/chainlink-plugins-fund-link": "0.0.1",
     "@appliedblockchain/chainlink-plugins-price-consumer": "0.0.3",
     "@appliedblockchain/chainlink-plugins-random-number-consumer": "0.0.3",
     "@chainlink/contracts": "^0.1.9",
