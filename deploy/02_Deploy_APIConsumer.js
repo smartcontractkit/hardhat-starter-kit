@@ -1,4 +1,4 @@
-let { networkConfig} = require('../helper-hardhat-config')
+let { networkConfig } = require('../helper-hardhat-config')
 
 module.exports = async ({
   getNamedAccounts,
@@ -14,8 +14,8 @@ module.exports = async ({
   ethers.utils.Logger.setLogLevel(ethers.utils.Logger.levels.ERROR)
 
   if (chainId == 31337) {
-    linkToken = await get('LinkToken')
-    MockOracle = await get('MockOracle')
+    let linkToken = await get('LinkToken')
+    let MockOracle = await get('MockOracle')
     linkTokenAddress = linkToken.address
     oracle = MockOracle.address
     additionalMessage = " --linkaddress " + linkTokenAddress
