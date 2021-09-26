@@ -1,4 +1,4 @@
-let { networkConfig} = require('../helper-hardhat-config')
+let {networkConfig} = require('../helper-hardhat-config')
 
 module.exports = async ({
   getNamedAccounts,
