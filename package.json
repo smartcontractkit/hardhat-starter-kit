@@ -18,12 +18,13 @@
     "chai-bn": "^0.2.1",
     "ethereum-waffle": "^3.2.1",
     "ethers": "^5.0.24",
-    "hardhat": "^2.0.6",
+    "hardhat": "^2.6.4",
     "hardhat-deploy": "^0.7.0-beta.39",
     "web3": "^1.2.9"
   },
   "dependencies": {
     "@appliedblockchain/chainlink-plugins-api-consumer": "0.0.4",
+    "@appliedblockchain/chainlink-plugins-fund-link": "0.0.1",
     "@appliedblockchain/chainlink-plugins-price-consumer": "0.0.3",
     "@appliedblockchain/chainlink-plugins-random-number-consumer": "0.0.3",
     "@chainlink/contracts": "^0.1.9",

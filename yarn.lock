@@ -233,6 +233,11 @@
     "@nomiclabs/hardhat-ethers" "^2.0.2"
     hardhat "^2.0.0"
 
+"@appliedblockchain/chainlink-plugins-fund-link@0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@appliedblockchain/chainlink-plugins-fund-link/-/chainlink-plugins-fund-link-0.0.1.tgz#2e0339283083073a69fb8c9fa2050385b3fddfd2"
+  integrity sha512-2LjexuACeLKsjSEeDwJ/oBJiILA1KgqjzvQWP9NddQqM7QONQtAVlCcyCz2k4CjspIAwFQsTxW4CosXTJbRMyg==
+
 "@appliedblockchain/chainlink-plugins-price-consumer@0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@appliedblockchain/chainlink-plugins-price-consumer/-/chainlink-plugins-price-consumer-0.0.3.tgz#7d9ebe81794578924da0e9875351a8bdc18301fd"
@@ -511,16 +516,6 @@
     patch-package "^6.2.2"
     postinstall-postinstall "^2.1.0"
 
-"@ethereumjs/block@^3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@ethereumjs/block/-/block-3.3.0.tgz#a1b3baec831c71c0d9e7f6145f25e919cff4939c"
-  integrity sha512-WoefY9Rs4W8vZTxG9qwntAlV61xsSv0NPoXmHO7x3SH16dwJQtU15YvahPCz4HEEXbu7GgGgNgu0pv8JY7VauA==
-  dependencies:
-    "@ethereumjs/common" "^2.3.0"
-    "@ethereumjs/tx" "^3.2.0"
-    ethereumjs-util "^7.0.10"
-    merkle-patricia-tree "^4.2.0"
-
 "@ethereumjs/block@^3.4.0":
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/@ethereumjs/block/-/block-3.4.0.tgz#4747b0c06220ee10cbdfe1cbde8cbb0677b1b074"
@@ -530,21 +525,6 @@
     "@ethereumjs/tx" "^3.3.0"
     ethereumjs-util "^7.1.0"
     merkle-patricia-tree "^4.2.0"
-
-"@ethereumjs/blockchain@^5.3.0":
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/@ethereumjs/blockchain/-/blockchain-5.3.0.tgz#206936e30a4320d87a26e58d157eadef21ef6ff1"
-  integrity sha512-B0Y5QDZcRDQISPilv3m8nzk97QmC98DnSE9WxzGpCxfef22Mw7xhwGipci5Iy0dVC2Np2Cr5d3F6bHAR7+yVmQ==
-  dependencies:
-    "@ethereumjs/block" "^3.3.0"
-    "@ethereumjs/common" "^2.3.0"
-    "@ethereumjs/ethash" "^1.0.0"
-    debug "^2.2.0"
-    ethereumjs-util "^7.0.10"
-    level-mem "^5.0.1"
-    lru-cache "^5.1.1"
-    rlp "^2.2.4"
-    semaphore-async-await "^1.5.1"
 
 "@ethereumjs/blockchain@^5.4.0":
   version "5.4.0"
@@ -561,7 +541,7 @@
     rlp "^2.2.4"
     semaphore-async-await "^1.5.1"
 
-"@ethereumjs/common@^2.2.0", "@ethereumjs/common@^2.3.0", "@ethereumjs/common@^2.3.1":
+"@ethereumjs/common@^2.2.0", "@ethereumjs/common@^2.3.1":
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/@ethereumjs/common/-/common-2.3.1.tgz#d692e3aff5adb35dd587dd1e6caab69e0ed2fa0b"
   integrity sha512-V8hrULExoq0H4HFs3cCmdRGbgmipmlNzak6Xg34nHYfQyqkSdrCuflvYjyWmsNpI8GtrcZhzifAbgX/1C1Cjwg==
@@ -587,7 +567,7 @@
     ethereumjs-util "^7.0.7"
     miller-rabin "^4.0.0"
 
-"@ethereumjs/tx@^3.1.3", "@ethereumjs/tx@^3.2.0", "@ethereumjs/tx@^3.2.1":
+"@ethereumjs/tx@^3.1.3":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@ethereumjs/tx/-/tx-3.2.1.tgz#65f5f1c11541764f08377a94ba4b0dcbbd67739e"
   integrity sha512-i9V39OtKvwWos1uVNZxdVhd7zFOyzFLjgt69CoiOY0EmXugS0HjO3uxpLBSglDKFMRriuGqw6ddKEv+RP1UNEw==
@@ -602,25 +582,6 @@
   dependencies:
     "@ethereumjs/common" "^2.4.0"
     ethereumjs-util "^7.1.0"
-
-"@ethereumjs/vm@^5.3.2":
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/@ethereumjs/vm/-/vm-5.4.1.tgz#62d9f64aa5a2fb334ad630418683c9654f683a5a"
-  integrity sha512-cpQcg5CtjzXJBn8QNiobaiWckeN/ZQwsDHLYa9df2wBEUvzuEZgFWK48YEXSpx3CnUY9fNT/lgA9CzKdq8HTzQ==
-  dependencies:
-    "@ethereumjs/block" "^3.3.0"
-    "@ethereumjs/blockchain" "^5.3.0"
-    "@ethereumjs/common" "^2.3.1"
-    "@ethereumjs/tx" "^3.2.1"
-    async-eventemitter "^0.2.4"
-    core-js-pure "^3.0.1"
-    debug "^2.2.0"
-    ethereumjs-util "^7.0.10"
-    functional-red-black-tree "^1.0.1"
-    mcl-wasm "^0.7.1"
-    merkle-patricia-tree "^4.2.0"
-    rustbn.js "~0.2.0"
-    util.promisify "^1.0.1"
 
 "@ethereumjs/vm@^5.5.2":
   version "5.5.2"
@@ -6251,16 +6212,16 @@ hardhat@^2.0.0:
     uuid "^3.3.2"
     ws "^7.4.6"
 
-hardhat@^2.0.6:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/hardhat/-/hardhat-2.4.1.tgz#2cd1e86ee6ca3a6a473eeb0f55bd3124c8c59250"
-  integrity sha512-vwllrFypukeE/Q+4ZfWj7j7nUo4ncUhRpsAYUM0Ruuuk6pQlKmRa0A6c0kxRSvvVgQsMud6j+/weYhbMX1wPmQ==
+hardhat@^2.6.4:
+  version "2.6.4"
+  resolved "https://registry.yarnpkg.com/hardhat/-/hardhat-2.6.4.tgz#9ff3f139f697bfc4e14836a3fef3ca4c62357d65"
+  integrity sha512-6QNfu1FptjtyGJ+jBR7LMX7AMY9gWWw9kAUD7v0YZNZH1ZBgsZdMHqXKiSzO5pLQXo+fy9zZovKAUNYbjQ/1fw==
   dependencies:
-    "@ethereumjs/block" "^3.3.0"
-    "@ethereumjs/blockchain" "^5.3.0"
-    "@ethereumjs/common" "^2.3.1"
-    "@ethereumjs/tx" "^3.2.1"
-    "@ethereumjs/vm" "^5.3.2"
+    "@ethereumjs/block" "^3.4.0"
+    "@ethereumjs/blockchain" "^5.4.0"
+    "@ethereumjs/common" "^2.4.0"
+    "@ethereumjs/tx" "^3.3.0"
+    "@ethereumjs/vm" "^5.5.2"
     "@ethersproject/abi" "^5.1.2"
     "@sentry/node" "^5.18.1"
     "@solidity-parser/parser" "^0.11.0"
@@ -6278,7 +6239,7 @@ hardhat@^2.0.6:
     eth-sig-util "^2.5.2"
     ethereum-cryptography "^0.1.2"
     ethereumjs-abi "^0.6.8"
-    ethereumjs-util "^7.0.10"
+    ethereumjs-util "^7.1.0"
     find-up "^2.1.0"
     fp-ts "1.19.3"
     fs-extra "^7.0.1"
