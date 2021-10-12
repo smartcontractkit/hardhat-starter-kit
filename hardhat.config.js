@@ -14,6 +14,7 @@ require("./tasks/price-consumer")
 require("./tasks/random-number-consumer")
 require("./tasks/price-consumer")
 require("./tasks/api-consumer")
+require("@appliedblockchain/chainlink-plugins-fund-link")
 
 require('dotenv').config()
 
@@ -40,10 +41,10 @@ module.exports = {
         },
         kovan: {
             url: KOVAN_RPC_URL,
-            // accounts: [PRIVATE_KEY],
-            accounts: {
-                mnemonic: MNEMONIC,
-            },
+             accounts: [PRIVATE_KEY],
+            //accounts: {
+           //     mnemonic: MNEMONIC,
+           // },
             saveDeployments: true,
         },
         rinkeby: {
