@@ -5,17 +5,16 @@ require("@nomiclabs/hardhat-waffle")
 require("@nomiclabs/hardhat-ethers")
 require("@nomiclabs/hardhat-truffle5")
 require("@nomiclabs/hardhat-etherscan")
-require("@appliedblockchain/chainlink-plugins-api-consumer")
-require("@appliedblockchain/chainlink-plugins-price-consumer")
-require("@appliedblockchain/chainlink-plugins-random-number-consumer")
-require("@appliedblockchain/chainlink-plugins-fund-link")
 require("hardhat-deploy")
 require("./tasks/accounts")
 require("./tasks/balance")
 require("./tasks/withdraw-link")
 require("./tasks/block-number")
 require("./tasks/price-consumer")
-
+require("./tasks/random-number-consumer")
+require("./tasks/price-consumer")
+require("./tasks/api-consumer")
+require("@appliedblockchain/chainlink-plugins-fund-link")
 
 require('dotenv').config()
 
@@ -42,10 +41,10 @@ module.exports = {
         },
         kovan: {
             url: KOVAN_RPC_URL,
-            // accounts: [PRIVATE_KEY],
-            accounts: {
-                mnemonic: MNEMONIC,
-            },
+             accounts: [PRIVATE_KEY],
+            //accounts: {
+           //     mnemonic: MNEMONIC,
+           // },
             saveDeployments: true,
         },
         rinkeby: {

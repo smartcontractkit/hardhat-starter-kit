@@ -19,7 +19,7 @@
 ## Installation
 
 ### Kovan Ethereum Testnet
-Set your `KOVAN_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). You can get one for free at [Infura's site.](https://infura.io/) You'll also need to set the variable `MNEMONIC` which is your mnemonic from your wallet, ie MetaMask. This is needed for deploying contracts to public networks. You can optionally set your `PRIVATE_KEY` instead with some changes to the `hardhat.config.js`.
+Set your `KOVAN_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). You can get one for free at [Infura's site.](https://infura.io/) You'll also need to set the variable `PRIVATE_KEY`, which is your private key from your wallet, ie MetaMask. This is needed for deploying contracts to public networks. You can optionally set your `MNEMONIC` environment variable instead with some changes to the `hardhat.config.js`.
 
 ### Matic Mumbai Testnet
 Set your `MUMBAI_RPC_URL` [environment variable](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). You can get one from the [Matic docs](https://docs.matic.network/docs/develop/network-details/network). You'll also need to set the variable `PRIVATE_KEY` which is your private key from your wallet, ie MetaMask. This is needed for deploying contracts to public networks. You can obtain testnet MATIC and LINK via the [MATIC Faucet](https://faucet.matic.network/)
@@ -34,7 +34,7 @@ Don't commit and push any changes to .env files that may contain sensitive infor
 `.env` example:
 ```
 KOVAN_RPC_URL='www.infura.io/asdfadsfafdadf'
-MNEMONIC='cat dog frog...'
+PRIVATE_KEY='abcdef'
 MAINNET_RPC_URL="https://eth-mainnet.alchemyapi.io/v2/your-api-key"
 MUMBAI_RPC_URL='https://rpc-mumbai.maticvigil.com'
 POLYGON_MAINNET_RPC_URL='https://rpc-mainnet.maticvigil.com'
@@ -42,7 +42,7 @@ POLYGON_MAINNET_RPC_URL='https://rpc-mainnet.maticvigil.com'
 `bash` example
 ```
 export KOVAN_RPC_URL='www.infura.io/asdfadsfafdadf'
-export MNEMONIC='cat dog frog...'
+export PRIVATE_KEY='abcdef'
 export MAINNET_RPC_URL='https://eth-mainnet.alchemyapi.io/v2/your-api-key'
 export MUMBAI_RPC_URL='https://rpc-mumbai.maticvigil.com'
 export POLYGON_MAINNET_RPC_URL='https://rpc-mainnet.maticvigil.com'
