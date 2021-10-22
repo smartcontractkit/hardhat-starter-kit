@@ -1,12 +1,17 @@
-pragma solidity 0.6.6;
+pragma solidity ^0.8.7;
 
-import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
+import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
+
+/**
+ * THIS IS AN EXAMPLE CONTRACT WHICH USES HARDCODED VALUES FOR CLARITY.
+ * PLEASE DO NOT USE THIS CODE IN PRODUCTION.
+ */
 contract RandomNumberConsumer is VRFConsumerBase {
 
     bytes32 internal keyHash;
     uint256 internal fee;
+
     uint256 public randomResult;
-    event RequestedRandomness(bytes32 requestId);
 
     /**
      * Constructor inherits VRFConsumerBase
@@ -33,8 +38,8 @@ contract RandomNumberConsumer is VRFConsumerBase {
      * Requests randomness
      */
     function getRandomNumber() public returns (bytes32 requestId) {
-        requestId = requestRandomness(keyHash, fee);
-        emit RequestedRandomness(requestId);
+        require(LINK.balanceOf(address(this)) >= fee, "Not enough LINK - fill contract with faucet");
+        return requestRandomness(keyHash, fee);
     }
 
     /**
@@ -44,13 +49,5 @@ contract RandomNumberConsumer is VRFConsumerBase {
         randomResult = randomness;
     }
 
-    /**
-     * Withdraw LINK from this contract
-     *
-     * DO NOT USE THIS IN PRODUCTION AS IT CAN BE CALLED BY ANY ADDRESS.
-     * THIS IS PURELY FOR EXAMPLE PURPOSES.
-     */
-    function withdrawLink() external {
-        require(LINK.transfer(msg.sender, LINK.balanceOf(address(this))), "Unable to transfer");
-    }
+    // function withdrawLink() external {} - Implement a withdraw function to avoid locking your LINK in the contract
 }

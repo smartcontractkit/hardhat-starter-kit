@@ -20,8 +20,8 @@ skip.if(developmentChains.includes(network.name)).
       const tx_receipt = await transaction.wait()
       const requestId = tx_receipt.events[2].topics[1]
 
-      //wait 30 secs for oracle to callback
-      await new Promise(resolve => setTimeout(resolve, 30000))
+      //wait 60 secs for oracle to callback
+      await new Promise(resolve => setTimeout(resolve, 60000))
 
       const result = await randomNumberConsumer.randomResult()
       console.log("VRF Result: ", new ethers.BigNumber.from(result._hex).toString())
