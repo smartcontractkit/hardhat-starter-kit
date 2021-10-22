@@ -1,9 +1,13 @@
-pragma solidity ^0.6.6;
+pragma solidity ^0.8.7;
 
-import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
-import "@chainlink/contracts/src/v0.6/vendor/Ownable.sol";
+import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 
-contract APIConsumer is ChainlinkClient, Ownable {
+/**
+ * THIS IS AN EXAMPLE CONTRACT WHICH USES HARDCODED VALUES FOR CLARITY.
+ * PLEASE DO NOT USE THIS CODE IN PRODUCTION.
+ */
+contract APIConsumer is ChainlinkClient {
+    using Chainlink for Chainlink.Request;
 
     uint256 public volume;
 
@@ -13,8 +17,9 @@ contract APIConsumer is ChainlinkClient, Ownable {
 
     /**
      * Network: Kovan
-     * Oracle: 0x2f90A6D021db21e1B2A077c5a37B3C7E75D15b7e
-     * Job ID: 29fa9aa13bf1468788b7cc4a500a45b8
+     * Oracle: 0xc57B33452b4F7BB189bB5AfaE9cc4aBa1f7a4FD8 (Chainlink Devrel
+     * Node)
+     * Job ID: d5270d1c311941d0b08bead21fea7747
      * Fee: 0.1 LINK
      */
     constructor(address _oracle, string memory _jobId, uint256 _fee, address _link) public {
@@ -70,15 +75,6 @@ contract APIConsumer is ChainlinkClient, Ownable {
         volume = _volume;
     }
 
-    /**
-     * Withdraw LINK from this contract
-     *
-     */
-    function withdrawLink() external onlyOwner {
-        LinkTokenInterface linkToken = LinkTokenInterface(chainlinkTokenAddress());
-        require(linkToken.transfer(msg.sender, linkToken.balanceOf(address(this))), "Unable to transfer");
-    }
-
     function stringToBytes32(string memory source) public pure returns (bytes32 result) {
         bytes memory tempEmptyStringTest = bytes(source);
         if (tempEmptyStringTest.length == 0) {
@@ -89,4 +85,7 @@ contract APIConsumer is ChainlinkClient, Ownable {
             result := mload(add(source, 32))
         }
     }
+
+    // function withdrawLink() external {} - Implement a withdraw function to avoid locking your LINK in the contract
 }
+

@@ -14,6 +14,7 @@ require("./tasks/price-consumer")
 require("./tasks/random-number-consumer")
 require("./tasks/price-consumer")
 require("./tasks/api-consumer")
+require("./tasks/keepers")
 require("@appliedblockchain/chainlink-plugins-fund-link")
 
 require('dotenv').config()
@@ -96,6 +97,9 @@ module.exports = {
     },
     solidity: {
         compilers: [
+            {
+                version: "0.8.7"
+            },
             {
                 version: "0.6.6"
             },
