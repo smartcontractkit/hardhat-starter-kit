@@ -16,7 +16,7 @@ task("withdraw-link", "Returns any LINK left in deployed contract")
         const LinkToken = await ethers.getContractFactory("LinkToken")
         const linkTokenContract = new ethers.Contract(linkTokenAddress, LinkToken.interface, signer)
         const balanceHex = await linkTokenContract.balanceOf(contractAddr)
-        const balance = await web3.utils.toBN(balanceHex._hex).toString()
+        const balance = await ethers.BigNumber.from(balanceHex._hex).toString()
         console.log('LINK balance of contract: ' + contractAddr + " is " + balance / Math.pow(10,18))
 
         if (balance > 0) {

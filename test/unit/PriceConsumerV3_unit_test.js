@@ -19,7 +19,7 @@ skip.if(!developmentChains.includes(network.name)).
 
     it('should return a positive value', async () => {
       let result = await priceConsumerV3.getLatestPrice()
-      console.log("Price Feed Value: ", new web3.utils.BN(result._hex).toString())
-      expect(new web3.utils.BN(result._hex).toString()).to.be.a.bignumber.that.is.greaterThan(new web3.utils.BN(0))
+      console.log("Price Feed Value: ", new ethers.BigNumber.from(result._hex).toString())
+      expect(new ethers.BigNumber.from(result._hex).toString()).to.be.a.bignumber.that.is.greaterThan(new ethers.BigNumber.from(0).toString())
     })
   })

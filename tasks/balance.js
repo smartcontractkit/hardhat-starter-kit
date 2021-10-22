@@ -1,10 +1,15 @@
+const { ethers } = require("ethers");
+
+const network = process.env.NETWORK;
+const provider = ethers.getDefaultProvider(network)
+
 task("balance", "Prints an account's balance")
     .addParam("account", "The account's address")
     .setAction(async taskArgs => {
-        const account = web3.utils.toChecksumAddress(taskArgs.account)
-        const balance = await web3.eth.getBalance(account)
+        const account = ethers.utils.getAddress(taskArgs.account)
+        const balance = await provider.getBalance(account)
 
-        console.log(web3.utils.fromWei(balance, "ether"), "ETH")
+        console.log(ethers.utils.formatEther(balance), "ETH")
     })
 
 module.exports = {}

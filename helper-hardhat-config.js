@@ -90,9 +90,9 @@ const autoFundCheck = async (contractAddr, networkName, linkTokenAddress, additi
     const LinkToken = await ethers.getContractFactory("LinkToken")
     const linkTokenContract = new ethers.Contract(linkTokenAddress, LinkToken.interface, signer)
     const balanceHex = await linkTokenContract.balanceOf(signer.address)
-    const balance = await web3.utils.toBN(balanceHex._hex).toString()
+    const balance = await ethers.BigNumber.from(balanceHex._hex).toString()
     const contractBalanceHex = await linkTokenContract.balanceOf(contractAddr)
-    const contractBalance = await web3.utils.toBN(contractBalanceHex._hex).toString()
+    const contractBalance = await ethers.BigNumber.from(contractBalanceHex._hex).toString()
     if (balance > amount && amount > 0 && contractBalance < amount) {
         //user has enough LINK to auto-fund
         //and the contract isn't already funded

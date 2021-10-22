@@ -24,7 +24,7 @@ skip.if(developmentChains.includes(network.name)).
       await new Promise(resolve => setTimeout(resolve, 30000))
 
       const result = await randomNumberConsumer.randomResult()
-      console.log("VRF Result: ", new web3.utils.BN(result._hex).toString())
-      expect(new web3.utils.BN(result._hex)).to.be.a.bignumber.that.is.greaterThan(new web3.utils.BN(0))
+      console.log("VRF Result: ", new ethers.BigNumber.from(result._hex).toString())
+      expect(new ethers.BigNumber.from(result._hex).toString()).to.be.a.bignumber.that.is.greaterThan(new ethers.BigNumber.from(0).toString())
     })
   })

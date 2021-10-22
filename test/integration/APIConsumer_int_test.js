@@ -25,7 +25,7 @@ skip.if(developmentChains.includes(network.name)).
 
       //Now check the result
       const result = await apiConsumer.volume()
-      console.log("API Consumer Volume: ", new web3.utils.BN(result._hex).toString())
-      expect(new web3.utils.BN(result._hex)).to.be.a.bignumber.that.is.greaterThan(new web3.utils.BN(0))
+      console.log("API Consumer Volume: ", new ethers.BigNumber.from(result._hex).toString())
+      expect(new ethers.BigNumber.from(result._hex).toString()).to.be.a.bignumber.that.is.greaterThan(new ethers.BigNumber.from(0).toString())
     })
   })
