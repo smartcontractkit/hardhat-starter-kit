@@ -168,6 +168,14 @@ Once you have successfully made a request for a random number, you can see the r
 npx hardhat read-random-number --contract insert-contract-address-here --network network
 ```
 
+### Keepers
+The KeepersCounter contract is a simple Chainlink Keepers enabled contract that simply maintains a counter variable that gets incremented each time the performUpkeep task is performed by a Chainlink Keeper. Once the contract is deployed, you should head to [https://keepers.chain.link/](https://keepers.chain.link/) to register it for upkeeps, then you can use the task below to view the counter variable that gets incremeneted by Chainlink Keepers
+
+
+```bash
+npx hardhat read-keepers-counter --contract insert-contract-address-here --network network
+```
+
 ## Verify on Etherscan
 
 You'll need an `ETHERSCAN_API_KEY` environment variable. You can get one from the [Etherscan API site.](https://etherscan.io/apis)
