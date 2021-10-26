@@ -6,7 +6,9 @@ artifacts
 cache
 deployments
 node_modules
-
+coverage
+coverage.json
+typechain
 
 # don't push the environment vars!
 .env
@@ -96,5 +98,3 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 
-node_modules
-node_modules
