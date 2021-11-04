@@ -6,6 +6,8 @@ require("@nomiclabs/hardhat-ethers")
 require("@nomiclabs/hardhat-truffle5")
 require("@nomiclabs/hardhat-etherscan")
 require("hardhat-deploy")
+require("hardhat-gas-reporter")
+require("solidity-coverage")
 require("./tasks/accounts")
 require("./tasks/balance")
 require("./tasks/withdraw-link")
@@ -85,6 +87,10 @@ module.exports = {
         // Your API key for Etherscan
         // Obtain one at https://etherscan.io/
         apiKey: ETHERSCAN_API_KEY
+    },
+    gasReporter: {
+        enabled: process.env.REPORT_GAS !== undefined,
+        currency: "USD",
     },
     namedAccounts: {
         deployer: {
