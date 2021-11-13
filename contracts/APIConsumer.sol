@@ -22,7 +22,7 @@ contract APIConsumer is ChainlinkClient {
      * Job ID: d5270d1c311941d0b08bead21fea7747
      * Fee: 0.1 LINK
      */
-    constructor(address _oracle, string memory _jobId, uint256 _fee, address _link) public {
+    constructor(address _oracle, bytes32 _jobId, uint256 _fee, address _link) public {
         if (_link == address(0)) {
             setPublicChainlinkToken();
         } else {
@@ -32,7 +32,7 @@ contract APIConsumer is ChainlinkClient {
         // jobId = "29fa9aa13bf1468788b7cc4a500a45b8";
         // fee = 0.1 * 10 ** 18; // 0.1 LINK
         oracle = _oracle;
-        jobId = stringToBytes32(_jobId);
+        jobId = _jobId;
         fee = _fee;
     }
 
@@ -73,17 +73,6 @@ contract APIConsumer is ChainlinkClient {
     function fulfill(bytes32 _requestId, uint256 _volume) public recordChainlinkFulfillment(_requestId)
     {
         volume = _volume;
-    }
-
-    function stringToBytes32(string memory source) public pure returns (bytes32 result) {
-        bytes memory tempEmptyStringTest = bytes(source);
-        if (tempEmptyStringTest.length == 0) {
-            return 0x0;
-        }
-
-        assembly {
-            result := mload(add(source, 32))
-        }
     }
 
     // function withdrawLink() external {} - Implement a withdraw function to avoid locking your LINK in the contract

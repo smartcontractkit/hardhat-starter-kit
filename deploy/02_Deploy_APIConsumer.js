@@ -23,7 +23,7 @@ module.exports = async ({
     linkTokenAddress = networkConfig[chainId]['linkToken']
     oracle = networkConfig[chainId]['oracle']
   }
-  const jobId = networkConfig[chainId]['jobId']
+  const jobId = ethers.utils.toUtf8Bytes(networkConfig[chainId]['jobId'])
   const fee = networkConfig[chainId]['fee']
   const networkName = networkConfig[chainId]['name']
 
