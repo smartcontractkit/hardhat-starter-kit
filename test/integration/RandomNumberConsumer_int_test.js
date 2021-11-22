@@ -20,7 +20,7 @@ skip.if(developmentChains.includes(network.name)).
       const tx_receipt = await transaction.wait()
       const requestId = tx_receipt.events[2].topics[1]
 
-      //wait 60 secs for oracle to callback
+      //wait 60 secs for oracle to callback!
       await new Promise(resolve => setTimeout(resolve, 60000))
 
       const result = await randomNumberConsumer.randomResult()
