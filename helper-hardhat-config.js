@@ -5,7 +5,8 @@ const networkConfig = {
         keyHash: '0x6c3699283bda56ad74f6b855546325b68d482e983852a7a82979cc4807b641f4',
         jobId: '29fa9aa13bf1468788b7cc4a500a45b8',
         fundAmount: "1000000000000000000",
-        keepersUpdateInterval: "30"
+        keepersUpdateInterval: "30",
+        multiplierEnabled: "true"
     },
     31337: {
         name: 'localhost',
@@ -13,7 +14,8 @@ const networkConfig = {
         keyHash: '0x6c3699283bda56ad74f6b855546325b68d482e983852a7a82979cc4807b641f4',
         jobId: '29fa9aa13bf1468788b7cc4a500a45b8',
         fundAmount: "1000000000000000000",
-        keepersUpdateInterval: "30"
+        keepersUpdateInterval: "30",
+        multiplierEnabled: "true"
     },
     42: {
         name: 'kovan',
@@ -25,7 +27,8 @@ const networkConfig = {
         jobId: 'd5270d1c311941d0b08bead21fea7747',
         fee: '100000000000000000',
         fundAmount: "1000000000000000000",
-        keepersUpdateInterval: "30"
+        keepersUpdateInterval: "30",
+        multiplierEnabled: "true"
     },
     4: {
         name: 'rinkeby',
@@ -37,13 +40,15 @@ const networkConfig = {
         jobId: '6b88e0402e5d415eb946e528b8e0c7ba',
         fee: '100000000000000000',
         fundAmount: "1000000000000000000",
-        keepersUpdateInterval: "30"
+        keepersUpdateInterval: "30",
+        multiplierEnabled: "true"
     },
     1: {
         name: 'mainnet',
         linkToken: '0x514910771af9ca656af840dff83e8264ecf986ca',
         fundAmount: "0",
-        keepersUpdateInterval: "30"
+        keepersUpdateInterval: "30",
+        multiplierEnabled: "true"
     },
     5: {
         name: 'goerli',

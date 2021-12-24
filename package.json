@@ -14,6 +14,7 @@
     "@nomiclabs/hardhat-etherscan": "^2.1.7",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@nomiclabs/hardhat-web3": "^2.0.0",
+    "@openzeppelin/test-helpers": "^0.5.15",
     "chai": "^4.3.4",
     "chai-bignumber": "^3.0.0",
     "chai-bn": "^0.2.1",

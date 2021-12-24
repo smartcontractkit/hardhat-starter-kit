@@ -10,11 +10,12 @@ module.exports = async ({
     const { deployer } = await getNamedAccounts()
     const chainId = await getChainId()
     let keepersUpdateInterval = networkConfig[chainId]['keepersUpdateInterval']
+    let multiplierEnabled = networkConfig[chainId]['multiplierEnabled']
     // Price Feed Address, values can be obtained at https://docs.chain.link/docs/reference-contracts
     // Default one below is ETH/USD contract on Kovan
     const keepersCounter = await deploy('Counter', {
         from: deployer,
-        args: [keepersUpdateInterval],
+        args: [keepersUpdateInterval, multiplierEnabled],
         log: true
     })
     log("Head to https://keepers.chain.link/ to register your contract for upkeeps. Then run the following command to track the counter updates")
