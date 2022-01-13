@@ -21,8 +21,6 @@
 ### Kovan Ethereum Testnet
 Set your `KOVAN_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). You can get one for free at [Infura's site.](https://infura.io/) You'll also need to set the variable `PRIVATE_KEY`, which is your private key from your wallet, ie MetaMask. This is needed for deploying contracts to public networks. You can optionally set your `MNEMONIC` environment variable instead with some changes to the `hardhat.config.js`.
 
-### Matic Mumbai Testnet
-Set your `MUMBAI_RPC_URL` [environment variable](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). You can get one from the [Matic docs](https://docs.matic.network/docs/develop/network-details/network). You'll also need to set the variable `PRIVATE_KEY` which is your private key from your wallet, ie MetaMask. This is needed for deploying contracts to public networks. You can obtain testnet MATIC and LINK via the [MATIC Faucet](https://faucet.matic.network/)
 
 ### Setting Environment Variables
 You can set these in your `.env` file if you're unfamiliar with how setting environment variables work. Check out our [.env example](https://github.com/smartcontractkit/hardhat-starter-kit/blob/main/.env.example). If you wish to use this method to set these variables, update the values in the .env.example file, and then rename it to '.env'
@@ -36,7 +34,6 @@ Don't commit and push any changes to .env files that may contain sensitive infor
 KOVAN_RPC_URL='www.infura.io/asdfadsfafdadf'
 PRIVATE_KEY='abcdef'
 MAINNET_RPC_URL="https://eth-mainnet.alchemyapi.io/v2/your-api-key"
-MUMBAI_RPC_URL='https://rpc-mumbai.maticvigil.com'
 POLYGON_MAINNET_RPC_URL='https://rpc-mainnet.maticvigil.com'
 ```
 `bash` example
@@ -44,7 +41,6 @@ POLYGON_MAINNET_RPC_URL='https://rpc-mainnet.maticvigil.com'
 export KOVAN_RPC_URL='www.infura.io/asdfadsfafdadf'
 export PRIVATE_KEY='abcdef'
 export MAINNET_RPC_URL='https://eth-mainnet.alchemyapi.io/v2/your-api-key'
-export MUMBAI_RPC_URL='https://rpc-mumbai.maticvigil.com'
 export POLYGON_MAINNET_RPC_URL='https://rpc-mainnet.maticvigil.com'
 ```
 
@@ -89,8 +85,6 @@ npx hardhat deploy --tags main
 ## Deploy
 
 Deployment scripts are in the [deploy](https://github.com/smartcontractkit/hardhat-starter-kit/tree/main/deploy) directory. If required, edit the desired environment specific variables or constructor parameters in each script, then run the hardhat deployment plugin as follows. If no network is specified, it will default to the Kovan network.
-
-This will deploy to a local hardhat network
 
 This will deploy to a local hardhat network
 
