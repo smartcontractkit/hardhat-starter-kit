@@ -50,17 +50,6 @@ const networkConfig = {
         linkToken: '0x326c977e6efc84e512bb9c30f76e30c160ed06fb',
         fundAmount: "0"
     },
-    80001: {
-        name: 'mumbai',
-        linkToken: '0x326C977E6efc84E512bB9C30f76E30c160eD06FB',
-        ethUsdPriceFeed: '0x0715A7794a1dc8e42615F059dD6e406A6594651A',
-        keyHash: '0x6e75b569a01ef56d18cab6a8e71e6600d6ce853834d4a5748b720d06f878b3a4',
-        vrfCoordinator: '0x8C7382F9D8f56b33781fE506E897a4F1e2d17255',
-        oracle: '0x58bbdbfb6fca3129b91f0dbe372098123b38b5e9',
-        jobId: 'da20aae0e4c843f6949e5cb3f7cfe8c4',
-        fee: '100000000000000',
-        fundAmount: "100000000000000"
-    },
     137: {
         name: 'polygon',
         linkToken: '0xb0897686c545045afc77cf20ec7a532e3120e0f1',

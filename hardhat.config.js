@@ -23,12 +23,14 @@ require('dotenv').config()
 const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL || process.env.ALCHEMY_MAINNET_RPC_URL || "https://eth-mainnet.alchemyapi.io/v2/your-api-key"
 const RINKEBY_RPC_URL = process.env.RINKEBY_RPC_URL || "https://eth-rinkeby.alchemyapi.io/v2/your-api-key"
 const KOVAN_RPC_URL = process.env.KOVAN_RPC_URL || "https://eth-kovan.alchemyapi.io/v2/your-api-key"
-const MUMBAI_RPC_URL = process.env.MUMBAI_RPC_URL || "https://polygon-mumbai.alchemyapi.io/v2/your-api-key"
 const POLYGON_MAINNET_RPC_URL = process.env.POLYGON_MAINNET_RPC_URL || "https://polygon-mainnet.alchemyapi.io/v2/your-api-key"
 const MNEMONIC = process.env.MNEMONIC || "your mnemonic"
-const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "Your etherscan API key"
 // optional
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "your private key"
+
+// Your API key for Etherscan, obtain one at https://etherscan.io/
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "Your etherscan API key"
+const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY || "Your polygonscan API key"
 
 module.exports = {
     defaultNetwork: "hardhat",
@@ -71,11 +73,6 @@ module.exports = {
             },
             saveDeployments: true,
         },
-        mumbai: {
-            url: MUMBAI_RPC_URL,
-            accounts: [PRIVATE_KEY],
-            saveDeployments: true,
-        },
         polygon: {
             url: POLYGON_MAINNET_RPC_URL,
             accounts: [PRIVATE_KEY],
@@ -83,9 +80,12 @@ module.exports = {
         },
     },
     etherscan: {
-        // Your API key for Etherscan
-        // Obtain one at https://etherscan.io/
-        apiKey: ETHERSCAN_API_KEY
+        // npx hardhat verify --network <NETWORK> <CONTRACT_ADDRESS> <CONSTRUCTOR_PARAMETERS>
+		apiKey: {
+			rinkeby: ETHERSCAN_API_KEY,
+			kovan: ETHERSCAN_API_KEY,
+			polygon: POLYGONSCAN_API_KEY,
+		},
     },
     gasReporter: {
         enabled: process.env.REPORT_GAS !== undefined,
