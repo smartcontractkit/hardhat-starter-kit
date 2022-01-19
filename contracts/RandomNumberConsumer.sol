@@ -7,7 +7,6 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
  * PLEASE DO NOT USE THIS CODE IN PRODUCTION.
  */
 contract RandomNumberConsumer is VRFConsumerBase {
-
     bytes32 internal keyHash;
     uint256 internal fee;
 
@@ -21,14 +20,17 @@ contract RandomNumberConsumer is VRFConsumerBase {
      * LINK token address:                0xa36085F69e2889c224210F603D836748e7dC0088
      * Key Hash: 0x6c3699283bda56ad74f6b855546325b68d482e983852a7a82979cc4807b641f4
      */
-    constructor(address _vrfCoordinator,
-                address _link,
-                bytes32 _keyHash,
-                uint _fee)
+    constructor(
+        address _vrfCoordinator,
+        address _link,
+        bytes32 _keyHash,
+        uint256 _fee
+    )
+        public
         VRFConsumerBase(
             _vrfCoordinator, // VRF Coordinator
-            _link  // LINK Token
-        ) public
+            _link // LINK Token
+        )
     {
         keyHash = _keyHash;
         fee = _fee;
@@ -49,5 +51,8 @@ contract RandomNumberConsumer is VRFConsumerBase {
         randomResult = randomness;
     }
 
-    // function withdrawLink() external {} - Implement a withdraw function to avoid locking your LINK in the contract
+    /**
+     * Implement a withdraw function to avoid locking your LINK in the contract
+     */
+    function withdrawLink() external {}
 }
