@@ -183,6 +183,12 @@ example:
 npx hardhat verify --network kovan 0x9279791897f112a41FfDa267ff7DbBC46b96c296 "0x9326BFA02ADD2366b30bacB125260Af641031331"
 ```
 
+### View Contracts Size
+
+```
+yarn run hardhat size-contracts
+```
+
 ### Linting
 
 ```
