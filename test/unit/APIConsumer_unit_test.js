@@ -12,7 +12,7 @@ skip.if(!developmentChains.includes(network.name)).
 
     let apiConsumer, linkToken, mockOracle
 
-    before(async () => {
+    beforeEach(async () => {
       const chainId = await getChainId()
       await deployments.fixture(['mocks', 'api'])
       const LinkToken = await deployments.get('LinkToken')
@@ -35,7 +35,6 @@ skip.if(!developmentChains.includes(network.name)).
 
     afterEach(async () => {
       mockOracle.removeAllListeners()
-      apiConsumer.removeAllListeners()
     })
 
     it('Should successfully make an API request', async () => {
@@ -49,17 +48,15 @@ skip.if(!developmentChains.includes(network.name)).
 
     it("Should successfully make an API request and get a result", (done) => {
       mockOracle.once("OracleRequest",
-        (_specId, _sender, requestId, _payment, _cbAddress, _callbackFuncId, expiration, _dataVersion, _data) => {
+        async (_specId, _sender, requestId, _payment, _cbAddress, _callbackFuncId, expiration, _dataVersion, _data) => {
           console.log("OracleRequest:", requestId, _data);
           // Mock the fulfillment of the request
-          mockOracle.fulfillOracleRequest(requestId, numToBytes32(1));
+          const callbackValue = 1
+          await mockOracle.fulfillOracleRequest(requestId, numToBytes32(callbackValue));
           // Now check the result
-          apiConsumer.volume().then((result) => {
-            console.log("API Consumer Volume: ", new ethers.BigNumber.from(result._hex).toString());
-            expect(new ethers.BigNumber.from(result._hex).toString())
-              .to.be.a.bignumber.that.is.greaterThan(new ethers.BigNumber.from(0).toString());
-            done();
-          });
+          const volume = await apiConsumer.volume()
+          expect(volume).to.equal(ethers.BigNumber.from(callbackValue))
+          done();
       });
       apiConsumer.requestVolumeData();
     });
