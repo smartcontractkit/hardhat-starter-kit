@@ -8,6 +8,7 @@ require("@nomiclabs/hardhat-etherscan")
 require("hardhat-deploy")
 require("hardhat-gas-reporter")
 require("solidity-coverage")
+require('hardhat-contract-sizer');
 require("./tasks/accounts")
 require("./tasks/balance")
 require("./tasks/withdraw-link")
@@ -90,6 +91,10 @@ module.exports = {
     gasReporter: {
         enabled: process.env.REPORT_GAS !== undefined,
         currency: "USD",
+    },
+    contractSizer: {
+        runOnCompile: false,
+        only: ["APIConsumer", "KeepersCounter", "PriceConsumerV3", "RandomNumberConsumer"],
     },
     namedAccounts: {
         deployer: {
