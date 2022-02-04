@@ -35,6 +35,7 @@ KOVAN_RPC_URL='www.infura.io/asdfadsfafdadf'
 PRIVATE_KEY='abcdef'
 MAINNET_RPC_URL="https://eth-mainnet.alchemyapi.io/v2/your-api-key"
 POLYGON_MAINNET_RPC_URL='https://rpc-mainnet.maticvigil.com'
+REPORT_GAS=true
 ```
 `bash` example
 ```
@@ -42,6 +43,7 @@ export KOVAN_RPC_URL='www.infura.io/asdfadsfafdadf'
 export PRIVATE_KEY='abcdef'
 export MAINNET_RPC_URL='https://eth-mainnet.alchemyapi.io/v2/your-api-key'
 export POLYGON_MAINNET_RPC_URL='https://rpc-mainnet.maticvigil.com'
+export REPORT_GAS=true
 ```
 
 If you plan on deploying to a local [Hardhat network](https://hardhat.org/hardhat-network/) that's a fork of the Ethereum mainnet instead of a public test network like Kovan, you'll also need to set your `MAINNET_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) and uncomment the `forking` section in `hardhat.config.js`. You can get one for free at [Alchemy's site.](https://alchemyapi.io/).
