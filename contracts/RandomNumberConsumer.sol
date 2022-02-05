@@ -8,8 +8,8 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
  * PLEASE DO NOT USE THIS CODE IN PRODUCTION.
  */
 contract RandomNumberConsumer is VRFConsumerBase {
-    bytes32 internal keyHash;
-    uint256 internal fee;
+    bytes32 internal immutable keyHash;
+    uint256 internal immutable fee;
 
     uint256 public randomResult;
 

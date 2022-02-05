@@ -12,9 +12,9 @@ contract APIConsumer is ChainlinkClient {
 
     uint256 public volume;
 
-    address private oracle;
-    bytes32 private jobId;
-    uint256 private fee;
+    address private immutable oracle;
+    bytes32 private immutable jobId;
+    uint256 private immutable fee;
 
     /**
      * @notice Executes once when a contract is created to initialize state variables
