@@ -1,51 +1,39 @@
 {
-  "name": "chainlink-hardhat-box",
+  "name": "hardhat-starter-kit",
   "version": "1.0.0",
   "description": "",
   "scripts": {
     "test": "hardhat test test/unit/PriceConsumerV3_unit_test.js --network hardhat && hardhat test test/unit/APIConsumer_unit_test.js --network hardhat && hardhat test test/unit/RandomNumberConsumer_unit_test.js --network hardhat && hardhat test test/unit/KeepersCounter_unit_test.js --network hardhat",
-    "test-integration": "hardhat test test/integration/APIConsumer_int_test.js --network kovan && hardhat test test/integration/RandomNumberConsumer_int_test.js --network kovan",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "test-staging": "hardhat test test/staging/APIConsumer_int_test.js --network kovan && hardhat test test/staging/RandomNumberConsumer_int_test.js --network kovan",
+    "lint": "solhint 'contracts/*.sol'",
+    "lint:fix": "solhint 'contracts/**/*.sol' --fix",
+    "format": "prettier --write ."
   },
   "license": "MIT",
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13",
     "@nomiclabs/hardhat-etherscan": "^3.0.0",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
-    "@nomiclabs/hardhat-web3": "^2.0.0",
     "chai": "^4.3.4",
-    "chai-bignumber": "^3.0.0",
-    "chai-bn": "^0.2.1",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.25.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.4.1",
-    "eslint-plugin-promise": "^5.1.1",
     "ethereum-waffle": "^3.4.0",
     "ethers": "^5.5.1",
     "hardhat": "^2.6.7",
     "hardhat-contract-sizer": "^2.4.0",
-    "hardhat-deploy": "^0.7.0-beta.39",
+    "hardhat-deploy": "^0.9.29",
     "hardhat-gas-reporter": "^1.0.7",
     "prettier": "^2.4.1",
-    "prettier-plugin-solidity": "^1.0.0-beta.13",
+    "prettier-plugin-solidity": "^1.0.0-beta.19",
     "solhint": "^3.3.6",
-    "solidity-coverage": "^0.7.17"
+    "solidity-coverage": "^0.7.13"
   },
   "dependencies": {
     "@appliedblockchain/chainlink-contracts": "0.0.4",
     "@appliedblockchain/chainlink-plugins-fund-link": "0.0.1",
-    "@chainlink/contracts": "^0.3.0",
-    "@chainlink/test-helpers": "0.0.5",
+    "@chainlink/contracts": "^0.3.1",
+    "@chainlink/test-helpers": "^0.0.7-alpha",
     "@chainlink/token": "^1.1.0",
-    "@nomiclabs/hardhat-truffle5": "^2.0.0",
     "babel-eslint": "^10.1.0",
-    "dotenv": "^10.0.0",
-    "eslint": "^7.32.0",
-    "mocha-skip-if": "^0.0.3",
-    "transform": "^1.1.2"
+    "dotenv": "^10.0.0"
   },
   "mocha": {
     "timeout": 10000000
