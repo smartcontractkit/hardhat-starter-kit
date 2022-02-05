@@ -13,6 +13,8 @@ contract RandomNumberConsumer is VRFConsumerBase {
 
     uint256 public randomResult;
 
+    event RandomnessFulfilled(bytes32 requestId, uint256 randomness);
+
     /**
      * @notice Constructor inherits VRFConsumerBase
      *
@@ -54,6 +56,8 @@ contract RandomNumberConsumer is VRFConsumerBase {
      */
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
         randomResult = randomness;
+
+        emit RandomnessFulfilled(requestId, randomness);
     }
 
     /**
