@@ -6,7 +6,7 @@
     "compile": "hardhat compile",
     "test": "hardhat test ./test/unit/*.spec.js --network hardhat",
     "test-integration": "hardhat test test/integration/*.spec.js --network kovan",
-    "lint": "eslint .",
+    "lint": "eslint . && solhint ./contracts/*.sol",
     "lint:fix": "eslint . --fix",
     "coverage": "hardhat coverage"
   },
