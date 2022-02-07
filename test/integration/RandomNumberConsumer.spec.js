@@ -10,6 +10,10 @@ skip.if(developmentChains.includes(network.name)).describe("RandomNumberConsumer
     randomNumberConsumer = await ethers.getContractAt("RandomNumberConsumer", RandomNumberConsumer.address)
   })
 
+  afterEach(async () => {
+    randomNumberConsumer.removeAllListeners()
+  })
+
   it("Should successfully make a VRF request and get a result", (done) => {
     randomNumberConsumer.once("RandomnessFulfilled", async () => {
       const result = await randomNumberConsumer.randomResult()

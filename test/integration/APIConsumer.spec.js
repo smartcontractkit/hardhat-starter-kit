@@ -10,6 +10,10 @@ skip.if(developmentChains.includes(network.name)).describe("APIConsumer Integrat
     apiConsumer = await ethers.getContractAt("APIConsumer", APIConsumer.address)
   })
 
+  afterEach(async () => {
+    apiConsumer.removeAllListeners()
+  })
+
   it("Should successfully make an external API request and get a result", (done) => {
     apiConsumer.once("ChainlinkFulfilled", async () => {
       const result = await apiConsumer.volume()
