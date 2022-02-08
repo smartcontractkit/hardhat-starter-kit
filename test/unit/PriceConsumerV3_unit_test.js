@@ -1,25 +1,31 @@
-const { expect } = require('chai')
-const chai = require('chai')
-const BN = require('bn.js')
-const skipIf = require('mocha-skip-if')
-chai.use(require('chai-bn')(BN))
-const { deployments, getChainId } = require('hardhat')
-const { networkConfig, developmentChains } = require('../../helper-hardhat-config')
+const { assert, expect } = require("chai")
+const { network, deployments, ethers } = require("hardhat")
+const { developmentChains } = require("../../helper-hardhat-config")
 
-skip.if(!developmentChains.includes(network.name)).
-  describe('PriceConsumer Unit Tests', async function () {
-    // Price Feed Address, values can be obtained at https://docs.chain.link/docs/reference-contracts
-    let priceConsumerV3
+!developmentChains.includes(network.name)
+  ? describe.skip
+  : describe("PriceConsumer Unit Tests", async function () {
+      // Price Feed Address, values can be obtained at https://docs.chain.link/docs/reference-contracts
+      let priceConsumerV3, mockV3Aggregator
 
-    beforeEach(async () => {
-      await deployments.fixture(['mocks', 'feed'])
-      const PriceConsumerV3 = await deployments.get("PriceConsumerV3")
-      priceConsumerV3 = await ethers.getContractAt("PriceConsumerV3", PriceConsumerV3.address)
+      beforeEach(async () => {
+        await deployments.fixture(["mocks", "feed"])
+        priceConsumerV3 = await ethers.getContract("PriceConsumerV3")
+        mockV3Aggregator = await ethers.getContract("MockV3Aggregator")
+      })
+
+      describe("constructor", () => {
+        it("sets the aggregator addresses correctly", async () => {
+          const response = await priceConsumerV3.getPriceFeed()
+          assert.equal(response, mockV3Aggregator.address)
+        })
+      })
+
+      describe("getLatestPrice", () => {
+        it("should return the same value as the mock", async () => {
+          const priceConsumerResult = await priceConsumerV3.getLatestPrice()
+          const priceFeedResult = (await mockV3Aggregator.latestRoundData()).answer
+          assert.equal(priceConsumerResult.toString(), priceFeedResult.toString())
+        })
+      })
     })
-
-    it('should return a positive value', async () => {
-      let result = await priceConsumerV3.getLatestPrice()
-      console.log("Price Feed Value: ", new ethers.BigNumber.from(result._hex).toString())
-      expect(new ethers.BigNumber.from(result._hex).toString()).to.be.a.bignumber.that.is.greaterThan(new ethers.BigNumber.from(0).toString())
-    })
-  })

@@ -1,40 +1,74 @@
-const { networkConfig, autoFundCheck, developmentChains } = require('../../helper-hardhat-config')
-const skipIf = require('mocha-skip-if')
-const chai = require('chai')
-const { expect } = require('chai')
-const BN = require('bn.js')
-chai.use(require('chai-bn')(BN))
+const { assert, expect } = require("chai")
+const { network, deployments, ethers } = require("hardhat")
+const { developmentChains } = require("../../helper-hardhat-config")
 
+!developmentChains.includes(network.name)
+  ? describe.skip
+  : describe("RandomNumberConsumer Unit Tests", async function () {
+      let randomNumberConsumer, linkToken, vrfCoordinatorMock
 
-skip.if(!developmentChains.includes(network.name)).
-  describe('RandomNumberConsumer Unit Tests', async function () {
+      beforeEach(async () => {
+        await deployments.fixture(["mocks", "vrf"])
+        linkToken = await ethers.getContract("LinkToken")
+        vrfCoordinatorMock = await ethers.getContract("VRFCoordinatorMock")
+        linkTokenAddress = linkToken.address
+        additionalMessage = " --linkaddress " + linkTokenAddress
 
-    let randomNumberConsumer
+        randomNumberConsumer = await ethers.getContract("RandomNumberConsumer")
 
-    beforeEach(async () => {
-      const chainId = await getChainId()
-      await deployments.fixture(['mocks', 'vrf'])
-      const LinkToken = await deployments.get('LinkToken')
-      linkToken = await ethers.getContractAt('LinkToken', LinkToken.address)
-      const networkName = networkConfig[chainId]['name']
+        await hre.run("fund-link", {
+          contract: randomNumberConsumer.address,
+          linkaddress: linkTokenAddress,
+        })
+      })
 
-      linkTokenAddress = linkToken.address
-      additionalMessage = " --linkaddress " + linkTokenAddress
+      it("Should successfully request a random number", async () => {
+        const transaction = await randomNumberConsumer.getRandomNumber()
+        const transactionReceipt = await transaction.wait(1)
+        const requestId = transactionReceipt.events[0].topics[1]
+        console.log("requestId: ", requestId)
+        expect(requestId).to.not.be.null
+      })
 
-      const RandomNumberConsumer = await deployments.get('RandomNumberConsumer')
-      randomNumberConsumer = await ethers.getContractAt('RandomNumberConsumer', RandomNumberConsumer.address)
+      it("Should successfully request a random number and get a result", async () => {
+        const transaction = await randomNumberConsumer.getRandomNumber()
+        const transactionReceipt = await transaction.wait(1)
+        const requestId = transactionReceipt.events[0].topics[1]
+        const randomValue = 777
+        await vrfCoordinatorMock.callBackWithRandomness(
+          requestId,
+          randomValue,
+          randomNumberConsumer.address
+        )
+        assert.equal((await randomNumberConsumer.randomResult()).toString(), randomValue)
+      })
 
-      if (await autoFundCheck(randomNumberConsumer.address, networkName, linkTokenAddress, additionalMessage)) {
-        await hre.run("fund-link", { contract: randomNumberConsumer.address, linkaddress: linkTokenAddress })
-      }
+      it("Our event should successfully fire event on callback", async function () {
+        const randomValue = 777
+        // we setup a promise so we can wait for our callback from the `once` function
+        await new Promise(async (resolve, reject) => {
+          // setup listener for our event
+          randomNumberConsumer.once("ReturnedRandomness", async () => {
+            console.log("ReturnedRandomness event fired!")
+            const result = await randomNumberConsumer.randomResult()
+            // assert throws an error if it fails, so we need to wrap
+            // it in a try/catch so that the promise returns event
+            // if it fails.
+            try {
+              assert.equal(result.toString(), randomValue.toString())
+              resolve()
+            } catch (e) {
+              reject(e)
+            }
+          })
+          const transaction = await randomNumberConsumer.getRandomNumber()
+          const transactionReceipt = await transaction.wait(1)
+          const requestId = transactionReceipt.events[0].topics[1]
+          await vrfCoordinatorMock.callBackWithRandomness(
+            requestId,
+            randomValue,
+            randomNumberConsumer.address
+          )
+        })
+      })
     })
-
-    it('Should successfully make an external random number request', async () => {
-      const transaction = await randomNumberConsumer.getRandomNumber()
-      const tx_receipt = await transaction.wait(1)
-      const requestId = tx_receipt.events[2].topics[1]
-
-      console.log("requestId: ", requestId)
-      expect(requestId).to.not.be.null
-    })
-  })

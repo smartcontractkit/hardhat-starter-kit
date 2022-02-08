@@ -3,3 +3,10 @@ artifacts
 cache
 coverage*
 gasReporterOutput.json
+package.json
+img
+.env
+.*
+README.md
+coverage.json
+deployments
