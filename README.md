@@ -6,8 +6,6 @@
 </p>
 <br/>
 
-<details open>
-</details>
 - [Chainlink Hardhat Box](#chainlink-hardhat-box)
 - [Getting Started](#getting-started)
   - [Requirements](#requirements)
