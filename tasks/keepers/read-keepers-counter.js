@@ -7,7 +7,7 @@ task(
     const contractAddr = taskArgs.contract
     const networkId = network.name
 
-    const KeepersCounterContract = await ethers.getContractFactory("Counter")
+    const KeepersCounterContract = await ethers.getContractFactory("KeepersCounter")
     console.log("Reading counter from Keepers contract ", contractAddr, " on network ", networkId)
 
     //Get signer information

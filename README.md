@@ -56,6 +56,8 @@ It's recommended that you've gone through the [hardhat getting started documenta
     - `yarn --version` And get an output like: `x.x.x`
     - You might need to install it with npm
 
+> If you're familiar with `npx` and `npm` instead of `yarn`, you can use `npx` for execution and `npm` for installing dependencies. 
+
 ## Quickstart
 
 1. Clone and install dependencies
@@ -85,7 +87,7 @@ yarn hardhat test
 or
 
 ```
-npx hardhat test
+yarn hardhat test
 ```
 
 ### Typescript

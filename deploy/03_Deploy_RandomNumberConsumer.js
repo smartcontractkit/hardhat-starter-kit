@@ -63,8 +63,9 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     }
   }
   log("Then run RandomNumberConsumer contract with the following command")
+  const networkName = network.name == "hardhat" ? "localhost" : network.name
   log(
-    `npx hardhat request-random-number --contract ${randomNumberConsumer.address} --network ${network.name}`
+    `yarn hardhat request-random-number --contract ${randomNumberConsumer.address} --network ${networkName}`
   )
   log("----------------------------------------------------")
 }
