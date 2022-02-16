@@ -61,7 +61,8 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   }
 
   log("Run API Consumer contract with following command:")
-  log(`npx hardhat request-data --contract ${apiConsumer.address} --network ${network.name}`)
+  const networkName = network.name == "hardhat" ? "localhost" : network.name
+  log(`yarn hardhat request-data --contract ${apiConsumer.address} --network ${networkName}`)
   log("----------------------------------------------------")
 }
 module.exports.tags = ["all", "api", "main"]

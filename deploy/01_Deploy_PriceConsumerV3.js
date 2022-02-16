@@ -38,7 +38,8 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   }
 
   log("Run Price Feed contract with command:")
-  log(`npx hardhat read-price-feed --contract ${priceConsumerV3.address} --network ${network.name}`)
+  const networkName = network.name == "hardhat" ? "localhost" : network.name
+  log(`yarn hardhat read-price-feed --contract ${priceConsumerV3.address} --network ${networkName}`)
   log("----------------------------------------------------")
 }
 
