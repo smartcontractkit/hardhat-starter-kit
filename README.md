@@ -337,7 +337,7 @@ This will format both your javascript and solidity to look nicer.
 yarn format
 ```
 
-# Estimaging Gas
+# Estimating Gas
 
 To estimate gas, just set a `REPORT_GAS` environment variable to true, and then run:
 
