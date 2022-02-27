@@ -6,16 +6,16 @@
 </p>
 <br/>
 
-- [Chainlink Hardhat Box](#chainlink-hardhat-box)
+- [Chainlink Hardhat Starter Kit](#chainlink-hardhat-starter-kit)
 - [Getting Started](#getting-started)
   - [Requirements](#requirements)
   - [Quickstart](#quickstart)
     - [Typescript](#typescript)
-- [Useage](#useage)
+- [Usage](#usage)
   - [Deploying Contracts](#deploying-contracts)
   - [Run a Local Network](#run-a-local-network)
   - [Using a Testnet or Live Network (like Mainnet or Polygon)](#using-a-testnet-or-live-network-like-mainnet-or-polygon)
-    - [Kovan Ethereum Testnet Setup](#kovan-ethereum-testnet-setup)
+    - [Rinkeby Ethereum Testnet Setup](#rinkeby-ethereum-testnet-setup)
   - [Forking](#forking)
   - [Auto-Funding](#auto-funding)
 - [Test](#test)
@@ -29,11 +29,13 @@
 - [Linting](#linting)
 - [Code Formating](#code-formating)
 - [Estimaging Gas](#estimaging-gas)
+- [Code Coverage](#code-coverage)
+- [Fuzzing](#fuzzing)
 - [Contributing](#contributing)
 - [Thank You!](#thank-you)
   - [Resources](#resources)
 
-# Chainlink Hardhat Box
+# Chainlink Hardhat Starter Kit
  Implementation of the following 4 Chainlink features using the [Hardhat](https://hardhat.org/) development environment:
  - [Chainlink Price Feeds](https://docs.chain.link/docs/using-chainlink-reference-contracts)
  - [Chainlink VRF](https://docs.chain.link/docs/chainlink-vrf)
@@ -99,7 +101,7 @@ git checkout typescript
 yarn
 ```
 
-# Useage
+# Usage
 
 If you run `yarn hardhat --help` you'll get an output of all the tasks you can run. 
 
@@ -139,15 +141,15 @@ To interact with a live or test network, you'll need:
 2. A Private Key
 3. ETH & LINK token (either testnet or real)
 
-Let's look at an example of setting these up using the Kovan testnet. 
+Let's look at an example of setting these up using the Rinkeby testnet. 
 
-### Kovan Ethereum Testnet Setup
+### Rinkeby Ethereum Testnet Setup
 
 First, we will need to set environment variables. We can do so by setting them in our `.env` file (create it if it's not there). You can also read more about [environment variables](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) from the linked twilio blog. You'll find a sample of what this file will look like in `.env.example`
 
 > IMPORTANT: MAKE SURE YOU'D DONT EXPOSE THE KEYS YOU PUT IN THIS `.env` FILE. By that, I mean don't push them to a public repo, and please try to keep them keys you use in development not associated with any real funds. 
 
-1. Set your `KOVAN_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html)
+1. Set your `RINKEBY_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html)
 
 You can get one for free from [Alchmey](https://www.alchemy.com/), [Infura](https://infura.io/), or [Moralis](https://moralis.io/speedy-nodes/). This is your connection to the blockchain. 
 
@@ -163,12 +165,12 @@ Don't commit and push any changes to .env files that may contain sensitive infor
 
 `.env` example:
 ```
-KOVAN_RPC_URL='www.infura.io/asdfadsfafdadf'
+RINKEBY_RPC_URL='www.infura.io/asdfadsfafdadf'
 PRIVATE_KEY='abcdef'
 ```
 `bash` example
 ```
-export KOVAN_RPC_URL='www.infura.io/asdfadsfafdadf'
+export RINKEBY_RPC_URL='www.infura.io/asdfadsfafdadf'
 export PRIVATE_KEY='abcdef'
 ```
 
@@ -176,40 +178,48 @@ export PRIVATE_KEY='abcdef'
 
 For other networks like mainnet and polygon, you can use different environment variables for your RPC URL and your private key. See the `hardhat.config.js` to learn more. 
 
-3. Get some Kovan Testnet ETH and LINK 
+3. Get some Rinkeby Testnet ETH and LINK 
 
 Head over to the [Chainlink faucets](https://faucets.chain.link/) and get some ETH and LINK. Please follow [the chainlink documentation](https://docs.chain.link/docs/acquire-link/) if unfamiliar. 
 
-4. Running commands
+4. Create VRF V2 subscription
 
-You should now be all setup! You can run any command and just pass the `--network kovan` now!
+Head over to [VRF Subscription Page](https://vrf.chain.link/rinkeby) and create the new subscription. Save your subscription ID and put it in `.env` file as `VRF_SUBSCRIPTION_ID`
+
+5. Running commands
+
+You should now be all setup! You can run any command and just pass the `--network rinkeby` now!
 
 To deploy contracts:
 
 ```
-yarn hardhat deploy --network kovan
+yarn hardhat deploy --network rinkeby
 ```
 
 To run staging testnet tests
 ```
-yarn hardhat test --network kovan
+yarn hardhat test --network rinkeby
 ```
 
 ## Forking 
  
 If you'd like to run tests or on a network that is a [forked network](https://hardhat.org/hardhat-network/guides/mainnet-forking.html)
 1. Set a `MAINNET_RPC_URL` environment variable that connects to the mainnet.
-2. Uncomment the section in your `hardhat.config.js`
+2. Choose a block number to select a state of the network you are forking. If ignored, it will use the latest block each time which can lead to test inconsistency.
+3. Set `enabled` flag to `true`/`false` to enable/disable forking feature
+4. Uncomment the section in your `hardhat.config.js`
 ```
       // forking: {
-      //   url: MAINNET_RPC_URL
+      //   url: MAINNET_RPC_URL,
+      //   blockNumber: "your forking block number goes here",
+      //   enabled: false,
       // }
 ```
 
 
 ## Auto-Funding
 
-This Starter Kit is configured by default to attempt to auto-fund any newly deployed contract that uses Any-API or Chainlink VRF, to save having to manually fund them after each deployment. The amount in LINK to send as part of this process can be modified in the [Starter Kit Config](helper-hardhat-config.js), and are configurable per network.
+This Starter Kit is configured by default to attempt to auto-fund any newly deployed contract that uses Any-API, to save having to manually fund them after each deployment. The amount in LINK to send as part of this process can be modified in the [Starter Kit Config](helper-hardhat-config.js), and are configurable per network.
 
 | Parameter  | Description                                       | Default Value |
 | ---------- | :------------------------------------------------ | :------------ |
@@ -240,13 +250,12 @@ yarn test-integration
 or
 
 ```
-yarn hardhat test --network kovan
+yarn hardhat test --network rinkeby
 ```
 
 # Interacting with Deployed Contracts
 
-After deploying your contracts. 
-The deployment output will give you the contract addresses as they are deployed. You can then use these contract addresses in conjunction with Hardhat tasks to perform operations on each contract.
+After deploying your contracts, the deployment output will give you the contract addresses as they are deployed. You can then use these contract addresses in conjunction with Hardhat tasks to perform operations on each contract.
 
 
 ## Chainlink Price Feeds
@@ -276,13 +285,19 @@ yarn hardhat read-data --contract insert-contract-address-here --network network
 
 
 ## VRF Get a random number
-The VRFConsumer contract has two tasks, one to request a random number, and one to read the result of the random number request. This contract needs to be funded with link first:
+The VRFConsumer contract has two tasks, one to request a random number, and one to read the result of the random number request. To start, go to [VRF Subscription Page](https://vrf.chain.link/rinkeby) and create the new subscription. Save your subscription ID and put it in `.env` file as `VRF_SUBSCRIPTION_ID`:
 
 ```bash
-yarn hardhat fund-link --contract insert-contract-address-here --network network
+VRF_SUBSCRIPTION_ID=subscription_id
 ```
 
-Once it's funded, you can perform a VRF request with the request-random-number task:
+Then, deploy your VRF V2 contract consumer to the network of your recent subscription using subscription id as constructor argument.
+
+```bash
+yarn hardhat deploy --network network   
+```
+
+Finally, you need to go to your subscription page one more time and add the address of deployed contract as a new consumer. Once that's done, you can perform a VRF request with the request-random-number task:
 
 ```bash
 yarn hardhat request-random-number --contract insert-contract-address-here --network network
@@ -312,7 +327,7 @@ yarn hardhat verify --network <NETWORK> <CONTRACT_ADDRESS> <CONSTRUCTOR_PARAMETE
 example:
 
 ```
-yarn hardhat verify --network kovan 0x9279791897f112a41FfDa267ff7DbBC46b96c296 "0x9326BFA02ADD2366b30bacB125260Af641031331"
+yarn hardhat verify --network rinkeby 0x9279791897f112a41FfDa267ff7DbBC46b96c296 "0x9326BFA02ADD2366b30bacB125260Af641031331"
 ```
 
 # View Contracts Size
@@ -347,6 +362,34 @@ yarn hardhat test
 
 If you'd like to see the gas prices in USD or other currency, add a `COINMARKETCAP_API_KEY` from [Coinmarketcap](https://coinmarketcap.com/api/documentation/v1/).
 
+# Code coverage
+
+To see a measure in percent of the degree to which the smart contract source code is executed when a particular test suite is run, type
+```
+yarn coverage
+```
+
+# Fuzzing
+
+We are going to use Echidna as a Fuzz testing tool. You need to have [Docker](https://www.docker.com/) installed with at least 8GB virtual memory allocated (To update this parameter go to _Settings->Resources->Advanced->Memory_). 
+
+To start Echidna instance run
+
+```
+yarn fuzzing
+```
+
+If you are using it for the first time, you will need to wait for Docker to download [eth-security-toolbox](https://hub.docker.com/r/trailofbits/eth-security-toolbox) image for us.
+
+To start Fuzzing run
+```
+echidna-test /src/contracts/test/fuzzing/KeepersCounterEchidnaTest.sol --contract KeepersCounterEchidnaTest --config /src/contracts/test/fuzzing/config.yaml
+```
+
+To exit Echidna type
+```bash
+exit
+```
 
 # Contributing
 

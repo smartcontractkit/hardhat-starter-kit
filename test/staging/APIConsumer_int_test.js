@@ -19,6 +19,10 @@ developmentChains.includes(network.name)
         }
       })
 
+      afterEach(async function () {
+        apiConsumer.removeAllListeners()
+      })
+
       // We can't use an arrow functions here because we need to use `this`. So we need
       // to use `async function() {` as seen.
       it("Our event should successfully fire on callback", async function () {
@@ -39,7 +43,8 @@ developmentChains.includes(network.name)
               reject(e)
             }
           })
-          const transaction = await apiConsumer.requestVolumeData()
+
+          await apiConsumer.requestVolumeData()
         })
       })
     })
