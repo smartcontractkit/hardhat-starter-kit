@@ -11,7 +11,7 @@
   - [Requirements](#requirements)
   - [Quickstart](#quickstart)
     - [Typescript](#typescript)
-- [Useage](#useage)
+- [Usage](#usage)
   - [Deploying Contracts](#deploying-contracts)
   - [Run a Local Network](#run-a-local-network)
   - [Using a Testnet or Live Network (like Mainnet or Polygon)](#using-a-testnet-or-live-network-like-mainnet-or-polygon)
