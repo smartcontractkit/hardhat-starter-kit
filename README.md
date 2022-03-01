@@ -11,7 +11,7 @@
   - [Requirements](#requirements)
   - [Quickstart](#quickstart)
     - [Typescript](#typescript)
-- [Useage](#useage)
+- [Usage](#usage)
   - [Deploying Contracts](#deploying-contracts)
   - [Run a Local Network](#run-a-local-network)
   - [Using a Testnet or Live Network (like Mainnet or Polygon)](#using-a-testnet-or-live-network-like-mainnet-or-polygon)
@@ -99,7 +99,7 @@ git checkout typescript
 yarn
 ```
 
-# Useage
+# Usage
 
 If you run `yarn hardhat --help` you'll get an output of all the tasks you can run. 
 
