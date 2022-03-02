@@ -236,7 +236,7 @@ To run unit tests:
 ```bash
 yarn test
 ```
-Or
+or
 ```
 yarn hardhat test
 ```
@@ -251,6 +251,19 @@ or
 
 ```
 yarn hardhat test --network rinkeby
+```
+
+## Performance optimizations
+
+Since all tests are written in a way to be independent from each other, you can save time by running them in parallel. Make sure that `AUTO_FUND=false` inside `.env` file. There are some limitations with parallel testing, read more about them [here](https://hardhat.org/guides/parallel-tests.html)
+
+To run tests in parallel:
+```
+yarn test --parallel
+```
+or
+```
+yarn hardhat test --parallel
 ```
 
 # Interacting with Deployed Contracts
