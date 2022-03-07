@@ -21,9 +21,10 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     vrfCoordinatorAddress = VRFCoordinatorV2Mock.address
     linkTokenAddress = linkToken.address
 
-    subscriptionId = await VRFCoordinatorV2Mock.callStatic.createSubscription()
     const fundAmount = networkConfig[chainId]["fundAmount"]
-    await VRFCoordinatorV2Mock.createSubscription()
+    const transaction = await VRFCoordinatorV2Mock.createSubscription()
+    const transactionReceipt = await transaction.wait(1)
+    subscriptionId = ethers.BigNumber.from(transactionReceipt.events[0].topics[1])
     await VRFCoordinatorV2Mock.fundSubscription(subscriptionId, fundAmount)
   } else {
     subscriptionId = process.env.VRF_SUBSCRIPTION_ID

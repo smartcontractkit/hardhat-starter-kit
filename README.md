@@ -205,15 +205,14 @@ yarn hardhat test --network rinkeby
  
 If you'd like to run tests or on a network that is a [forked network](https://hardhat.org/hardhat-network/guides/mainnet-forking.html)
 1. Set a `MAINNET_RPC_URL` environment variable that connects to the mainnet.
-2. Choose a block number to select a state of the network you are forking. If ignored, it will use the latest block each time which can lead to test inconsistency.
+2. Choose a block number to select a state of the network you are forking and set it as `FORKING_BLOCK_NUMBER` environment variable. If ignored, it will use the latest block each time which can lead to test inconsistency.
 3. Set `enabled` flag to `true`/`false` to enable/disable forking feature
-4. Uncomment the section in your `hardhat.config.js`
 ```
-      // forking: {
-      //   url: MAINNET_RPC_URL,
-      //   blockNumber: "your forking block number goes here",
-      //   enabled: false,
-      // }
+      forking: {
+        url: MAINNET_RPC_URL,
+        blockNumber: FORKING_BLOCK_NUMBER,
+        enabled: false,
+      }
 ```
 
 

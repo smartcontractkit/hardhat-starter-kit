@@ -42,4 +42,27 @@ const { developmentChains } = require("../../helper-hardhat-config")
           "Second random number is greather than zero"
         )
       })
+
+      it("Should successfully fire event on callback", async function () {
+        await new Promise(async (resolve, reject) => {
+          randomNumberConsumerV2.once("ReturnedRandomness", async () => {
+            console.log("ReturnedRandomness event fired!")
+            const firstRandomNumber = await randomNumberConsumerV2.s_randomWords(0)
+            const secondRandomNumber = await randomNumberConsumerV2.s_randomWords(1)
+            // assert throws an error if it fails, so we need to wrap
+            // it in a try/catch so that the promise returns event
+            // if it fails.
+            try {
+              assert(firstRandomNumber.gt(ethers.constants.Zero))
+              assert(secondRandomNumber.gt(ethers.constants.Zero))
+              resolve()
+            } catch (e) {
+              reject(e)
+            }
+          })
+          await randomNumberConsumerV2.requestRandomWords()
+          const requestId = await randomNumberConsumerV2.s_requestId()
+          vrfCoordinatorV2Mock.fulfillRandomWords(requestId, randomNumberConsumerV2.address)
+        })
+      })
     })
