@@ -1,26 +1,33 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
 import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 
 /**
- * THIS IS AN EXAMPLE CONTRACT WHICH USES HARDCODED VALUES FOR CLARITY.
- * PLEASE DO NOT USE THIS CODE IN PRODUCTION.
+ * @title The APIConsumer contract
+ * @notice An API Consumer contract that makes GET requests to obtain 24h trading volume of ETH in USD
  */
 contract APIConsumer is ChainlinkClient {
   using Chainlink for Chainlink.Request;
 
   uint256 public volume;
-  address private oracle;
-  bytes32 private jobId;
-  uint256 private fee;
+  address private immutable oracle;
+  bytes32 private immutable jobId;
+  uint256 private immutable fee;
 
   event DataFullfilled(uint256 volume);
 
   /**
-   * Network: Kovan
-   * Oracle: 0xc57B33452b4F7BB189bB5AfaE9cc4aBa1f7a4FD8 (Chainlink Devrel
-   * Node)
-   * Job ID: d5270d1c311941d0b08bead21fea7747
+   * @notice Executes once when a contract is created to initialize state variables
+   *
+   * @param _oracle - address of the specific Chainlink node that a contract makes an API call from
+   * @param _jobId - specific job for :_oracle: to run; each job is unique and returns different types of data
+   * @param _fee - node operator price per API call / data request
+   * @param _link - LINK token address on the corresponding network
+   *
+   * Network: Rinkeby
+   * Oracle: 0xc57b33452b4f7bb189bb5afae9cc4aba1f7a4fd8
+   * Job ID: 6b88e0402e5d415eb946e528b8e0c7ba
    * Fee: 0.1 LINK
    */
   constructor(
@@ -34,17 +41,16 @@ contract APIConsumer is ChainlinkClient {
     } else {
       setChainlinkToken(_link);
     }
-    // oracle = 0x2f90A6D021db21e1B2A077c5a37B3C7E75D15b7e;
-    // jobId = "29fa9aa13bf1468788b7cc4a500a45b8";
-    // fee = 0.1 * 10 ** 18; // 0.1 LINK
     oracle = _oracle;
     jobId = _jobId;
     fee = _fee;
   }
 
   /**
-   * Create a Chainlink request to retrieve API response, find the target
+   * @notice Creates a Chainlink request to retrieve API response, find the target
    * data, then multiply by 1000000000000000000 (to remove decimal places from data).
+   *
+   * @return requestId - id of the request
    */
   function requestVolumeData() public returns (bytes32 requestId) {
     Chainlink.Request memory request = buildChainlinkRequest(
@@ -77,7 +83,10 @@ contract APIConsumer is ChainlinkClient {
   }
 
   /**
-   * Receive the response in the form of uint256
+   * @notice Receives the response in the form of uint256
+   *
+   * @param _requestId - id of the request
+   * @param _volume - response; requested 24h trading volume of ETH in USD
    */
   function fulfill(bytes32 _requestId, uint256 _volume)
     public
@@ -86,4 +95,10 @@ contract APIConsumer is ChainlinkClient {
     volume = _volume;
     emit DataFullfilled(volume);
   }
+
+  /**
+   * @notice Witdraws LINK from the contract
+   * @dev Implement a withdraw function to avoid locking your LINK in the contract
+   */
+  function withdrawLink() external {}
 }
