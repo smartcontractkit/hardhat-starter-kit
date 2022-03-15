@@ -35,7 +35,7 @@ contract APIConsumer is ChainlinkClient {
     bytes32 _jobId,
     uint256 _fee,
     address _link
-  ) public {
+  ) {
     if (_link == address(0)) {
       setPublicChainlinkToken();
     } else {
