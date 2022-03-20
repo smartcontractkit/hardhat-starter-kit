@@ -1,0 +1,14 @@
+# testLimit is the number of test sequences to run; default is 50000
+testLimit: 10000
+# maximum time between generated txs; default is one week
+maxTimeDelay: 0
+# maximum number of blocks elapsed between generated txs; default is expected increment in one week
+maxBlockDelay: 60480
+# additional arguments to use in crytic-compile for the compilation of the contract to test.
+cryticArgs:
+  [
+    "--solc-remaps",
+    "@chainlink/contracts=/src/node_modules/@chainlink/contracts",
+    "--solc-args",
+    "--allow-paths /src/contracts",
+  ]

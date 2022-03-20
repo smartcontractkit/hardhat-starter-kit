@@ -23,6 +23,7 @@ export interface APIConsumerInterface extends utils.Interface {
     "fulfill(bytes32,uint256)": FunctionFragment;
     "requestVolumeData()": FunctionFragment;
     "volume()": FunctionFragment;
+    "withdrawLink()": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -34,6 +35,10 @@ export interface APIConsumerInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "volume", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "withdrawLink",
+    values?: undefined
+  ): string;
 
   decodeFunctionResult(functionFragment: "fulfill", data: BytesLike): Result;
   decodeFunctionResult(
@@ -41,16 +46,22 @@ export interface APIConsumerInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "volume", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawLink",
+    data: BytesLike
+  ): Result;
 
   events: {
     "ChainlinkCancelled(bytes32)": EventFragment;
     "ChainlinkFulfilled(bytes32)": EventFragment;
     "ChainlinkRequested(bytes32)": EventFragment;
+    "DataFullfilled(uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "ChainlinkCancelled"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ChainlinkFulfilled"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ChainlinkRequested"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "DataFullfilled"): EventFragment;
 }
 
 export type ChainlinkCancelledEvent = TypedEvent<[string], { id: string }>;
@@ -67,6 +78,13 @@ export type ChainlinkRequestedEvent = TypedEvent<[string], { id: string }>;
 
 export type ChainlinkRequestedEventFilter =
   TypedEventFilter<ChainlinkRequestedEvent>;
+
+export type DataFullfilledEvent = TypedEvent<
+  [BigNumber],
+  { volume: BigNumber }
+>;
+
+export type DataFullfilledEventFilter = TypedEventFilter<DataFullfilledEvent>;
 
 export interface APIConsumer extends BaseContract {
   contractName: "APIConsumer";
@@ -107,6 +125,10 @@ export interface APIConsumer extends BaseContract {
     ): Promise<ContractTransaction>;
 
     volume(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    withdrawLink(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
   };
 
   fulfill(
@@ -121,6 +143,10 @@ export interface APIConsumer extends BaseContract {
 
   volume(overrides?: CallOverrides): Promise<BigNumber>;
 
+  withdrawLink(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   callStatic: {
     fulfill(
       _requestId: BytesLike,
@@ -131,6 +157,8 @@ export interface APIConsumer extends BaseContract {
     requestVolumeData(overrides?: CallOverrides): Promise<string>;
 
     volume(overrides?: CallOverrides): Promise<BigNumber>;
+
+    withdrawLink(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -148,6 +176,9 @@ export interface APIConsumer extends BaseContract {
       id?: BytesLike | null
     ): ChainlinkRequestedEventFilter;
     ChainlinkRequested(id?: BytesLike | null): ChainlinkRequestedEventFilter;
+
+    "DataFullfilled(uint256)"(volume?: null): DataFullfilledEventFilter;
+    DataFullfilled(volume?: null): DataFullfilledEventFilter;
   };
 
   estimateGas: {
@@ -162,6 +193,10 @@ export interface APIConsumer extends BaseContract {
     ): Promise<BigNumber>;
 
     volume(overrides?: CallOverrides): Promise<BigNumber>;
+
+    withdrawLink(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -176,5 +211,9 @@ export interface APIConsumer extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     volume(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    withdrawLink(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
   };
 }

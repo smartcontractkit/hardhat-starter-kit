@@ -1,43 +1,36 @@
-import { Block } from "@ethersproject/abstract-provider"
-import { expect } from "chai"
-import { BigNumber, constants } from "ethers"
+import { assert, expect } from "chai"
+import { BigNumber } from "ethers"
 import { deployments, network, ethers } from "hardhat"
 import { developmentChains } from "../../helper-hardhat-config"
 import { KeepersCounter } from "../../typechain"
 
-if (developmentChains.includes(network.name)) {
-  describe("Keepers Counter Unit Tests", async function () {
-    let counter: KeepersCounter
+!developmentChains.includes(network.name)
+  ? describe.skip
+  : describe("Keepers Counter Unit Tests", async function () {
+      let counter: KeepersCounter
 
-    beforeEach(async () => {
-      await deployments.fixture(["mocks", "keepers"])
-      const Counter = await deployments.get("KeepersCounter")
-      counter = (await ethers.getContractAt("KeepersCounter", Counter.address)) as KeepersCounter
+      beforeEach(async () => {
+        await deployments.fixture(["mocks", "keepers"])
+        counter = await ethers.getContract("KeepersCounter")
+      })
+
+      it("should be able to call checkUpkeep", async () => {
+        const checkData = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(""))
+        const { upkeepNeeded } = await counter.callStatic.checkUpkeep(checkData)
+        assert.equal(upkeepNeeded, false)
+      })
+
+      it("should not be able to call perform upkeep without the time passed interval", async () => {
+        const checkData = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(""))
+        await expect(counter.performUpkeep(checkData)).to.be.revertedWith("Time interval not met")
+      })
+
+      it("should be able to call performUpkeep after time passes", async () => {
+        const startingCount: BigNumber = await counter.counter()
+        const checkData = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(""))
+        const interval: BigNumber = await counter.interval()
+        await network.provider.send("evm_increaseTime", [interval.toNumber() + 1])
+        await counter.performUpkeep(checkData)
+        assert.equal(startingCount.toNumber() + 1, (await counter.counter()).toNumber())
+      })
     })
-
-    it("should be able to call checkUpkeep", async () => {
-      const checkData: string = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(""))
-
-      const blockNumber: number = await ethers.provider.getBlockNumber()
-      const block: Block = await ethers.provider.getBlock(blockNumber)
-      const lastTimestamp: BigNumber = await counter.lastTimeStamp()
-
-      const [upkeepNeeded /*, performData*/] = await counter.checkUpkeep(checkData)
-
-      const interval: BigNumber = await counter.interval()
-
-      expect(upkeepNeeded).to.equal(BigNumber.from(block.timestamp).sub(lastTimestamp).gt(interval))
-    })
-
-    it("should be able to call performUpkeep", async () => {
-      const previousCounterValue: BigNumber = await counter.counter()
-      const checkData = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(""))
-
-      await counter.performUpkeep(checkData)
-      //now get the new counter value
-      const currentCounterValue: BigNumber = await counter.counter()
-
-      expect(currentCounterValue).to.equal(previousCounterValue.add(constants.One))
-    })
-  })
-}

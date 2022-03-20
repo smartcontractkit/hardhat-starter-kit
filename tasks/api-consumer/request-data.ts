@@ -1,4 +1,3 @@
-import { networkConfig, getNetworkIdFromName } from "../../helper-hardhat-config"
 import { task } from "hardhat/config"
 import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types"
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers"
@@ -9,9 +8,6 @@ task("request-data", "Calls an API Consumer Contract to request external data")
   .addParam("contract", "The address of the API Consumer contract that you want to call")
   .setAction(async (taskArgs: TaskArguments, hre: HardhatRuntimeEnvironment): Promise<void> => {
     const contractAddr: string = taskArgs.contract
-    const networkId: string | null = await getNetworkIdFromName(hre.network.name)
-
-    if (!networkId) return
 
     console.log(`Calling API Consumer contract ${contractAddr} on network ${hre.network.name}`)
 
@@ -27,6 +23,6 @@ task("request-data", "Calls an API Consumer Contract to request external data")
     console.log(
       `Contract ${contractAddr} external data request successfully called. Transaction Hash: ${tx.hash}\n`,
       `Run the following to read the returned result:\n`,
-      `npx hardhat read-data --contract ${contractAddr} --network ${hre.network.name}`,
+      `yarn hardhat read-data --contract ${contractAddr} --network ${hre.network.name}`
     )
   })

@@ -8,6 +8,7 @@ deployments
 node_modules
 coverage
 coverage.json
+typechain
 
 # don't push the environment vars!
 .env
@@ -97,3 +98,6 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 
+gas-report.txt
+
+contracts/test/fuzzing/crytic-export

@@ -1,45 +1,70 @@
 import { DeployFunction } from "hardhat-deploy/types"
-import { HardhatRuntimeEnvironment } from "hardhat/types"
-import { networkConfig } from "../helper-hardhat-config"
+import { ethers, network } from "hardhat"
+import {
+  networkConfig,
+  developmentChains,
+  VERIFICATION_BLOCK_CONFIRMATIONS,
+} from "../helper-hardhat-config"
+import { verify } from "../helper-functions"
+import { BigNumber, ContractReceipt, ContractTransaction } from "ethers"
+import { VRFCoordinatorV2Mock } from "../typechain"
 
-const deployFunction: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
-  const { deployments, getNamedAccounts, getChainId } = hre
+const deployFunction: DeployFunction = async ({ getNamedAccounts, deployments }) => {
   const { deploy, get, log } = deployments
 
   const { deployer } = await getNamedAccounts()
-  const chainId = await getChainId()
+  const chainId: number | undefined = network.config.chainId
+  if (!chainId) return
 
   let linkTokenAddress: string | undefined
   let vrfCoordinatorAddress: string | undefined
-  let additionalMessage: string = ``
+  let subscriptionId: BigNumber
 
-  if (chainId === `31337`) {
+  if (chainId === 31337) {
     const linkToken = await get("LinkToken")
-    const VRFCoordinatorMock = await get("VRFCoordinatorMock")
+    const VRFCoordinatorV2Mock: VRFCoordinatorV2Mock = await ethers.getContract(
+      "VRFCoordinatorV2Mock"
+    )
+
+    vrfCoordinatorAddress = VRFCoordinatorV2Mock.address
     linkTokenAddress = linkToken.address
-    vrfCoordinatorAddress = VRFCoordinatorMock.address
-    additionalMessage = ` --linkaddress ${linkTokenAddress}`
+
+    const fundAmount: BigNumber = networkConfig[chainId].fundAmount
+    const transaction: ContractTransaction = await VRFCoordinatorV2Mock.createSubscription()
+    const transactionReceipt: ContractReceipt = await transaction.wait(1)
+    if (!transactionReceipt.events) return
+    subscriptionId = ethers.BigNumber.from(transactionReceipt.events[0].topics[1])
+    await VRFCoordinatorV2Mock.fundSubscription(subscriptionId, fundAmount)
   } else {
+    subscriptionId = BigNumber.from(process.env.VRF_SUBSCRIPTION_ID)
     linkTokenAddress = networkConfig[chainId].linkToken
     vrfCoordinatorAddress = networkConfig[chainId].vrfCoordinator
   }
 
-  const keyHash = networkConfig[chainId].keyHash
-  const fee = networkConfig[chainId].fee
+  const keyHash: string | undefined = networkConfig[chainId].keyHash
+  const waitBlockConfirmations: number = developmentChains.includes(network.name)
+    ? 1
+    : VERIFICATION_BLOCK_CONFIRMATIONS
 
-  const randomNumberConsumer = await deploy("RandomNumberConsumer", {
+  const args = [subscriptionId, vrfCoordinatorAddress, linkTokenAddress, keyHash]
+  const randomNumberConsumerV2 = await deploy("RandomNumberConsumerV2", {
     from: deployer,
-    args: [vrfCoordinatorAddress, linkTokenAddress, keyHash, fee],
+    args: args,
     log: true,
+    waitConfirmations: waitBlockConfirmations,
   })
 
-  log(`Run the following command to fund contract with LINK:`)
+  if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
+    log("Verifying...")
+    await verify(randomNumberConsumerV2.address, args)
+  }
+
+  log("Run RandomNumberConsumer contract with the following command")
+  const networkName = network.name == "hardhat" ? "localhost" : network.name
   log(
-    `npx hardhat fund-link --contract ${randomNumberConsumer.address} --network ${networkConfig[chainId].name} ${additionalMessage}`,
+    `yarn hardhat request-random-number --contract ${randomNumberConsumerV2.address} --network ${networkName}`
   )
-  log(`Then run RandomNumberConsumer contract with the following command`)
-  log(`npx hardhat request-random-number --contract ${randomNumberConsumer.address} --network ${networkConfig[chainId].name}`)
-  log(`----------------------------------------------------`)
+  log("----------------------------------------------------")
 }
 
 export default deployFunction

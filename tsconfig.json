@@ -7,6 +7,6 @@
     "outDir": "dist",
     "declaration": true
   },
-  "include": ["./deploy", "./test", "./tasks", "./typechain"],
-  "files": ["./hardhat.config.ts", "./helper-hardhat-config.ts"]
+  "include": ["./deploy", "./test", "./tasks", "./typechain", "./scripts"],
+  "files": ["./hardhat.config.ts", "./helper-hardhat-config.ts", "./helper-functions.ts"]
 }

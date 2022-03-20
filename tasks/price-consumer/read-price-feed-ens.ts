@@ -24,7 +24,10 @@ task("read-price-feed-ens", "Gets the latest price from a Chainlink Price Feed")
     const accounts: SignerWithAddress[] = await hre.ethers.getSigners()
     const signer: SignerWithAddress = accounts[0]
 
-    const priceFeedConsumerContract: MockV3Aggregator = MockV3Aggregator__factory.connect(ensAddress, signer)
+    const priceFeedConsumerContract: MockV3Aggregator = MockV3Aggregator__factory.connect(
+      ensAddress,
+      signer
+    )
 
     const data: RoundData = await priceFeedConsumerContract.latestRoundData()
 

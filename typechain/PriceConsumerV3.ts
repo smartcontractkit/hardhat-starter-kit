@@ -18,15 +18,24 @@ export interface PriceConsumerV3Interface extends utils.Interface {
   contractName: "PriceConsumerV3";
   functions: {
     "getLatestPrice()": FunctionFragment;
+    "getPriceFeed()": FunctionFragment;
   };
 
   encodeFunctionData(
     functionFragment: "getLatestPrice",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "getPriceFeed",
+    values?: undefined
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "getLatestPrice",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getPriceFeed",
     data: BytesLike
   ): Result;
 
@@ -62,21 +71,31 @@ export interface PriceConsumerV3 extends BaseContract {
 
   functions: {
     getLatestPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    getPriceFeed(overrides?: CallOverrides): Promise<[string]>;
   };
 
   getLatestPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
+  getPriceFeed(overrides?: CallOverrides): Promise<string>;
+
   callStatic: {
     getLatestPrice(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getPriceFeed(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {};
 
   estimateGas: {
     getLatestPrice(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getPriceFeed(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     getLatestPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getPriceFeed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

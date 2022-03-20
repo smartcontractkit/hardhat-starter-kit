@@ -21,7 +21,10 @@ task("read-data", "Calls an API Consumer Contract to read data obtained from an 
     const result: BigNumber = await apiConsumerContract.volume()
     console.log(`Data is: ${result}`)
 
-    if (result == constants.Zero && ["hardhat", "localhost", "ganache"].indexOf(hre.network.name) == 0) {
+    if (
+      result == constants.Zero &&
+      ["hardhat", "localhost", "ganache"].indexOf(hre.network.name) == 0
+    ) {
       console.log("You'll either need to wait another minute, or fix something!")
     }
 

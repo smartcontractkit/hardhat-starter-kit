@@ -2,12 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import { Provider } from "@ethersproject/providers";
-import type {
-  VRFConsumerBase,
-  VRFConsumerBaseInterface,
-} from "../VRFConsumerBase";
+import { Contract, Signer, utils } from "ethers"
+import { Provider } from "@ethersproject/providers"
+import type { VRFConsumerBase, VRFConsumerBaseInterface } from "../VRFConsumerBase"
 
 const _abi = [
   {
@@ -28,17 +25,14 @@ const _abi = [
     stateMutability: "nonpayable",
     type: "function",
   },
-];
+]
 
 export class VRFConsumerBase__factory {
-  static readonly abi = _abi;
+  static readonly abi = _abi
   static createInterface(): VRFConsumerBaseInterface {
-    return new utils.Interface(_abi) as VRFConsumerBaseInterface;
+    return new utils.Interface(_abi) as VRFConsumerBaseInterface
   }
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): VRFConsumerBase {
-    return new Contract(address, _abi, signerOrProvider) as VRFConsumerBase;
+  static connect(address: string, signerOrProvider: Signer | Provider): VRFConsumerBase {
+    return new Contract(address, _abi, signerOrProvider) as VRFConsumerBase
   }
 }

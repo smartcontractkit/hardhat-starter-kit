@@ -1,24 +1,34 @@
-import { expect } from "chai"
-import { BigNumber, constants } from "ethers"
+import { assert } from "chai"
+import { BigNumber } from "ethers"
 import { deployments, network, ethers } from "hardhat"
 import { developmentChains } from "../../helper-hardhat-config"
-import { PriceConsumerV3 } from "../../typechain"
+import { MockV3Aggregator, PriceConsumerV3 } from "../../typechain"
 
-if (developmentChains.includes(network.name)) {
-  describe("PriceConsumer Unit Tests", async function () {
-    // Price Feed Address, values can be obtained at https://docs.chain.link/docs/reference-contracts
-    let priceConsumerV3: PriceConsumerV3
+!developmentChains.includes(network.name)
+  ? describe.skip
+  : describe("PriceConsumer Unit Tests", async function () {
+      // Price Feed Address, values can be obtained at https://docs.chain.link/docs/reference-contracts
+      let priceConsumerV3: PriceConsumerV3
+      let mockV3Aggregator: MockV3Aggregator
 
-    beforeEach(async () => {
-      await deployments.fixture(["mocks", "feed"])
-      const PriceConsumerV3 = await deployments.get("PriceConsumerV3")
-      priceConsumerV3 = (await ethers.getContractAt("PriceConsumerV3", PriceConsumerV3.address)) as PriceConsumerV3
+      beforeEach(async () => {
+        await deployments.fixture(["mocks", "feed"])
+        priceConsumerV3 = await ethers.getContract("PriceConsumerV3")
+        mockV3Aggregator = await ethers.getContract("MockV3Aggregator")
+      })
+
+      describe("constructor", () => {
+        it("sets the aggregator addresses correctly", async () => {
+          const response: string = await priceConsumerV3.getPriceFeed()
+          assert.equal(response, mockV3Aggregator.address)
+        })
+      })
+
+      describe("getLatestPrice", () => {
+        it("should return the same value as the mock", async () => {
+          const priceConsumerResult: BigNumber = await priceConsumerV3.getLatestPrice()
+          const priceFeedResult: BigNumber = (await mockV3Aggregator.latestRoundData()).answer
+          assert.equal(priceConsumerResult.toString(), priceFeedResult.toString())
+        })
+      })
     })
-
-    it("should return a positive value", async () => {
-      const latestPrice: BigNumber = await priceConsumerV3.getLatestPrice()
-
-      expect(latestPrice).to.be.gt(constants.Zero)
-    })
-  })
-}

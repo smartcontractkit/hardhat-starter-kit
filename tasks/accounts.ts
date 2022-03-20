@@ -9,5 +9,5 @@ task("accounts", "Prints the list of accounts").setAction(
     for (const account of accounts) {
       console.log(account.address)
     }
-  },
+  }
 )
