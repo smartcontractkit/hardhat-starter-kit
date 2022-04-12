@@ -32,7 +32,7 @@ const autoFundCheck = async (contractAddr, networkName, linkTokenAddress, additi
       `Please obtain LINK via the faucet at https://faucets.chain.link/${networkName} then run the following command to fund contract with LINK:`
     )
     console.log(
-      `npx hardhat fund-link --contract ${contractAddr} --network ${networkName} ${additionalMessage}`
+      `yarn hardhat fund-link --contract ${contractAddr} --network ${networkName} ${additionalMessage}`
     )
     return false
   }

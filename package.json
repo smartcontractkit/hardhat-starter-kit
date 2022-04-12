@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "hardhat test test/unit/PriceConsumerV3_unit_test.js --network hardhat && hardhat test test/unit/APIConsumer_unit_test.js --network hardhat && hardhat test test/unit/RandomNumberConsumer_unit_test.js --network hardhat && hardhat test test/unit/KeepersCounter_unit_test.js --network hardhat",
-    "test-staging": "hardhat test test/staging/APIConsumer_int_test.js --network kovan && hardhat test test/staging/RandomNumberConsumer_int_test.js --network kovan",
+    "compile": "hardhat compile",
+    "test": "hardhat test test/unit/*_test.js --network hardhat",
+    "test-staging": "hardhat test test/staging/*_test.js --network rinkeby",
     "lint": "solhint 'contracts/*.sol'",
     "lint:fix": "solhint 'contracts/**/*.sol' --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "coverage": "hardhat coverage --solcoverjs ./.solcover.js",
+    "fuzzing": "docker run -it --rm -v $PWD:/src trailofbits/eth-security-toolbox"
   },
   "license": "MIT",
   "devDependencies": {
@@ -17,7 +20,7 @@
     "chai": "^4.3.4",
     "ethereum-waffle": "^3.4.0",
     "ethers": "^5.5.1",
-    "hardhat": "^2.6.7",
+    "hardhat": "^2.9.0",
     "hardhat-contract-sizer": "^2.4.0",
     "hardhat-deploy": "^0.9.29",
     "hardhat-gas-reporter": "^1.0.7",
@@ -29,7 +32,7 @@
   "dependencies": {
     "@appliedblockchain/chainlink-contracts": "0.0.4",
     "@appliedblockchain/chainlink-plugins-fund-link": "0.0.1",
-    "@chainlink/contracts": "^0.3.1",
+    "@chainlink/contracts": "^0.4.0",
     "@chainlink/test-helpers": "^0.0.7-alpha",
     "@chainlink/token": "^1.1.0",
     "babel-eslint": "^10.1.0",

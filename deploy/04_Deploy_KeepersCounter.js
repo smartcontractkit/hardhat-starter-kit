@@ -30,8 +30,9 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   log(
     "Head to https://keepers.chain.link/ to register your contract for upkeeps. Then run the following command to track the counter updates: "
   )
+  const networkName = network.name == "hardhat" ? "localhost" : network.name
   log(
-    `npx hardhat read-keepers-counter --contract ${keepersCounter.address} --network ${network.name}`
+    `yarn hardhat read-keepers-counter --contract ${keepersCounter.address} --network ${networkName}`
   )
   log("----------------------------------------------------")
 }

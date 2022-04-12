@@ -1,10 +1,10 @@
-const { getNamedAccounts, deployments, network } = require("hardhat")
+const { network } = require("hardhat")
 const {
   networkConfig,
   developmentChains,
   VERIFICATION_BLOCK_CONFIRMATIONS,
 } = require("../helper-hardhat-config")
-const { autoFundCheck, verify } = require("../helper-functions")
+const { verify } = require("../helper-functions")
 
 module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy, get, log } = deployments
@@ -12,26 +12,31 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   const chainId = network.config.chainId
   let linkTokenAddress
   let vrfCoordinatorAddress
-  let additionalMessage = ""
+  let subscriptionId
 
   if (chainId == 31337) {
     linkToken = await get("LinkToken")
-    VRFCoordinatorMock = await get("VRFCoordinatorMock")
+    VRFCoordinatorV2Mock = await ethers.getContract("VRFCoordinatorV2Mock")
+
+    vrfCoordinatorAddress = VRFCoordinatorV2Mock.address
     linkTokenAddress = linkToken.address
-    vrfCoordinatorAddress = VRFCoordinatorMock.address
-    additionalMessage = " --linkaddress " + linkTokenAddress
+
+    const fundAmount = networkConfig[chainId]["fundAmount"]
+    const transaction = await VRFCoordinatorV2Mock.createSubscription()
+    const transactionReceipt = await transaction.wait(1)
+    subscriptionId = ethers.BigNumber.from(transactionReceipt.events[0].topics[1])
+    await VRFCoordinatorV2Mock.fundSubscription(subscriptionId, fundAmount)
   } else {
+    subscriptionId = process.env.VRF_SUBSCRIPTION_ID
     linkTokenAddress = networkConfig[chainId]["linkToken"]
     vrfCoordinatorAddress = networkConfig[chainId]["vrfCoordinator"]
   }
   const keyHash = networkConfig[chainId]["keyHash"]
-  const fee = networkConfig[chainId]["fee"]
-
   const waitBlockConfirmations = developmentChains.includes(network.name)
     ? 1
     : VERIFICATION_BLOCK_CONFIRMATIONS
-  const args = [vrfCoordinatorAddress, linkTokenAddress, keyHash, fee]
-  const randomNumberConsumer = await deploy("RandomNumberConsumer", {
+  const args = [subscriptionId, vrfCoordinatorAddress, linkTokenAddress, keyHash]
+  const randomNumberConsumerV2 = await deploy("RandomNumberConsumerV2", {
     from: deployer,
     args: args,
     log: true,
@@ -40,31 +45,13 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 
   if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
     log("Verifying...")
-    await verify(randomNumberConsumer.address, args)
+    await verify(randomNumberConsumerV2.address, args)
   }
 
-  // Checking for funding...
-  if (networkConfig.fundAmount > 0) {
-    log("Funding with LINK...")
-    if (
-      await autoFundCheck(
-        randomNumberConsumer.address,
-        network.name,
-        linkTokenAddress,
-        additionalMessage
-      )
-    ) {
-      await hre.run("fund-link", {
-        contract: randomNumberConsumer.address,
-        linkaddress: linkTokenAddress,
-      })
-    } else {
-      log("Contract already has LINK!")
-    }
-  }
   log("Then run RandomNumberConsumer contract with the following command")
+  const networkName = network.name == "hardhat" ? "localhost" : network.name
   log(
-    `npx hardhat request-random-number --contract ${randomNumberConsumer.address} --network ${network.name}`
+    `yarn hardhat request-random-number --contract ${randomNumberConsumerV2.address} --network ${networkName}`
   )
   log("----------------------------------------------------")
 }

@@ -1,22 +1,18 @@
-const { assert, expect } = require("chai")
-const { network, ethers, run } = require("hardhat")
-const { developmentChains, networkConfig } = require("../../helper-hardhat-config")
-const { autoFundCheck } = require("../../helper-functions")
+const { assert } = require("chai")
+const { network, ethers } = require("hardhat")
+const { developmentChains } = require("../../helper-hardhat-config")
 
 developmentChains.includes(network.name)
   ? describe.skip
   : describe("RandomNumberConsumer Staging Tests", async function () {
-      let randomNumberConsumer, linkTokenAddress
+      let randomNumberConsumerV2
 
       beforeEach(async () => {
-        randomNumberConsumer = await ethers.getContract("RandomNumberConsumer")
-        linkTokenAddress = networkConfig[network.config.chainId].linkToken
-        if (await autoFundCheck(randomNumberConsumer.address, network.name, linkTokenAddress, "")) {
-          await run("fund-link", {
-            contract: randomNumberConsumer.address,
-            linkaddress: linkTokenAddress,
-          })
-        }
+        randomNumberConsumerV2 = await ethers.getContract("RandomNumberConsumerV2")
+      })
+
+      afterEach(async function () {
+        randomNumberConsumerV2.removeAllListeners()
       })
 
       // We can't use an arrow functions here because we need to use `this`. So we need
@@ -26,20 +22,29 @@ developmentChains.includes(network.name)
         // we setup a promise so we can wait for our callback from the `once` function
         await new Promise(async (resolve, reject) => {
           // setup listener for our event
-          randomNumberConsumer.once("ReturnedRandomness", async () => {
+          randomNumberConsumerV2.once("ReturnedRandomness", async () => {
             console.log("ReturnedRandomness event fired!")
-            const result = await randomNumberConsumer.randomResult()
+            const firstRandomNumber = await randomNumberConsumerV2.s_randomWords(0)
+            const secondRandomNumber = await randomNumberConsumerV2.s_randomWords(1)
             // assert throws an error if it fails, so we need to wrap
             // it in a try/catch so that the promise returns event
             // if it fails.
             try {
-              assert(result.gt(0), "The result is more than 0. ")
+              assert(
+                firstRandomNumber.gt(ethers.constants.Zero),
+                "First random number is greather than zero"
+              )
+              assert(
+                secondRandomNumber.gt(ethers.constants.Zero),
+                "Second random number is greather than zero"
+              )
               resolve()
             } catch (e) {
               reject(e)
             }
           })
-          const transaction = await randomNumberConsumer.getRandomNumber()
+
+          await randomNumberConsumerV2.requestRandomWords()
         })
       })
     })

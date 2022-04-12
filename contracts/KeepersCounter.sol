@@ -1,7 +1,12 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
 import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
 
+/**
+ * @title The Counter contract
+ * @notice  A keeper-compatible contract that increments counter variable at fixed time intervals
+ */
 contract KeepersCounter is KeeperCompatibleInterface {
   /**
    * Public counter variable
@@ -14,6 +19,11 @@ contract KeepersCounter is KeeperCompatibleInterface {
   uint256 public immutable interval;
   uint256 public lastTimeStamp;
 
+  /**
+   * @notice Executes once when a contract is created to initialize state variables
+   *
+   * @param updateInterval - Period of time between two counter increments expressed as UNIX timestamp value
+   */
   constructor(uint256 updateInterval) {
     interval = updateInterval;
     lastTimeStamp = block.timestamp;
@@ -21,6 +31,9 @@ contract KeepersCounter is KeeperCompatibleInterface {
     counter = 0;
   }
 
+  /**
+   * @notice Checks if the contract requires work to be done
+   */
   function checkUpkeep(
     bytes memory /* checkData */
   )
@@ -35,6 +48,9 @@ contract KeepersCounter is KeeperCompatibleInterface {
     // We don't use the checkData in this example. The checkData is defined when the Upkeep was registered.
   }
 
+  /**
+   * @notice Performs the work on the contract, if instructed by :checkUpkeep():
+   */
   function performUpkeep(
     bytes calldata /* performData */
   ) external override {
