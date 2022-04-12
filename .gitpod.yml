@@ -1,0 +1,3 @@
+tasks:
+  - name: 👷 HARDHAT 👷
+    command: yarn

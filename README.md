@@ -6,6 +6,8 @@
 </p>
 <br/>
 
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/smartcontractkit/hardhat-starter-kit)
+
 - [Chainlink Hardhat Starter Kit](#chainlink-hardhat-starter-kit)
 - [Getting Started](#getting-started)
   - [Requirements](#requirements)
