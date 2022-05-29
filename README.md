@@ -6,6 +6,10 @@
 </p>
 <br/>
 
+
+*[⌨️ (18:51:36) Lesson 11: Hardhat Starter Kit](https://www.youtube.com/watch?v=gyMwXuJrbJQ&t=67896s)*
+
+
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/smartcontractkit/hardhat-starter-kit)
 
 - [Chainlink Hardhat Starter Kit](#chainlink-hardhat-starter-kit)
