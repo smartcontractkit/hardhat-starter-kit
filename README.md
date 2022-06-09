@@ -88,12 +88,6 @@ npm i
 yarn hardhat test
 ```
 
-or
-
-```
-yarn hardhat test
-```
-
 ### Typescript
 
 To use typescript, run:
@@ -242,10 +236,10 @@ or
 yarn hardhat test
 ```
 
-To run integration tests:
+To run staging tests on Rinkeby network:
 
 ```bash
-yarn test-integration
+yarn test-staging
 ```
 
 or
