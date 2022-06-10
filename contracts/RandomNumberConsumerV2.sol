@@ -2,7 +2,6 @@
 // An example of a consumer contract that relies on a subscription for funding.
 pragma solidity ^0.8.7;
 
-import "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 
@@ -12,7 +11,6 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
  */
 contract RandomNumberConsumerV2 is VRFConsumerBaseV2 {
   VRFCoordinatorV2Interface immutable COORDINATOR;
-  LinkTokenInterface immutable LINKTOKEN;
 
   // Your subscription ID.
   uint64 immutable s_subscriptionId;
@@ -53,11 +51,9 @@ contract RandomNumberConsumerV2 is VRFConsumerBaseV2 {
   constructor(
     uint64 subscriptionId,
     address vrfCoordinator,
-    address link,
     bytes32 keyHash
   ) VRFConsumerBaseV2(vrfCoordinator) {
     COORDINATOR = VRFCoordinatorV2Interface(vrfCoordinator);
-    LINKTOKEN = LinkTokenInterface(link);
     s_keyHash = keyHash;
     s_owner = msg.sender;
     s_subscriptionId = subscriptionId;
