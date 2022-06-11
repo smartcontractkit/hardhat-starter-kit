@@ -26,14 +26,14 @@ contract RandomNumberConsumerV2 is VRFConsumerBaseV2 {
   // this limit based on the network that you select, the size of the request,
   // and the processing of the callback request in the fulfillRandomWords()
   // function.
-  uint32 immutable s_callbackGasLimit = 100000;
+  uint32 constant s_callbackGasLimit = 100000;
 
   // The default is 3, but you can set this higher.
-  uint16 immutable s_requestConfirmations = 3;
+  uint16 constant s_requestConfirmations = 3;
 
   // For this example, retrieve 2 random values in one request.
   // Cannot exceed VRFCoordinatorV2.MAX_NUM_WORDS.
-  uint32 immutable s_numWords = 2;
+  uint32 constant s_numWords = 2;
 
   uint256[] public s_randomWords;
   uint256 public s_requestId;
