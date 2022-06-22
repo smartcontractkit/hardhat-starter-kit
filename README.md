@@ -88,6 +88,12 @@ npm i
 yarn hardhat test
 ```
 
+or
+
+```
+npm test
+```
+
 ### Typescript
 
 To use typescript, run:

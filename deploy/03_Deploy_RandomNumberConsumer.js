@@ -10,16 +10,13 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy, get, log } = deployments
   const { deployer } = await getNamedAccounts()
   const chainId = network.config.chainId
-  let linkTokenAddress
   let vrfCoordinatorAddress
   let subscriptionId
 
   if (chainId == 31337) {
-    linkToken = await get("LinkToken")
     VRFCoordinatorV2Mock = await ethers.getContract("VRFCoordinatorV2Mock")
 
     vrfCoordinatorAddress = VRFCoordinatorV2Mock.address
-    linkTokenAddress = linkToken.address
 
     const fundAmount = networkConfig[chainId]["fundAmount"]
     const transaction = await VRFCoordinatorV2Mock.createSubscription()
@@ -28,14 +25,13 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     await VRFCoordinatorV2Mock.fundSubscription(subscriptionId, fundAmount)
   } else {
     subscriptionId = process.env.VRF_SUBSCRIPTION_ID
-    linkTokenAddress = networkConfig[chainId]["linkToken"]
     vrfCoordinatorAddress = networkConfig[chainId]["vrfCoordinator"]
   }
   const keyHash = networkConfig[chainId]["keyHash"]
   const waitBlockConfirmations = developmentChains.includes(network.name)
     ? 1
     : VERIFICATION_BLOCK_CONFIRMATIONS
-  const args = [subscriptionId, vrfCoordinatorAddress, linkTokenAddress, keyHash]
+  const args = [subscriptionId, vrfCoordinatorAddress, keyHash]
   const randomNumberConsumerV2 = await deploy("RandomNumberConsumerV2", {
     from: deployer,
     args: args,
