@@ -242,10 +242,10 @@ or
 yarn hardhat test
 ```
 
-To run integration tests:
+To run staging tests on Rinkeby network:
 
 ```bash
-yarn test-integration
+yarn test-staging
 ```
 
 or
