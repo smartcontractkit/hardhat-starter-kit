@@ -91,7 +91,7 @@ yarn hardhat test
 or
 
 ```
-yarn hardhat test
+npm test
 ```
 
 ### Typescript
