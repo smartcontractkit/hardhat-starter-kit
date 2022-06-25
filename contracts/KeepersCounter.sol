@@ -17,7 +17,7 @@ contract KeepersCounter is KeeperCompatibleInterface {
     * Public multiplier boolean variable
     */
     bool public multiplierEnabled;
-
+    
     /**
     * Use an interval in seconds and a timestamp to slow execution of Upkeep
     */
