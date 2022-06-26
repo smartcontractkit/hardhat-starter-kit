@@ -30,7 +30,7 @@
 - [View Contracts Size](#view-contracts-size)
 - [Linting](#linting)
 - [Code Formating](#code-formating)
-- [Estimaging Gas](#estimaging-gas)
+- [Estimating Gas](#estimaging-gas)
 - [Code Coverage](#code-coverage)
 - [Fuzzing](#fuzzing)
 - [Contributing](#contributing)
