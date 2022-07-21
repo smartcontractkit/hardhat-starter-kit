@@ -2,7 +2,12 @@ const { getNamedAccounts, deployments, network } = require("hardhat")
 
 const DECIMALS = "18"
 const INITIAL_PRICE = "200000000000000000000"
-const POINT_ONE_LINK = "100000000000000000"
+
+/**
+ * @dev Read more at https://docs.chain.link/docs/chainlink-vrf/
+ */
+const BASE_FEE = "100000000000000000"
+const GAS_PRICE_LINK = "1000000000" // 0.000000001 LINK per gas
 
 module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const { deploy, log } = deployments
@@ -22,8 +27,8 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
       from: deployer,
       log: true,
       args: [
-        POINT_ONE_LINK,
-        1e9, // 0.000000001 LINK per gas
+        BASE_FEE,
+        GAS_PRICE_LINK
       ],
     })
     await deploy("MockOracle", {
