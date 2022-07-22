@@ -4,7 +4,12 @@ import { getNamedAccounts, deployments, network } from "hardhat"
 const deployFunction: DeployFunction = async () => {
   const DECIMALS: string = `18`
   const INITIAL_PRICE: string = `200000000000000000000`
-  const POINT_ONE_LINK: string = `100000000000000000`
+
+  /**
+   * @dev Read more at https://docs.chain.link/docs/chainlink-vrf/
+   */
+  const BASE_FEE = "100000000000000000"
+  const GAS_PRICE_LINK = "1000000000" // 0.000000001 LINK per gas
 
   const { deploy, log } = deployments
   const { deployer } = await getNamedAccounts()
@@ -26,10 +31,7 @@ const deployFunction: DeployFunction = async () => {
     await deploy("VRFCoordinatorV2Mock", {
       from: deployer,
       log: true,
-      args: [
-        POINT_ONE_LINK,
-        1e9, // 0.000000001 LINK per gas
-      ],
+      args: [BASE_FEE, GAS_PRICE_LINK],
     })
 
     await deploy(`MockOracle`, {
