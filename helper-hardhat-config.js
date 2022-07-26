@@ -6,6 +6,7 @@ const networkConfig = {
     jobId: "29fa9aa13bf1468788b7cc4a500a45b8",
     fundAmount: "1000000000000000000",
     keepersUpdateInterval: "30",
+    multiplierEnabled: "true",
   },
   31337: {
     name: "localhost",
@@ -14,6 +15,7 @@ const networkConfig = {
     jobId: "29fa9aa13bf1468788b7cc4a500a45b8",
     fundAmount: "1000000000000000000",
     keepersUpdateInterval: "30",
+    multiplierEnabled: "true",
     ethUsdPriceFeed: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
   },
   42: {
@@ -25,6 +27,7 @@ const networkConfig = {
     fee: "100000000000000000",
     fundAmount: "100000000000000000", // 0.1
     keepersUpdateInterval: "30",
+    multiplierEnabled: "true",
   },
   4: {
     name: "rinkeby",
@@ -37,17 +40,21 @@ const networkConfig = {
     fee: "100000000000000000",
     fundAmount: "100000000000000000", // 0.1
     keepersUpdateInterval: "30",
+    multiplierEnabled: "true",
   },
   1: {
     name: "mainnet",
     linkToken: "0x514910771af9ca656af840dff83e8264ecf986ca",
     fundAmount: "0",
     keepersUpdateInterval: "30",
+    multiplierEnabled: "true",
   },
   5: {
     name: "goerli",
     linkToken: "0x326c977e6efc84e512bb9c30f76e30c160ed06fb",
     fundAmount: "0",
+    keepersUpdateInterval: "30",
+    multiplierEnabled: "true",
   },
   137: {
     name: "polygon",
@@ -57,6 +64,8 @@ const networkConfig = {
     jobId: "12b86114fa9e46bab3ca436f88e1a912",
     fee: "100000000000000",
     fundAmount: "100000000000000",
+    keepersUpdateInterval: "30",
+    multiplierEnabled: "true",
   },
 }
 
