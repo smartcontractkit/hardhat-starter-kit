@@ -155,7 +155,7 @@
     semaphore-async-await "^1.5.1"
     web3-provider-engine "14.0.6"
   optionalDependencies:
-    "@ledgerhq/hw-transport-node-hid" "^4.3.0"
+    "@ledgerhq/hw-transport-node-hid" "^5.26.0"
 
 "@0x/types@^3.3.4":
   version "3.3.4"
