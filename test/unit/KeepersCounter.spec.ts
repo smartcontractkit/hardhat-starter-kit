@@ -30,6 +30,7 @@ import { KeepersCounter } from "../../typechain"
         const checkData = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(""))
         const interval: BigNumber = await counter.interval()
         await network.provider.send("evm_increaseTime", [interval.toNumber() + 1])
+        await network.provider.send("evm_mine");
         await counter.performUpkeep(checkData)
         assert.equal(startingCount.toNumber() + 1, (await counter.counter()).toNumber())
       })
