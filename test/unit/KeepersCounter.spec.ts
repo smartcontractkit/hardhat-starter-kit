@@ -1,3 +1,4 @@
+import { time } from "@nomicfoundation/hardhat-network-helpers"
 import { assert, expect } from "chai"
 import { BigNumber } from "ethers"
 import { deployments, network, ethers } from "hardhat"
@@ -29,8 +30,7 @@ import { KeepersCounter } from "../../typechain"
         const startingCount: BigNumber = await counter.counter()
         const checkData = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(""))
         const interval: BigNumber = await counter.interval()
-        await network.provider.send("evm_increaseTime", [interval.toNumber() + 1])
-        await network.provider.send("evm_mine");
+        time.increase(interval.toNumber() + 1) // mines a new block
         await counter.performUpkeep(checkData)
         assert.equal(startingCount.toNumber() + 1, (await counter.counter()).toNumber())
       })
