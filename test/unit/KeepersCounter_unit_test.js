@@ -22,13 +22,13 @@ const { developmentChains } = require("../../helper-hardhat-config")
                   "Time interval not met"
               )
           })
-
-          it("should be able to call performUpkeep after time passes", async () => {
-              const startingCount = await counter.counter()
-              const checkData = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(""))
-              const interval = await counter.interval()
-              await network.provider.send("evm_increaseTime", [interval.toNumber() + 1])
-              await counter.performUpkeep(checkData)
-              assert.equal(startingCount + 1, (await counter.counter()).toNumber())
-          })
+          
+      it("should be able to call performUpkeep after time passes", async () => {
+        const startingCount = await counter.counter()
+        const checkData = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(""))
+        const interval = await counter.interval()
+        await network.provider.send("evm_increaseTime", [interval.toNumber() + 1])
+        await network.provider.send("evm_mine");
+        await counter.performUpkeep(checkData)
+        assert.equal(startingCount + 1, (await counter.counter()).toNumber())
       })
