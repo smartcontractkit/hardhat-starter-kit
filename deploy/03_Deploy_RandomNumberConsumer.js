@@ -1,4 +1,4 @@
-const { network } = require("hardhat")
+const { network, ethers } = require("hardhat")
 const {
     networkConfig,
     developmentChains,
@@ -11,12 +11,11 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     const { deployer } = await getNamedAccounts()
     const chainId = network.config.chainId
     let vrfCoordinatorAddress
-    let VRFCoordinatorV2Mock
     let subscriptionId
 
-    if (chainId == 31337) {
-        VRFCoordinatorV2Mock = await ethers.getContract("VRFCoordinatorV2Mock")
+    const VRFCoordinatorV2Mock = await ethers.getContract("VRFCoordinatorV2Mock")
 
+    if (chainId == 31337) {
         vrfCoordinatorAddress = VRFCoordinatorV2Mock.address
 
         const fundAmount = networkConfig[chainId]["fundAmount"]
@@ -40,15 +39,16 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         waitConfirmations: waitBlockConfirmations,
     })
 
-    if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
-        log("Verifying...")
-        await verify(randomNumberConsumerV2.address, args)
-    } else {
-        //If on hardhat or localhost network, consumer should be added to the VRF coordinator
+    if (chainId === 31337) {
         await VRFCoordinatorV2Mock.addConsumer(subscriptionId, randomNumberConsumerV2.address)
     }
 
-    log("Then run RandomNumberConsumer contract with the following command")
+    if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
+        log("Verifying...")
+        await verify(randomNumberConsumerV2.address, args)
+    }
+
+    log("Run RandomNumberConsumer contract with the following command")
     const networkName = network.name == "hardhat" ? "localhost" : network.name
     log(
         `yarn hardhat request-random-number --contract ${randomNumberConsumerV2.address} --network ${networkName}`
