@@ -38,6 +38,7 @@ contract KeepersCounter is KeeperCompatibleInterface {
     bytes memory /* checkData */
   )
     public
+    view
     override
     returns (
       bool upkeepNeeded,
