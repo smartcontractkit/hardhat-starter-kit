@@ -19,7 +19,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     ethUsdPriceFeedAddress = networkConfig[chainId]["ethUsdPriceFeed"]
   }
   // Price Feed Address, values can be obtained at https://docs.chain.link/docs/reference-contracts
-  // Default one below is ETH/USD contract on Kovan
+  // Default one below is ETH/USD contract on Goerli
   const waitBlockConfirmations = developmentChains.includes(network.name)
     ? 1
     : VERIFICATION_BLOCK_CONFIRMATIONS

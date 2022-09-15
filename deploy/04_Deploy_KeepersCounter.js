@@ -11,8 +11,6 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const { deployer } = await getNamedAccounts()
   const chainId = network.config.chainId
   const keepersUpdateInterval = networkConfig[chainId]["keepersUpdateInterval"] || "30"
-  // Price Feed Address, values can be obtained at https://docs.chain.link/docs/reference-contracts
-  // Default one below is ETH/USD contract on Kovan
   const waitBlockConfirmations = developmentChains.includes(network.name)
     ? 1
     : VERIFICATION_BLOCK_CONFIRMATIONS

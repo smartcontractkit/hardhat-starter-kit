@@ -28,7 +28,7 @@ task("read-random-number", "Reads the random number returned to a contract by Ch
         console.log("You'll have to manually update the value since you're on a local chain!")
       } else {
         console.log(
-          `Visit https://vrf.chain.link/rinkeby/${process.env.VRF_SUBSCRIPTION_ID} and make sure that your last request fulfillment is there`
+          `Visit https://vrf.chain.link/goerli/${process.env.VRF_SUBSCRIPTION_ID} and make sure that your last request fulfillment is there`
         )
       }
     }

@@ -17,7 +17,7 @@
   - [Deploying Contracts](#deploying-contracts)
   - [Run a Local Network](#run-a-local-network)
   - [Using a Testnet or Live Network (like Mainnet or Polygon)](#using-a-testnet-or-live-network-like-mainnet-or-polygon)
-    - [Rinkeby Ethereum Testnet Setup](#rinkeby-ethereum-testnet-setup)
+    - [Goerli Ethereum Testnet Setup](#goerli-ethereum-testnet-setup)
   - [Forking](#forking)
   - [Auto-Funding](#auto-funding)
 - [Test](#test)
@@ -143,15 +143,15 @@ To interact with a live or test network, you'll need:
 2. A Private Key
 3. ETH & LINK token (either testnet or real)
 
-Let's look at an example of setting these up using the Rinkeby testnet. 
+Let's look at an example of setting these up using the Goerli testnet. 
 
-### Rinkeby Ethereum Testnet Setup
+### Goerli Ethereum Testnet Setup
 
 First, we will need to set environment variables. We can do so by setting them in our `.env` file (create it if it's not there). You can also read more about [environment variables](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) from the linked twilio blog. You'll find a sample of what this file will look like in `.env.example`
 
 > IMPORTANT: MAKE SURE YOU'D DON'T EXPOSE THE KEYS YOU PUT IN THIS `.env` FILE. By that, I mean don't push them to a public repo, and please try to keep them keys you use in development not associated with any real funds. 
 
-1. Set your `RINKEBY_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html)
+1. Set your `GOERLI_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html)
 
 You can get one for free from [Alchemy](https://www.alchemy.com/), [Infura](https://infura.io/), or [Moralis](https://moralis.io/speedy-nodes/). This is your connection to the blockchain. 
 
@@ -167,12 +167,12 @@ Don't commit and push any changes to .env files that may contain sensitive infor
 
 `.env` example:
 ```
-RINKEBY_RPC_URL='www.infura.io/asdfadsfafdadf'
+GOERLI_RPC_URL='www.infura.io/asdfadsfafdadf'
 PRIVATE_KEY='abcdef'
 ```
 `bash` example
 ```
-export RINKEBY_RPC_URL='www.infura.io/asdfadsfafdadf'
+export GOERLI_RPC_URL='www.infura.io/asdfadsfafdadf'
 export PRIVATE_KEY='abcdef'
 ```
 
@@ -180,27 +180,27 @@ export PRIVATE_KEY='abcdef'
 
 For other networks like mainnet and polygon, you can use different environment variables for your RPC URL and your private key. See the `hardhat.config.js` to learn more. 
 
-3. Get some Rinkeby Testnet ETH and LINK 
+3. Get some Goerli Testnet ETH and LINK 
 
 Head over to the [Chainlink faucets](https://faucets.chain.link/) and get some ETH and LINK. Please follow [the chainlink documentation](https://docs.chain.link/docs/acquire-link/) if unfamiliar. 
 
 4. Create VRF V2 subscription
 
-Head over to [VRF Subscription Page](https://vrf.chain.link/rinkeby) and create the new subscription. Save your subscription ID and put it in `.env` file as `VRF_SUBSCRIPTION_ID`
+Head over to [VRF Subscription Page](https://vrf.chain.link/goerli) and create the new subscription. Save your subscription ID and put it in `.env` file as `VRF_SUBSCRIPTION_ID`
 
 5. Running commands
 
-You should now be all setup! You can run any command and just pass the `--network rinkeby` now!
+You should now be all setup! You can run any command and just pass the `--network goerli` now!
 
 To deploy contracts:
 
 ```
-yarn hardhat deploy --network rinkeby
+yarn hardhat deploy --network goerli
 ```
 
 To run staging testnet tests
 ```
-yarn hardhat test --network rinkeby
+yarn hardhat test --network goerli
 ```
 
 ## Forking 
@@ -242,7 +242,7 @@ or
 yarn hardhat test
 ```
 
-To run staging tests on Rinkeby network:
+To run staging tests on Goerli network:
 
 ```bash
 yarn test-staging
@@ -251,7 +251,7 @@ yarn test-staging
 or
 
 ```
-yarn hardhat test --network rinkeby
+yarn hardhat test --network goerli
 ```
 
 ## Performance optimizations
@@ -299,7 +299,7 @@ yarn hardhat read-data --contract insert-contract-address-here --network network
 
 
 ## VRF Get a random number
-The VRFConsumer contract has two tasks, one to request a random number, and one to read the result of the random number request. To start, go to [VRF Subscription Page](https://vrf.chain.link/rinkeby) and create the new subscription. Save your subscription ID and put it in `.env` file as `VRF_SUBSCRIPTION_ID`:
+The VRFConsumer contract has two tasks, one to request a random number, and one to read the result of the random number request. To start, go to [VRF Subscription Page](https://vrf.chain.link/goerli) and create the new subscription. Save your subscription ID and put it in `.env` file as `VRF_SUBSCRIPTION_ID`:
 
 ```bash
 VRF_SUBSCRIPTION_ID=subscription_id
@@ -341,7 +341,7 @@ yarn hardhat verify --network <NETWORK> <CONTRACT_ADDRESS> <CONSTRUCTOR_PARAMETE
 example:
 
 ```
-yarn hardhat verify --network rinkeby 0x9279791897f112a41FfDa267ff7DbBC46b96c296 "0x9326BFA02ADD2366b30bacB125260Af641031331"
+yarn hardhat verify --network goerli 0x9279791897f112a41FfDa267ff7DbBC46b96c296 "0x9326BFA02ADD2366b30bacB125260Af641031331"
 ```
 
 # View Contracts Size
