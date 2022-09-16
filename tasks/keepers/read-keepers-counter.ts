@@ -5,25 +5,30 @@ import { KeepersCounter, KeepersCounter__factory } from "../../typechain"
 import { BigNumber } from "ethers"
 
 task(
-  "read-keepers-counter",
-  "Gets the value of the counter from the Counter contract used to demo Chainlink Keepers"
+    "read-keepers-counter",
+    "Gets the value of the counter from the Counter contract used to demo Chainlink Keepers"
 )
-  .addParam("contract", "The address of the Price Feed consumer contract that you want to read")
-  .setAction(async (taskArgs: TaskArguments, hre: HardhatRuntimeEnvironment): Promise<void> => {
-    const contractAddr = taskArgs.contract
-    const networkId = hre.network.name
+    .addParam("contract", "The address of the Price Feed consumer contract that you want to read")
+    .setAction(async (taskArgs: TaskArguments, hre: HardhatRuntimeEnvironment): Promise<void> => {
+        const contractAddr = taskArgs.contract
+        const networkId = hre.network.name
 
-    console.log("Reading counter from Keepers contract ", contractAddr, " on network ", networkId)
+        console.log(
+            "Reading counter from Keepers contract ",
+            contractAddr,
+            " on network ",
+            networkId
+        )
 
-    //Get signer information
-    const accounts: SignerWithAddress[] = await hre.ethers.getSigners()
-    const signer: SignerWithAddress = accounts[0]
+        //Get signer information
+        const accounts: SignerWithAddress[] = await hre.ethers.getSigners()
+        const signer: SignerWithAddress = accounts[0]
 
-    const keepersCounterContract: KeepersCounter = KeepersCounter__factory.connect(
-      contractAddr,
-      signer
-    )
-    const counter: BigNumber = await keepersCounterContract.counter()
+        const keepersCounterContract: KeepersCounter = KeepersCounter__factory.connect(
+            contractAddr,
+            signer
+        )
+        const counter: BigNumber = await keepersCounterContract.counter()
 
-    console.log(`Counter is: ${counter.toString()}`)
-  })
+        console.log(`Counter is: ${counter.toString()}`)
+    })

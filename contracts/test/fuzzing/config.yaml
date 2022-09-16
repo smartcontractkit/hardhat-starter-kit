@@ -6,9 +6,9 @@ maxTimeDelay: 0
 maxBlockDelay: 60480
 # additional arguments to use in crytic-compile for the compilation of the contract to test.
 cryticArgs:
-  [
-    "--solc-remaps",
-    "@chainlink/contracts=/src/node_modules/@chainlink/contracts",
-    "--solc-args",
-    "--allow-paths /src/contracts",
-  ]
+    [
+        "--solc-remaps",
+        "@chainlink/contracts=/src/node_modules/@chainlink/contracts",
+        "--solc-args",
+        "--allow-paths /src/contracts",
+    ]

@@ -102,8 +102,8 @@ export interface KeepersCounter extends BaseContract {
   functions: {
     checkUpkeep(
       arg0: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+      overrides?: CallOverrides
+    ): Promise<[boolean, string] & { upkeepNeeded: boolean }>;
 
     counter(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -119,8 +119,8 @@ export interface KeepersCounter extends BaseContract {
 
   checkUpkeep(
     arg0: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+    overrides?: CallOverrides
+  ): Promise<[boolean, string] & { upkeepNeeded: boolean }>;
 
   counter(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -156,7 +156,7 @@ export interface KeepersCounter extends BaseContract {
   estimateGas: {
     checkUpkeep(
       arg0: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     counter(overrides?: CallOverrides): Promise<BigNumber>;
@@ -174,7 +174,7 @@ export interface KeepersCounter extends BaseContract {
   populateTransaction: {
     checkUpkeep(
       arg0: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     counter(overrides?: CallOverrides): Promise<PopulatedTransaction>;

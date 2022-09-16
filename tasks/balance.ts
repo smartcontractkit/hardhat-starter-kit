@@ -6,10 +6,10 @@ const jsonRpcProvider = process.env.ALCHEMY_MAINNET_RPC_URL // https://docs.ethe
 const provider = ethers.getDefaultProvider(jsonRpcProvider)
 
 task("balance", "Prints an account's balance")
-  .addParam("account", "The account's address")
-  .setAction(async (taskArgs: TaskArguments): Promise<void> => {
-    const account: string = utils.getAddress(taskArgs.account)
-    const balance: BigNumber = await provider.getBalance(account)
+    .addParam("account", "The account's address")
+    .setAction(async (taskArgs: TaskArguments): Promise<void> => {
+        const account: string = utils.getAddress(taskArgs.account)
+        const balance: BigNumber = await provider.getBalance(account)
 
-    console.log(`${utils.formatEther(balance)} ETH`)
-  })
+        console.log(`${utils.formatEther(balance)} ETH`)
+    })
