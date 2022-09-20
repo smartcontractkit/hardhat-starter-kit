@@ -4,3 +4,9 @@ tasks:
     openMode: split-right
   - name: 👷 HARDHAT 👷
     command: yarn
+    
+vscode:
+  extensions:
+    - "esbenp.prettier-vscode"
+    - "JuanBlanco.solidity"
+    - "NomicFoundation.hardhat-solidity"
