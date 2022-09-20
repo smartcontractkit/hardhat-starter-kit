@@ -1,0 +1,6 @@
+tasks:
+  - name: 💎 INSTALL 💎
+    command: bash .install.sh
+    openMode: split-right
+  - name: 👷 HARDHAT 👷
+    command: yarn

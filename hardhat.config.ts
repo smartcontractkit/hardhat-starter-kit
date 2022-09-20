@@ -3,8 +3,12 @@ import * as dotenv from "dotenv"
 import type { HardhatUserConfig } from "hardhat/config"
 import "@nomicfoundation/hardhat-toolbox"
 import "@nomicfoundation/hardhat-chai-matchers"
+import "@nomiclabs/hardhat-waffle"
+import "@nomiclabs/hardhat-etherscan"
 import "hardhat-deploy"
 import "hardhat-contract-sizer"
+import "hardhat-contract-sizer"
+import "solidity-coverage"
 import "@appliedblockchain/chainlink-plugins-fund-link"
 import "./tasks"
 
@@ -109,7 +113,7 @@ const config: HardhatUserConfig = {
         ],
     },
     mocha: {
-        timeout: 200000, // 200 seconds max for running tests
+        timeout: 100000, // 100 seconds max for running tests
     },
     typechain: {
         outDir: "typechain",
