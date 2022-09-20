@@ -46,7 +46,6 @@
     "@chainlink/contracts": "^0.4.0",
     "@chainlink/test-helpers": "^0.0.7-alpha",
     "@chainlink/token": "^1.1.0",
-    "@openzeppelin/contracts": "^4.7.3",
     "babel-eslint": "^10.1.0",
     "dotenv": "^10.0.0"
   },
