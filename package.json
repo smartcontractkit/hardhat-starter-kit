@@ -14,12 +14,13 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@ethersproject/abi": "^5.7.0",
+    "@ethersproject/abi": "^5.7.1",
     "@ethersproject/providers": "^5.7.1",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.3",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.6",
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
-    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.10",
+    "@nomiclabs/buidler": "^1.4.8",
+    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers",
     "@nomiclabs/hardhat-etherscan": "^3.1.0",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
     "@typechain/ethers-v5": "^10.1.0",
@@ -29,8 +30,9 @@
     "chai": "^4.3.6",
     "ethers": "^5.7.1",
     "hardhat": "^2.11.2",
-    "hardhat-contract-sizer": "^2.4.0",
-    "hardhat-deploy": "^0.9.29",
+    "hardhat-contract-sizer": "^2.6.1",
+    "hardhat-deploy": "^0.11.15",
+    "hardhat-deploy-ethers": "^0.3.0-beta.13",
     "hardhat-gas-reporter": "^1.0.9",
     "prettier": "^2.4.1",
     "prettier-plugin-solidity": "^1.0.0-beta.19",
@@ -38,7 +40,9 @@
     "solidity-coverage": "^0.8.2",
     "ts-node": "^10.4.0",
     "typechain": "^8.1.0",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "babel-eslint": "^10.1.0",
+    "dotenv": "^16.0.2"
   },
   "dependencies": {
     "@appliedblockchain/chainlink-contracts": "0.0.4",
@@ -46,9 +50,7 @@
     "@chainlink/contracts": "^0.4.0",
     "@chainlink/test-helpers": "^0.0.7-alpha",
     "@chainlink/token": "^1.1.0",
-    "@openzeppelin/contracts": "^4.7.3",
-    "babel-eslint": "^10.1.0",
-    "dotenv": "^10.0.0"
+    "@openzeppelin/contracts": "^4.7.3"
   },
   "mocha": {
     "timeout": 10000000

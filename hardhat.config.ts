@@ -29,6 +29,7 @@ const FORKING_BLOCK_NUMBER = process.env.FORKING_BLOCK_NUMBER
 // Your API key for Etherscan, obtain one at https://etherscan.io/
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "Your etherscan API key"
 const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY || "Your polygonscan API key"
+const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || "Your coin market cap"
 
 const config: HardhatUserConfig = {
     defaultNetwork: "hardhat",
@@ -83,7 +84,7 @@ const config: HardhatUserConfig = {
         currency: "USD",
         outputFile: "gas-report.txt",
         noColors: true,
-        // coinmarketcap: process.env.COINMARKETCAP_API_KEY,
+        // coinmarketcap: COINMARKETCAP_API_KEY,
     },
     contractSizer: {
         runOnCompile: false,
@@ -101,7 +102,7 @@ const config: HardhatUserConfig = {
     solidity: {
         compilers: [
             {
-                version: "0.8.7",
+                version: "0.8.17",
             },
             {
                 version: "0.6.6",
