@@ -20,7 +20,7 @@
 			"extensions": [
 				"dbaeumer.vscode-eslint",
 				"esbenp.prettier-vscode",
-				"JuanBlanco.solidity",
+				// "JuanBlanco.solidity",
 				"NomicFoundation.hardhat-solidity"
 			]
 		}
