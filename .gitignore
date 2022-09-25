@@ -101,3 +101,7 @@ lint/tmp/
 gas-report.txt
 
 contracts/test/fuzzing/crytic-export
+
+# lock files
+yarn.lock
+package-lock.json
