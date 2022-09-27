@@ -79,7 +79,7 @@ yarn
 
 or
 ```
-npm i
+npm i --force
 ```
 
 2. You can now do stuff!
