@@ -39,6 +39,10 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     waitConfirmations: waitBlockConfirmations,
   })
 
+  if (chainId === 31337) {
+    await VRFCoordinatorV2Mock.addConsumer(subscriptionId, randomNumberConsumerV2.address)
+  }
+
   if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
     log("Verifying...")
     await verify(randomNumberConsumerV2.address, args)
