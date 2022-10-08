@@ -74,24 +74,29 @@ cd hardhat-starter-kit
 ```
 Then:
 ```
-yarn
+npm install
 ```
 
-or
+The recommendation is to use npm 7 or later. If you are using an older version of npm, you'll also need to install all the packages used by the toolbox.
 ```
-npm i
+npm install --save-dev @nomicfoundation/hardhat-toolbox @nomicfoundation/hardhat-network-helpers @nomicfoundation/hardhat-chai-matchers @nomiclabs/hardhat-ethers @nomiclabs/hardhat-etherscan chai ethers hardhat-gas-reporter solidity-coverage @typechain/hardhat typechain @typechain/ethers-v5 @ethersproject/abi @ethersproject/providers
+```
+
+That's also the case if you are using yarn.
+```
+yarn add --dev @nomicfoundation/hardhat-toolbox @nomicfoundation/hardhat-network-helpers @nomicfoundation/hardhat-chai-matchers @nomiclabs/hardhat-ethers @nomiclabs/hardhat-etherscan chai ethers hardhat-gas-reporter solidity-coverage @typechain/hardhat typechain @typechain/ethers-v5 @ethersproject/abi @ethersproject/providers
 ```
 
 2. You can now do stuff!
 
 ```
-yarn hardhat test
+npm test
 ```
 
 or
 
 ```
-npm test
+yarn hardhat test
 ```
 
 ### Typescript
@@ -100,7 +105,7 @@ To use typescript, run:
 
 ```
 git checkout typescript
-yarn
+npm install
 ```
 
 # Usage
@@ -110,7 +115,7 @@ If you run `yarn hardhat --help` you'll get an output of all the tasks you can r
 ## Deploying Contracts
 
 ```
-yarn hardhat deploy
+yarn deploy
 ```
 
 This will deploy your contracts to a local network. Additionally, if on a local network, it will deploy mock Chainlink contracts for you to interact with. If you'd like to interact with your deployed contracts, skip down to [Interacting with Deployed Contracts](#interacting-with-deployed-contracts).
@@ -200,7 +205,7 @@ yarn hardhat deploy --network goerli
 
 To run staging testnet tests
 ```
-yarn hardhat test --network goerli
+yarn hardhat test-staging
 ```
 
 ## Forking 
@@ -397,7 +402,7 @@ If you are using it for the first time, you will need to wait for Docker to down
 
 To start Fuzzing run
 ```
-echidna-test /src/contracts/test/fuzzing/KeepersCounterEchidnaTest.sol --contract KeepersCounterEchidnaTest --config /src/contracts/test/fuzzing/config.yaml
+echidna-test /src/contracts/test/fuzzing/AutomationCounterEchidnaTest.sol --contract AutomationCounterEchidnaTest --config /src/contracts/test/fuzzing/config.yaml
 ```
 
 To exit Echidna type
