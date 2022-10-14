@@ -74,24 +74,35 @@ cd hardhat-starter-kit
 ```
 Then:
 ```
-yarn
+npm install
 ```
 
-or
+The recommendation is to use npm 7 or later. If you are using an older version of npm, you'll also need to install all the packages used by the toolbox.
 ```
-npm i
+npm install --save-dev @nomicfoundation/hardhat-toolbox @nomicfoundation/hardhat-network-helpers @nomicfoundation/hardhat-chai-matchers @nomiclabs/hardhat-ethers @nomiclabs/hardhat-etherscan chai ethers hardhat-gas-reporter solidity-coverage @typechain/hardhat typechain @typechain/ethers-v5 @ethersproject/abi @ethersproject/providers
+```
+
+That's also the case if you are using yarn.
+```
+yarn add --dev @nomicfoundation/hardhat-toolbox @nomicfoundation/hardhat-network-helpers @nomicfoundation/hardhat-chai-matchers @nomiclabs/hardhat-ethers @nomiclabs/hardhat-etherscan chai ethers hardhat-gas-reporter solidity-coverage @typechain/hardhat typechain @typechain/ethers-v5 @ethersproject/abi @ethersproject/providers
 ```
 
 2. You can now do stuff!
 
 ```
-yarn hardhat test
+npx hardhat test
 ```
 
 or
 
 ```
-npm test
+npm run test
+```
+
+or
+
+```
+yarn test
 ```
 
 ### Typescript
@@ -100,17 +111,17 @@ To use typescript, run:
 
 ```
 git checkout typescript
-yarn
+npm install
 ```
 
 # Usage
 
-If you run `yarn hardhat --help` you'll get an output of all the tasks you can run. 
+If you run `npx hardhat --help` you'll get an output of all the tasks you can run. 
 
 ## Deploying Contracts
 
 ```
-yarn hardhat deploy
+npm run deploy
 ```
 
 This will deploy your contracts to a local network. Additionally, if on a local network, it will deploy mock Chainlink contracts for you to interact with. If you'd like to interact with your deployed contracts, skip down to [Interacting with Deployed Contracts](#interacting-with-deployed-contracts).
@@ -120,10 +131,10 @@ This will deploy your contracts to a local network. Additionally, if on a local 
 One of the best ways to test and interact with smart contracts is with a local network. To run a local network with all your contracts in it, run the following:
 
 ```
-yarn hardhat node
+npx hardhat node
 ```
 
-You'll get a local blockchain, private keys, contracts deployed (from the `deploy` folder scripts), and an endpoint to potentially add to an EVM wallet. 
+You'll get a local blockchain, private keys, contracts deployed (from the `deployment` folder scripts), and an endpoint to potentially add to an EVM wallet. 
 
 ## Using a Testnet or Live Network (like Mainnet or Polygon)
 
@@ -186,7 +197,7 @@ Head over to the [Chainlink faucets](https://faucets.chain.link/) and get some E
 
 4. Create VRF V2 subscription
 
-Head over to [VRF Subscription Page](https://vrf.chain.link/goerli) and create the new subscription. Save your subscription ID and put it in `.env` file as `VRF_SUBSCRIPTION_ID`
+Head over to [VRF Subscription Page](https://vrf.chain.link/goerli) and create the new subscription. Save your subscription ID and put it in `helper-hardhat-config.js` file as `subscriptionId`
 
 5. Running commands
 
@@ -195,12 +206,12 @@ You should now be all setup! You can run any command and just pass the `--networ
 To deploy contracts:
 
 ```
-yarn hardhat deploy --network goerli
+npm run deploy --network goerli
 ```
 
 To run staging testnet tests
 ```
-yarn hardhat test --network goerli
+npm run test-staging
 ```
 
 ## Forking 
@@ -234,24 +245,30 @@ Tests are located in the [test](./test/) directory, and are split between unit t
 
 To run unit tests:
 
-```bash
-yarn test
 ```
+npx hardhat test
+```
+
 or
+
 ```
-yarn hardhat test
+npm run test
+```
+
+or
+
+```
+yarn test
 ```
 
 To run staging tests on Goerli network:
 
-```bash
-yarn test-staging
 ```
-
+npx hardhat test --network goerli
+```
 or
-
-```
-yarn hardhat test --network goerli
+```bash
+npm run test-staging
 ```
 
 ## Performance optimizations
@@ -260,11 +277,11 @@ Since all tests are written in a way to be independent from each other, you can 
 
 To run tests in parallel:
 ```
-yarn test --parallel
+npx hardhat test --parallel
 ```
 or
 ```
-yarn hardhat test --parallel
+npm run test --parallel
 ```
 
 # Interacting with Deployed Contracts
@@ -276,59 +293,62 @@ After deploying your contracts, the deployment output will give you the contract
 The Price Feeds consumer contract has one task, to read the latest price of a specified price feed contract
 
 ```bash
-yarn hardhat read-price-feed --contract insert-contract-address-here --network network
+npx hardhat read-price-feed --contract insert-contract-address-here --network network
 ```
 
 ## Request & Receive Data
 The APIConsumer contract has two tasks, one to request external data based on a set of parameters, and one to check to see what the result of the data request is. This contract needs to be funded with link first:
 
 ```bash
-yarn hardhat fund-link --contract insert-contract-address-here --network network
+npx hardhat fund-link --contract insert-contract-address-here --network network
 ```
 
 Once it's funded, you can request external data by passing in a number of parameters to the request-data task. The contract parameter is mandatory, the rest are optional
 
 ```bash
-yarn hardhat request-data --contract insert-contract-address-here --network network
+npx hardhat request-data --contract insert-contract-address-here --network network
 ```
 
 Once you have successfully made a request for external data, you can see the result via the read-data task
 ```bash
-yarn hardhat read-data --contract insert-contract-address-here --network network
+npx hardhat read-data --contract insert-contract-address-here --network network
 ```
 
 
 ## VRF Get a random number
-The VRFConsumer contract has two tasks, one to request a random number, and one to read the result of the random number request. To start, go to [VRF Subscription Page](https://vrf.chain.link/goerli) and create the new subscription. Save your subscription ID and put it in `.env` file as `VRF_SUBSCRIPTION_ID`:
+The VRFConsumer contract has two tasks, one to request a random number, and one to read the result of the random number request. To start, go to [VRF Subscription Page](https://vrf.chain.link/goerli) and create the new subscription. Save your subscription ID and put it in `helper-hardhat-config.js` file as `subscriptionId`:
 
-```bash
-VRF_SUBSCRIPTION_ID=subscription_id
+```javascript
+5: {
+    // rest of the config
+    subscriptionId = "777"
+}
 ```
 
 Then, deploy your VRF V2 contract consumer to the network of your recent subscription using subscription id as constructor argument.
 
 ```bash
-yarn hardhat deploy --network network   
+npm run deploy --network network   
 ```
 
 Finally, you need to go to your subscription page one more time and add the address of deployed contract as a new consumer. Once that's done, you can perform a VRF request with the request-random-number task:
 
 ```bash
-yarn hardhat request-random-number --contract insert-contract-address-here --network network
+npx hardhat request-random-number --contract insert-contract-address-here --network network
 ```
 
 Once you have successfully made a request for a random number, you can see the result via the read-random-number task:
 
 ```bash
-yarn hardhat read-random-number --contract insert-contract-address-here --network network
+npx hardhat read-random-number --contract insert-contract-address-here --network network
 ```
 
-## Keepers
-The KeepersCounter contract is a simple Chainlink Keepers enabled contract that simply maintains a counter variable that gets incremented each time the performUpkeep task is performed by a Chainlink Keeper. Once the contract is deployed, you should head to [https://keepers.chain.link/](https://keepers.chain.link/) to register it for upkeeps, then you can use the task below to view the counter variable that gets incremented by Chainlink Keepers
+## Automation
+The AutomationCounter contract is a simple Chainlink Automation enabled contract that simply maintains a counter variable that gets incremented each time the performUpkeep task is performed by a Chainlink Automation. Once the contract is deployed, you should head to [https://automation.chain.link/](https://automation.chain.link/) to register it for upkeeps, then you can use the task below to view the counter variable that gets incremented by Chainlink Automation
 
 
 ```bash
-yarn hardhat read-keepers-counter --contract insert-contract-address-here --network network
+npx hardhat read-automation-counter --contract insert-contract-address-here --network network
 ```
 
 ## Verify on Etherscan
@@ -336,18 +356,12 @@ yarn hardhat read-keepers-counter --contract insert-contract-address-here --netw
 You'll need an `ETHERSCAN_API_KEY` environment variable. You can get one from the [Etherscan API site.](https://etherscan.io/apis). If you have it set, your deploy script will try to verify them by default, but if you want to verify any manually, you can run: 
 
 ```
-yarn hardhat verify --network <NETWORK> <CONTRACT_ADDRESS> <CONSTRUCTOR_PARAMETERS>
+npx hardhat verify --network <NETWORK> <CONTRACT_ADDRESS> <CONSTRUCTOR_PARAMETERS>
 ```
 example:
 
 ```
-yarn hardhat verify --network goerli 0x9279791897f112a41FfDa267ff7DbBC46b96c296 "0x9326BFA02ADD2366b30bacB125260Af641031331"
-```
-
-# View Contracts Size
-
-```
-yarn run hardhat size-contracts
+npx hardhat verify --network goerli 0x9279791897f112a41FfDa267ff7DbBC46b96c296 "0x9326BFA02ADD2366b30bacB125260Af641031331"
 ```
 
 # Linting
@@ -355,7 +369,7 @@ yarn run hardhat size-contracts
 This will [lint](https://stackoverflow.com/questions/8503559/what-is-linting) your smart contracts.  
 
 ```
-yarn lint:fix
+npm run lint:fix
 ```
 
 # Code Formatting
@@ -363,7 +377,7 @@ yarn lint:fix
 This will format both your javascript and solidity to look nicer. 
 
 ```
-yarn format
+npm run format
 ```
 
 # Estimating Gas
@@ -371,7 +385,7 @@ yarn format
 To estimate gas, just set a `REPORT_GAS` environment variable to true, and then run:
 
 ```
-yarn hardhat test
+npx hardhat test
 ```
 
 If you'd like to see the gas prices in USD or other currency, add a `COINMARKETCAP_API_KEY` from [Coinmarketcap](https://coinmarketcap.com/api/documentation/v1/).
@@ -380,7 +394,7 @@ If you'd like to see the gas prices in USD or other currency, add a `COINMARKETC
 
 To see a measure in percent of the degree to which the smart contract source code is executed when a particular test suite is run, type
 ```
-yarn coverage
+npm run coverage
 ```
 
 # Fuzzing
@@ -390,14 +404,14 @@ We are going to use Echidna as a Fuzz testing tool. You need to have [Docker](ht
 To start Echidna instance run
 
 ```
-yarn fuzzing
+npm run fuzzing
 ```
 
 If you are using it for the first time, you will need to wait for Docker to download [eth-security-toolbox](https://hub.docker.com/r/trailofbits/eth-security-toolbox) image for us.
 
 To start Fuzzing run
 ```
-echidna-test /src/contracts/test/fuzzing/KeepersCounterEchidnaTest.sol --contract KeepersCounterEchidnaTest --config /src/contracts/test/fuzzing/config.yaml
+echidna-test /src/contracts/test/fuzzing/AutomationCounterEchidnaTest.sol --contract AutomationCounterEchidnaTest --config /src/contracts/test/fuzzing/config.yaml
 ```
 
 To exit Echidna type

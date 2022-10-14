@@ -1,44 +1,53 @@
 {
   "name": "hardhat-starter-kit",
-  "version": "1.0.0",
-  "description": "",
+  "license": "MIT",
+  "version": "2.0.0",
+  "description": "A repo for boilerplate code for testing, deploying, and shipping chainlink solidity code.",
   "scripts": {
     "compile": "hardhat compile",
-    "test": "hardhat test test/unit/*_test.js --network hardhat",
-    "test-staging": "hardhat test test/staging/*_test.js --network goerli",
+    "test": "hardhat test test/unit/*.spec.js",
+    "test-staging": "hardhat test test/staging/*.spec.js --network goerli",
+    "deploy": "hardhat run scripts/deployment/main.js",
     "lint": "solhint 'contracts/*.sol'",
     "lint:fix": "solhint 'contracts/**/*.sol' --fix",
     "format": "prettier --write .",
     "coverage": "hardhat coverage --solcoverjs ./.solcover.js",
     "fuzzing": "docker run -it --rm -v $PWD:/src trailofbits/eth-security-toolbox"
   },
-  "license": "MIT",
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13",
-    "@nomiclabs/hardhat-etherscan": "^3.0.0",
-    "@nomiclabs/hardhat-waffle": "^2.0.1",
-    "chai": "^4.3.4",
-    "ethereum-waffle": "^3.4.0",
-    "ethers": "^5.5.1",
+    "@chainlink/contracts": "0.5.1",
+    "@ethersproject/abi": "^5.7.0",
+    "@ethersproject/providers": "^5.7.1",
+    "@nomicfoundation/hardhat-chai-matchers": "^1.0.3",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.6",
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "@nomiclabs/hardhat-ethers": "^2.1.1",
+    "@nomiclabs/hardhat-etherscan": "^3.1.0",
+    "@typechain/ethers-v5": "^10.1.0",
+    "@typechain/hardhat": "^6.1.3",
+    "chai": "^4.3.6",
+    "ethers": "^5.7.1",
     "hardhat": "^2.11.2",
-    "hardhat-contract-sizer": "^2.4.0",
-    "hardhat-deploy": "^0.9.29",
-    "hardhat-gas-reporter": "^1.0.7",
-    "prettier": "^2.4.1",
-    "prettier-plugin-solidity": "^1.0.0-beta.19",
-    "solhint": "^3.3.6",
-    "solidity-coverage": "^0.7.13"
+    "hardhat-gas-reporter": "^1.0.9",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "prettier-plugin-solidity": "^1.0.0-beta.24",
+    "solhint": "^3.3.7",
+    "solhint-plugin-prettier": "^0.0.5",
+    "solidity-coverage": "^0.8.2",
+    "typechain": "^8.1.0"
   },
   "dependencies": {
-    "@appliedblockchain/chainlink-contracts": "0.0.4",
-    "@appliedblockchain/chainlink-plugins-fund-link": "0.0.1",
-    "@chainlink/contracts": "^0.4.0",
-    "@chainlink/test-helpers": "^0.0.7-alpha",
-    "@chainlink/token": "^1.1.0",
-    "babel-eslint": "^10.1.0",
-    "dotenv": "^10.0.0"
+    "dotenv": "^16.0.3"
   },
-  "mocha": {
-    "timeout": 10000000
+  "lint-staged": {
+    "*.{js,json,yml,yaml}": [
+      "prettier --write"
+    ],
+    "*.sol": [
+      "prettier --write",
+      "solhint"
+    ]
   }
 }
