@@ -10,7 +10,7 @@ task("read-random-number", "Reads the random number returned to a contract by Ch
         const accounts = await hre.ethers.getSigners()
         const signer = accounts[0]
 
-        //Create connection to API Consumer Contract and call the createRequestTo function
+        //Create connection to VRF Contract and check for returned random values
         const vrfConsumerContractV2 = new ethers.Contract(
             contractAddr,
             RandomNumberConsumerV2.interface,
@@ -30,7 +30,7 @@ task("read-random-number", "Reads the random number returned to a contract by Ch
                 )
             } else {
                 console.log(
-                    `Visit https://vrf.chain.link/goerli/${process.env.VRF_SUBSCRIPTION_ID} and make sure that your last request fulfillment is there`
+                    `Visit https://vrf.chain.link/ and make sure that your last request fulfillment is there`
                 )
             }
         }

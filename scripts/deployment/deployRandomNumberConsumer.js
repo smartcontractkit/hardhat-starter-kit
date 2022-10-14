@@ -24,7 +24,7 @@ async function deployRandomNumberConsumer(chainId) {
         subscriptionId = ethers.BigNumber.from(transactionReceipt.events[0].topics[1])
         await VRFCoordinatorV2Mock.fundSubscription(subscriptionId, fundAmount)
     } else {
-        subscriptionId = networkConfig[chainId]["subscriptionId"] || process.env.VRF_SUBSCRIPTION_ID
+        subscriptionId = networkConfig[chainId]["subscriptionId"]
         vrfCoordinatorAddress = networkConfig[chainId]["vrfCoordinator"]
     }
 

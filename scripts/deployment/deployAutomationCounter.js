@@ -8,7 +8,7 @@ const {
 async function deployAutomationCounter(chainId) {
     const automationUpdateInterval = networkConfig[chainId]["automationUpdateInterval"]
 
-    const automationCounterFactory = await ethers.getContractFactory("Counter")
+    const automationCounterFactory = await ethers.getContractFactory("AutomationCounter")
     const automationCounter = await automationCounterFactory.deploy(automationUpdateInterval)
 
     const waitBlockConfirmations = developmentChains.includes(network.name)

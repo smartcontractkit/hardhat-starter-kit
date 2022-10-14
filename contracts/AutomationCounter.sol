@@ -11,7 +11,7 @@ import "@chainlink/contracts/src/v0.8/AutomationCompatible.sol";
  * DO NOT USE THIS CODE IN PRODUCTION.
  */
 
-contract Counter is AutomationCompatibleInterface {
+contract AutomationCounter is AutomationCompatibleInterface {
     /**
      * Public counter variable
      */

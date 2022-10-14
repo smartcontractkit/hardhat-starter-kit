@@ -16,7 +16,7 @@ const { assert, expect } = require("chai")
               const automationUpdateInterval =
                   networkConfig[chainId]["automationUpdateInterval"] || "30"
 
-              const counterFactory = await ethers.getContractFactory("Counter")
+              const counterFactory = await ethers.getContractFactory("AutomationCounter")
               const counter = await counterFactory
                   .connect(deployer)
                   .deploy(automationUpdateInterval)

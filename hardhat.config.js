@@ -90,7 +90,7 @@ module.exports = {
         runOnCompile: false,
         only: [
             "APIConsumer",
-            "Counter",
+            "AutomationCounter",
             "NFTFloorPriceConsumerV3",
             "PriceConsumerV3",
             "RandomNumberConsumerV2",
