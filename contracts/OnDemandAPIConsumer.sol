@@ -28,7 +28,10 @@ contract OnDemandAPIConsumer is OCR2DRClient, ConfirmedOwner {
      *
      * @param oracle - The OCR2DROracle contract
      */
-    constructor(address oracle) OCR2DRClient(oracle) ConfirmedOwner(msg.sender) {}
+    constructor(address oracle)
+        OCR2DRClient(oracle)
+        ConfirmedOwner(msg.sender)
+    {}
 
     /**
      * @notice Sends request to be serviced by the DON
@@ -44,7 +47,11 @@ contract OnDemandAPIConsumer is OCR2DRClient, ConfirmedOwner {
         require(reqInFlight == false, "Request is already in flight");
 
         OCR2DR.Request memory request;
-        request.initializeRequest(OCR2DR.Location.Inline, OCR2DR.CodeLanguage.JavaScript, source);
+        request.initializeRequest(
+            OCR2DR.Location.Inline,
+            OCR2DR.CodeLanguage.JavaScript,
+            source
+        );
         if (secrets.length > 0) request.addInlineSecrets(secrets);
         if (args.length > 0) request.addArgs(args);
         if (queries.length > 0) request.setHttpQueries(queries);
@@ -68,7 +75,7 @@ contract OnDemandAPIConsumer is OCR2DRClient, ConfirmedOwner {
         bytes memory err
     ) internal override {
         emit FulfillRequestInvoked(requestId, response, err);
-        if (err.length == 0) value = response;
+        if (err.length != 0) value = response;
         reqInFlight = false;
     }
 }
