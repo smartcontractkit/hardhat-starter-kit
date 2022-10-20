@@ -9,7 +9,11 @@ import "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
 /**
  * @title OCR2DR oracle contract
  */
-contract OCR2DROracle is OCR2DROracleInterface, AuthorizedReceiver, ConfirmedOwner {
+contract OCR2DROracle is
+    OCR2DROracleInterface,
+    AuthorizedReceiver,
+    ConfirmedOwner
+{
     event OracleRequest(bytes32 requestId, bytes data);
     event OracleResponse(bytes32 requestId);
 
@@ -24,11 +28,13 @@ contract OCR2DROracle is OCR2DROracleInterface, AuthorizedReceiver, ConfirmedOwn
 
     uint256 private constant MINIMUM_CONSUMER_GAS_LIMIT = 400000;
 
-    bytes32 private s_donPublicKey;
+    bytes private s_donPublicKey;
     uint256 private s_nonce;
     mapping(bytes32 => Commitment) private s_commitments;
 
-    constructor(address owner, bytes32 donPublicKey) ConfirmedOwner(owner) {
+    constructor(address owner, bytes memory donPublicKey)
+        ConfirmedOwner(owner)
+    {
         s_donPublicKey = donPublicKey;
     }
 
@@ -40,7 +46,7 @@ contract OCR2DROracle is OCR2DROracleInterface, AuthorizedReceiver, ConfirmedOwn
         return "OCR2DROracle 0.0.0";
     }
 
-    function getDONPublicKey() external view override returns (bytes32) {
+    function getDONPublicKey() external view override returns (bytes memory) {
         return s_donPublicKey;
     }
 
@@ -64,7 +70,9 @@ contract OCR2DROracle is OCR2DROracleInterface, AuthorizedReceiver, ConfirmedOwn
         bytes calldata response,
         bytes calldata err
     ) external override validateRequestId(requestId) validateAuthorizedSender {
-        OCR2DRClientInterface client = OCR2DRClientInterface(s_commitments[requestId].client);
+        OCR2DRClientInterface client = OCR2DRClientInterface(
+            s_commitments[requestId].client
+        );
         emit OracleResponse(requestId);
         if (gasleft() < MINIMUM_CONSUMER_GAS_LIMIT) {
             revert LowGasForConsumer();

@@ -11,7 +11,7 @@ interface OCR2DROracleInterface {
      * needed to decrypt the secrets encrypted with the public key
      * @return publicKey DON's public key
      */
-    function getDONPublicKey() external view returns (bytes32);
+    function getDONPublicKey() external view returns (bytes memory);
 
     /**
      * @notice Sends a request (encoded as data) using the provided subscriptionId
@@ -20,7 +20,9 @@ interface OCR2DROracleInterface {
      * @param data Encoded OCR2DR request data, use OCR2DRClient API to encode a request
      * @return requestId A unique request identifier (unique per oracle)
      */
-    function sendRequest(uint256 subscriptionId, bytes calldata data) external returns (bytes32);
+    function sendRequest(uint256 subscriptionId, bytes calldata data)
+        external
+        returns (bytes32);
 
     /**
      * @notice Fulfills a request (called by DON)

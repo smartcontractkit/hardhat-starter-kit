@@ -24,7 +24,7 @@ abstract contract OCR2DRClient is OCR2DRClientInterface {
         setOracle(oracle);
     }
 
-    function getDONPublicKey() external view override returns (bytes32) {
+    function getDONPublicKey() external view override returns (bytes memory) {
         return s_oracle.getDONPublicKey();
     }
 
@@ -38,7 +38,10 @@ abstract contract OCR2DRClient is OCR2DRClientInterface {
         internal
         returns (bytes32)
     {
-        bytes32 requestId = s_oracle.sendRequest(subscriptionId, OCR2DR.encodeCBOR(req));
+        bytes32 requestId = s_oracle.sendRequest(
+            subscriptionId,
+            OCR2DR.encodeCBOR(req)
+        );
         s_pendingRequests[requestId] = address(s_oracle);
         emit RequestSent(requestId);
         return requestId;

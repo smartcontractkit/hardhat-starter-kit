@@ -13,7 +13,11 @@ contract OCR2DROracleFactory {
 
     EnumerableSet.AddressSet private s_created;
 
-    event OracleCreated(address indexed oracle, address indexed owner, address indexed sender);
+    event OracleCreated(
+        address indexed oracle,
+        address indexed owner,
+        address indexed sender
+    );
 
     /**
      * @notice The type and version of this contract
@@ -27,7 +31,10 @@ contract OCR2DROracleFactory {
      * @notice creates a new Oracle contract with the msg.sender as owner
      * @param donPublicKey DON's public key used to encrypt user secrets
      */
-    function deployNewOracle(bytes32 donPublicKey) external returns (address) {
+    function deployNewOracle(bytes calldata donPublicKey)
+        external
+        returns (address)
+    {
         OCR2DROracle oracle = new OCR2DROracle(msg.sender, donPublicKey);
 
         s_created.add(address(oracle));

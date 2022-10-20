@@ -11,7 +11,7 @@ interface OCR2DRClientInterface {
      * needed to decrypt the secrets encrypted with the public key
      * @return publicKey DON's public key
      */
-    function getDONPublicKey() external view returns (bytes32);
+    function getDONPublicKey() external view returns (bytes memory);
 
     /**
      * @notice OCR2DR response handler called by the designated oracle.

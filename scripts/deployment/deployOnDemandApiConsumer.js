@@ -22,7 +22,7 @@ async function deployOnDemandApiConsumer(chainId = network.config.chainId) {
         const mockOracleFactoryFactory = await ethers.getContractFactory("OCR2DROracleFactory")
         mockOracleFactory = await mockOracleFactoryFactory.connect(deployer).deploy()
         const OracleDeploymentTransaction = await mockOracleFactory.deployNewOracle(
-            networkConfig[chainId]["OCRODMockPublicKey"]
+            ethers.utils.toUtf8Bytes(networkConfig[chainId]["OCR2ODMockPublicKey"])
         )
         const OracleDeploymentReceipt = await OracleDeploymentTransaction.wait()
         const OCR2DROracleAddress = OracleDeploymentReceipt.events[0].args.oracle

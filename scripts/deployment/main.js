@@ -7,6 +7,8 @@
 const { network, run } = require("hardhat")
 
 const { deployApiConsumer } = require("./deployApiConsumer")
+const { deployAutomatedApiConsumer } = require("./deployAutomatedApiConsumer")
+const { deployOnDemandApiConsumer } = require("./deployOnDemandApiConsumer")
 const { deployAutomationCounter } = require("./deployAutomationCounter")
 const { deployPriceConsumerV3 } = require("./deployPriceConsumerV3")
 const { deployRandomNumberConsumer } = require("./deployRandomNumberConsumer")
@@ -16,6 +18,8 @@ async function main() {
     const chainId = network.config.chainId
 
     await deployApiConsumer(chainId)
+    await deployAutomatedApiConsumer(chainId)
+    await deployOnDemandApiConsumer(chainId)
     await deployAutomationCounter(chainId)
     await deployPriceConsumerV3(chainId)
     await deployRandomNumberConsumer(chainId)

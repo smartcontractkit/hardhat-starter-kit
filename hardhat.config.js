@@ -1,3 +1,5 @@
+const ethers = require("ethers")
+const { networkConfig } = require("./helper-hardhat-config")
 require("@nomicfoundation/hardhat-toolbox")
 require("./tasks")
 require("dotenv").config()
@@ -45,6 +47,13 @@ module.exports = {
                 enabled: false,
             },
             chainId: 31337,
+            accounts: [
+                {
+                    privateKey: ethers.Wallet.fromMnemonic(networkConfig[31337].deployerMnemonic)
+                        .privateKey,
+                    balance: "10000000000000000000000",
+                },
+            ],
         },
         localhost: {
             chainId: 31337,
@@ -97,10 +106,10 @@ module.exports = {
         ],
     },
     paths: {
-    sources: "./contracts",
-    tests: "./test",
-    cache: "./build/cache",
-    artifacts: "./build/artifacts"
+        sources: "./contracts",
+        tests: "./test",
+        cache: "./build/cache",
+        artifacts: "./build/artifacts",
     },
     mocha: {
         timeout: 200000, // 200 seconds max for running tests

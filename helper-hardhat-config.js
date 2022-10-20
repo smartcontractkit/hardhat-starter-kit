@@ -15,6 +15,11 @@ const networkConfig = {
         fundAmount: "1000000000000000000",
         automationUpdateInterval: "30",
         ethUsdPriceFeed: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+        deployerMnemonic:
+            "repair craft aspect trophy height matrix pool basket category west boat solar",
+        OCR2ODMockPublicKey:
+            "971f006163a12ee3383a00d7743334480d6b1c83fdf60497e0c520b16d1a4ee421cc61375679b63466156fee6f2f1da5a7e630ba0b1cddb2704ef907ead223db",
+        OCR2ODMockPrivateKey: "0x09768a19def4dce2b6793d7dc807828ef47b681709cf1005627a93f0da9c8065",
     },
     1: {
         name: "mainnet",
@@ -29,6 +34,7 @@ const networkConfig = {
         keyHash: "0x79d3d8832d904592c0bf9818b621522c988bb8b0c05cdc3b15aea1b6e8db0c15",
         vrfCoordinator: "0x2Ca8E0C643bDe4C2E08ab1fA0da3401AdAD7734D",
         oracle: "0xCC79157eb46F5624204f47AB42b3906cAA40eaB7",
+        ocr2odOracle: "0xCC79157eb46F5624204f47AB42b3906cAA40eaB7",
         jobId: "ca98366cc7314957b8c012c72f05aeeb",
         fee: "100000000000000000",
         fundAmount: "100000000000000000", // 0.1

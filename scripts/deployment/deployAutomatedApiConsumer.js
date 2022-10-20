@@ -5,6 +5,7 @@ const {
     developmentChains,
 } = require("../../helper-hardhat-config")
 const LINK_TOKEN_ABI = require("@chainlink/contracts/abi/v0.4/LinkToken.json")
+const { ocr2drRequest } = require("../../ocr2dr-config")
 
 async function deployAutomatedApiConsumer(chainId = network.config.chainId) {
     const accounts = await ethers.getSigners()
@@ -22,7 +23,7 @@ async function deployAutomatedApiConsumer(chainId = network.config.chainId) {
         const mockOracleFactoryFactory = await ethers.getContractFactory("OCR2DROracleFactory")
         mockOracleFactory = await mockOracleFactoryFactory.connect(deployer).deploy()
         const OracleDeploymentTransaction = await mockOracleFactory.deployNewOracle(
-            networkConfig[chainId]["OCRODMockPublicKey"]
+            networkConfig[chainId]["OCR2ODMockPublicKey"]
         )
         const OracleDeploymentReceipt = await OracleDeploymentTransaction.wait()
         const OCR2DROracleAddress = OracleDeploymentReceipt.events[0].args.oracle
@@ -38,17 +39,10 @@ async function deployAutomatedApiConsumer(chainId = network.config.chainId) {
         linkTokenAddress = networkConfig[chainId]["linkToken"]
         linkToken = new ethers.Contract(linkTokenAddress, LINK_TOKEN_ABI, deployer)
     }
-
-    const source = `function run(args, queryResponses) {
-        const avgPrice = (queryResponses[0].data.price + queryResponses[1].data.price) / 2;
-        return Math.round(avgPrice * args[0]);
-    }`
-    const arguments = [] // TODO
-    const queries = [] // TODO
-    const secrets = [] // TODO
+    const { args, queries, secrets, source } = ocr2drRequest[chainId]
     const updateInterval = networkConfig[chainId]["keepersUpdateInterval"] || "30"
 
-    const args = [oracleAddress, source, arguments, queries, secrets, updateInterval]
+    const args = [oracleAddress, source, args, queries, secrets, updateInterval]
     const apiConsumerFactory = await ethers.getContractFactory("AutomatedAPIConsumer")
     const apiConsumer = await apiConsumerFactory.deploy(...args)
 
