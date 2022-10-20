@@ -20,8 +20,8 @@ contract OnDemandAPIConsumer is OCR2DRClient, ConfirmedOwner {
     bool public reqInFlight;
     bytes public value;
 
-    event FulfillRequestInvoked(bytes32 requestId, bytes response, bytes err);
     event ExecuteRequestInvoked(bytes32 requestId);
+    event FulfillRequestInvoked(bytes32 requestId, bytes response, bytes err);
 
     /**
      * @notice Executes once when a contract is created to initialize state variables

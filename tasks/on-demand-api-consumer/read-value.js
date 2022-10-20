@@ -8,7 +8,23 @@ task(
     )
     .setAction(async (taskArgs) => {
         const contractAddr = taskArgs.contract
-        // TODO
+        const networkId = network.name
+        console.log(
+            "Reading data from On Demand API Consumer contract ",
+            contractAddr,
+            " on network ",
+            networkId
+        )
+        const APIConsumer = await ethers.getContractFactory("OnDemandAPIConsumer")
+
+        //Get signer information
+        const accounts = await ethers.getSigners()
+        const signer = accounts[0]
+
+        //Create connection to API Consumer Contract and call the createRequestTo function
+        const apiConsumerContract = new ethers.Contract(contractAddr, APIConsumer.interface, signer)
+        let result = await apiConsumerContract.value()
+        console.log("Data is: ", result.toString())
     })
 
 module.exports = {}

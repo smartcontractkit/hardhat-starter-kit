@@ -6,9 +6,10 @@ const ocr2drRequest = {
         name: "localhost",
         args: ["arg1", "arg2"],
         queries: [],
-        secrets: { api_key: "my_super_secret_api_key" },
+        secrets: { justinskey: "my_super_secret_api_key" },
         source: `function run(args, queryResponses) {
             const avgPrice = (queryResponses[0].data.price + queryResponses[1].data.price) / 2;
+            secrets[justinskey]
             return Math.round(avgPrice * args[0]);
         }`,
     },
@@ -17,6 +18,14 @@ const ocr2drRequest = {
     },
     5: {
         name: "goerli",
+        args: ["arg3", "arg2"],
+        queries: [],
+        secrets: { justinskey: "my_super_secret_api_key" },
+        source: `function run(args, queryResponses) {
+            const avgPrice = (queryResponses[0].data.price + queryResponses[1].data.price) / 2;
+            secrets[justinskey]
+            return Math.round(avgPrice * args[0]);
+        }`,
     },
     137: {
         name: "polygon",

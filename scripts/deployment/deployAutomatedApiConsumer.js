@@ -23,7 +23,7 @@ async function deployAutomatedApiConsumer(chainId = network.config.chainId) {
         const mockOracleFactoryFactory = await ethers.getContractFactory("OCR2DROracleFactory")
         mockOracleFactory = await mockOracleFactoryFactory.connect(deployer).deploy()
         const OracleDeploymentTransaction = await mockOracleFactory.deployNewOracle(
-            networkConfig[chainId]["OCR2ODMockPublicKey"]
+            ethers.utils.toUtf8Bytes(networkConfig[chainId]["OCR2ODMockPublicKey"])
         )
         const OracleDeploymentReceipt = await OracleDeploymentTransaction.wait()
         const OCR2DROracleAddress = OracleDeploymentReceipt.events[0].args.oracle
@@ -35,16 +35,16 @@ async function deployAutomatedApiConsumer(chainId = network.config.chainId) {
         // Set up OCR2DR Oracle
         await mockOracle.setAuthorizedSenders([deployer.address])
     } else {
-        oracleAddress = networkConfig[chainId]["oracle"]
+        oracleAddress = networkConfig[chainId]["ocr2odOracle"]
         linkTokenAddress = networkConfig[chainId]["linkToken"]
         linkToken = new ethers.Contract(linkTokenAddress, LINK_TOKEN_ABI, deployer)
     }
     const { args, queries, secrets, source } = ocr2drRequest[chainId]
     const updateInterval = networkConfig[chainId]["keepersUpdateInterval"] || "30"
 
-    const args = [oracleAddress, source, args, queries, secrets, updateInterval]
+    const arguments = [oracleAddress, source, args, queries, secrets, updateInterval]
     const apiConsumerFactory = await ethers.getContractFactory("AutomatedAPIConsumer")
-    const apiConsumer = await apiConsumerFactory.deploy(...args)
+    const apiConsumer = await apiConsumerFactory.deploy(...arguments)
 
     const waitBlockConfirmations = developmentChains.includes(network.name)
         ? 1
@@ -56,7 +56,7 @@ async function deployAutomatedApiConsumer(chainId = network.config.chainId) {
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
         await run("verify:verify", {
             address: apiConsumer.address,
-            constructorArguments: args,
+            constructorArguments: arguments,
         })
     }
 

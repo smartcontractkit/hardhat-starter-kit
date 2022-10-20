@@ -9,6 +9,8 @@ const { network, run } = require("hardhat")
 const { deployApiConsumer } = require("./deployApiConsumer")
 const { deployAutomatedApiConsumer } = require("./deployAutomatedApiConsumer")
 const { deployOnDemandApiConsumer } = require("./deployOnDemandApiConsumer")
+const { deployOcr2odOracle } = require("./deployOcr2odOracle")
+const { deployOcr2odOracleFactory } = require("./deployOcr2odOracleFactory")
 const { deployAutomationCounter } = require("./deployAutomationCounter")
 const { deployPriceConsumerV3 } = require("./deployPriceConsumerV3")
 const { deployRandomNumberConsumer } = require("./deployRandomNumberConsumer")
@@ -16,13 +18,14 @@ const { deployRandomNumberConsumer } = require("./deployRandomNumberConsumer")
 async function main() {
     await run("compile")
     const chainId = network.config.chainId
-
-    await deployApiConsumer(chainId)
-    await deployAutomatedApiConsumer(chainId)
+    // await deployApiConsumer(chainId)
+    // await deployAutomatedApiConsumer(chainId)
+    // await deployOcr2odOracle(chainId)
+    // await deployOcr2odOracleFactory(chainId)
     await deployOnDemandApiConsumer(chainId)
-    await deployAutomationCounter(chainId)
-    await deployPriceConsumerV3(chainId)
-    await deployRandomNumberConsumer(chainId)
+    // await deployAutomationCounter(chainId)
+    // await deployPriceConsumerV3(chainId)
+    // await deployRandomNumberConsumer(chainId)
 }
 
 // We recommend this pattern to be able to use async/await everywhere

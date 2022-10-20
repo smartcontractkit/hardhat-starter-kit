@@ -5,8 +5,6 @@ const generateKeys = () => {
     const address = EthCrypto.publicKey.toAddress(publicKey)
     return { publicKey, address, privateKey }
 }
-const { publicKey, address, privateKey } = generateKeys()
-console.log({ publicKey, address, privateKey })
 
 module.exports = {
     generateKeys,

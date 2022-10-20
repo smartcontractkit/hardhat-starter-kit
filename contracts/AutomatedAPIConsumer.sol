@@ -12,7 +12,11 @@ import "hardhat/console.sol";
  * @notice This contract is a demonstration of using OCR2DR along with Chainlink Automation.
  * @notice NOT FOR PRODUCTION USE
  */
-contract AutomatedAPIConsumer is OCR2DRClient, KeeperCompatibleInterface, ConfirmedOwner {
+contract AutomatedAPIConsumer is
+    OCR2DRClient,
+    KeeperCompatibleInterface,
+    ConfirmedOwner
+{
     using OCR2DR for OCR2DR.Request;
     using OCR2DR for OCR2DR.HttpQuery;
     using OCR2DR for OCR2DR.HttpHeader;
@@ -50,7 +54,11 @@ contract AutomatedAPIConsumer is OCR2DRClient, KeeperCompatibleInterface, Confir
         bytes memory secrets,
         uint256 updateInterval
     ) OCR2DRClient(oracle) ConfirmedOwner(msg.sender) {
-        request.initializeRequest(OCR2DR.Location.Inline, OCR2DR.CodeLanguage.JavaScript, source);
+        request.initializeRequest(
+            OCR2DR.Location.Inline,
+            OCR2DR.CodeLanguage.JavaScript,
+            source
+        );
         if (secrets.length > 0) request.addInlineSecrets(secrets);
         if (args.length > 0) request.addArgs(args);
         if (queries.length > 0) request.setHttpQueries(queries);
@@ -80,7 +88,10 @@ contract AutomatedAPIConsumer is OCR2DRClient, KeeperCompatibleInterface, Confir
      *
      * @param queries The array of queries to be set (must not be empty)
      */
-    function setHttpQueries(OCR2DR.HttpQuery[] memory queries) public onlyOwner {
+    function setHttpQueries(OCR2DR.HttpQuery[] memory queries)
+        public
+        onlyOwner
+    {
         request.setHttpQueries(queries);
     }
 

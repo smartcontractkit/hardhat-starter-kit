@@ -34,7 +34,7 @@ async function deployOnDemandApiConsumer(chainId = network.config.chainId) {
         // Set up OCR2DR Oracle
         await mockOracle.setAuthorizedSenders([deployer.address])
     } else {
-        oracleAddress = networkConfig[chainId]["oracle"]
+        oracleAddress = networkConfig[chainId]["ocr2odOracle"]
         linkTokenAddress = networkConfig[chainId]["linkToken"]
         linkToken = new ethers.Contract(linkTokenAddress, LINK_TOKEN_ABI, deployer)
     }
