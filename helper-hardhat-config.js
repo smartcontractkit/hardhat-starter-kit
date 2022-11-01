@@ -34,10 +34,10 @@ const networkConfig = {
         keyHash: "0x79d3d8832d904592c0bf9818b621522c988bb8b0c05cdc3b15aea1b6e8db0c15",
         vrfCoordinator: "0x2Ca8E0C643bDe4C2E08ab1fA0da3401AdAD7734D",
         oracle: "0xCC79157eb46F5624204f47AB42b3906cAA40eaB7",
-        ocr2odOracle: "0x7171C8F21e4e0dddF1e49d41dA66188D4d5BA964",
-        ocr2odOracleFactory: "0x48a7e94b29fAE2ebF3328062f84Ca56EbFD0a02F",
+        ocr2odOracle: "0xe68924fFEB05aBE709b4d4f36e6E395b377Fe53e",
+        ocr2odOracleFactory: "0xA43B5DF6ff7d12B26c5de97fc7cB1261646208B6", // TODO remove me
         OCR2ODMockPublicKey:
-            "971f006163a12ee3383a00d7743334480d6b1c83fdf60497e0c520b16d1a4ee421cc61375679b63466156fee6f2f1da5a7e630ba0b1cddb2704ef907ead223db",
+            "971f006163a12ee3383a00d7743334480d6b1c83fdf60497e0c520b16d1a4ee421cc61375679b63466156fee6f2f1da5a7e630ba0b1cddb2704ef907ead223db", // TODO remove me
         jobId: "ca98366cc7314957b8c012c72f05aeeb",
         fee: "100000000000000000",
         fundAmount: "100000000000000000", // 0.1

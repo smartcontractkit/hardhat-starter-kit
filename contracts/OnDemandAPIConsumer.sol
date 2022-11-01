@@ -12,16 +12,10 @@ import "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
  */
 contract OnDemandAPIConsumer is OCR2DRClient, ConfirmedOwner {
     using OCR2DR for OCR2DR.Request;
-    using OCR2DR for OCR2DR.HttpQuery;
-    using OCR2DR for OCR2DR.HttpHeader;
 
-    uint256 private constant MY_SUBSCRIPTION_ID = 1;
-
-    bool public reqInFlight;
-    bytes public value;
-
-    event ExecuteRequestInvoked(bytes32 requestId);
-    event FulfillRequestInvoked(bytes32 requestId, bytes response, bytes err);
+    bytes32 public latestRequestId;
+    bytes public latestResponse;
+    bytes public latestError;
 
     /**
      * @notice Executes once when a contract is created to initialize state variables
@@ -34,48 +28,46 @@ contract OnDemandAPIConsumer is OCR2DRClient, ConfirmedOwner {
     {}
 
     /**
-     * @notice Sends request to be serviced by the DON
-     *
-     * @return assignedReqID An identifier generated for this request execution
+     * @notice Send a simple request
+     * @param source JavaScript source code
+     * @param secrets Encrypted secrets payload
+     * @param args List of arguments accessible from within the source code
+     * @param subscriptionId Billing ID
      */
     function executeRequest(
-        string memory source,
-        string[] memory args,
-        OCR2DR.HttpQuery[] memory queries,
-        bytes memory secrets
+        string calldata source,
+        bytes calldata secrets,
+        string[] calldata args,
+        uint256 subscriptionId
     ) public onlyOwner returns (bytes32) {
-        require(reqInFlight == false, "Request is already in flight");
-
-        OCR2DR.Request memory request;
-        request.initializeRequest(
+        OCR2DR.Request memory req;
+        req.initializeRequest(
             OCR2DR.Location.Inline,
             OCR2DR.CodeLanguage.JavaScript,
             source
         );
-        if (secrets.length > 0) request.addInlineSecrets(secrets);
-        if (args.length > 0) request.addArgs(args);
-        if (queries.length > 0) request.setHttpQueries(queries);
+        if (secrets.length > 0) req.addInlineSecrets(secrets);
+        if (args.length > 0) req.addArgs(args);
 
-        bytes32 assignedReqID = sendRequest(request, MY_SUBSCRIPTION_ID);
-        reqInFlight = true;
-        emit ExecuteRequestInvoked(assignedReqID);
+        bytes32 assignedReqID = sendRequest(req, subscriptionId);
+        latestRequestId = assignedReqID;
         return assignedReqID;
     }
 
     /**
      * @notice Callback that is invoked once the DON has resolved the request or hit an error
      *
-     * @param requestId - Period of time between two counter increments expressed as UNIX timestamp value
-     * @param response - Period of time between two counter increments expressed as UNIX timestamp value
-     * @param err - Period of time between two counter increments expressed as UNIX timestamp value
+     * @param requestId The request ID, returned by sendRequest()
+     * @param response Aggregated response from the user code
+     * @param err Aggregated error from the user code or from the execution pipeline
+     * Either response or error parameter will be set, but never both
      */
     function fulfillRequest(
         bytes32 requestId,
         bytes memory response,
         bytes memory err
     ) internal override {
-        emit FulfillRequestInvoked(requestId, response, err);
-        if (err.length != 0) value = response;
-        reqInFlight = false;
+        latestResponse = response;
+        latestError = err;
     }
 }

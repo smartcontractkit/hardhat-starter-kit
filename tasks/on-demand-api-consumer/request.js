@@ -1,4 +1,4 @@
-const { ocr2drRequest } = require("../../ocr2dr-config")
+const input = require("./_input")
 const { encrypt } = require("../../scripts/encrypt")
 
 task("on-demand-request", "Calls an On Demand API Consumer Contract to request external data")
@@ -24,7 +24,7 @@ task("on-demand-request", "Calls an On Demand API Consumer Contract to request e
 
         //Create connection to API Consumer Contract and call the createRequestTo function
         const apiConsumerContract = new ethers.Contract(contractAddr, APIConsumer.interface, signer)
-        const { args = [], queries = [], secrets: rawSecrets = [], source } = ocr2drRequest[chainId]
+        const { arguments: args = [], secrets: rawSecrets = [], sourceCode: source } = input
         if (!source) throw Error("Source code must be given to make a new request")
 
         // Encrypt secrets
@@ -36,6 +36,7 @@ task("on-demand-request", "Calls an On Demand API Consumer Contract to request e
 
         const deployerWallet = new ethers.Wallet(PRIVATE_KEY)
         const publicKeyBytesString = await apiConsumerContract.getDONPublicKey()
+        console.log(publicKeyBytesString)
         const publicKeyBytes = ethers.utils.arrayify(publicKeyBytesString)
         const publicKey = ethers.utils.toUtf8String(publicKeyBytes)
         const secretsJsonString = JSON.stringify(rawSecrets)
@@ -49,14 +50,13 @@ task("on-demand-request", "Calls an On Demand API Consumer Contract to request e
 
         console.log("Requesting with the following input:\n", {
             args,
-            queries,
             secrets: rawSecrets,
             source,
         })
-        const arguments = [source, args, queries, secrets]
+        const arguments = [source, secrets, args, 1]
         const transaction = await apiConsumerContract.executeRequest(...arguments)
-        const receipt = await transaction.wait()
-        const requestId = receipt
+        const receipt = await transaction
+        const requestId = receipt.data
         console.log("Request initiated with ID: ", requestId)
     })
 module.exports = {}

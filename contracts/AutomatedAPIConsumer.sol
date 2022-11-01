@@ -18,8 +18,6 @@ contract AutomatedAPIConsumer is
     ConfirmedOwner
 {
     using OCR2DR for OCR2DR.Request;
-    using OCR2DR for OCR2DR.HttpQuery;
-    using OCR2DR for OCR2DR.HttpHeader;
 
     uint256 private constant MY_SUBSCRIPTION_ID = 2;
 
@@ -42,7 +40,6 @@ contract AutomatedAPIConsumer is
      * @param oracle - The OCR2DROracle contract
      * @param source - The user provided source code
      * @param args - The array of args
-     * @param queries - The array of queries
      * @param secrets - Encrypted secrets blob
      * @param updateInterval - Period of time between two counter increments expressed as UNIX timestamp value
      */
@@ -50,7 +47,6 @@ contract AutomatedAPIConsumer is
         address oracle,
         string memory source,
         string[] memory args,
-        OCR2DR.HttpQuery[] memory queries,
         bytes memory secrets,
         uint256 updateInterval
     ) OCR2DRClient(oracle) ConfirmedOwner(msg.sender) {
@@ -61,7 +57,6 @@ contract AutomatedAPIConsumer is
         );
         if (secrets.length > 0) request.addInlineSecrets(secrets);
         if (args.length > 0) request.addArgs(args);
-        if (queries.length > 0) request.setHttpQueries(queries);
         reqInFlight = false;
 
         interval = updateInterval;
@@ -81,18 +76,6 @@ contract AutomatedAPIConsumer is
         string memory source
     ) public onlyOwner {
         request.initializeRequest(location, language, source);
-    }
-
-    /**
-     * @notice Set an array of HttpQuery to a Request
-     *
-     * @param queries The array of queries to be set (must not be empty)
-     */
-    function setHttpQueries(OCR2DR.HttpQuery[] memory queries)
-        public
-        onlyOwner
-    {
-        request.setHttpQueries(queries);
     }
 
     /**

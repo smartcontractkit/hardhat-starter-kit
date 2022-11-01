@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.6;
 
-import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import "./EnumerableSet.sol";
 import "./OCR2DROracle.sol";
-import "./interfaces/TypeAndVersionInterface.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/TypeAndVersionInterface.sol";
 
 /**
  * @title OCR2DROracle Factory
@@ -35,6 +35,7 @@ contract OCR2DROracleFactory is TypeAndVersionInterface {
      */
     function deployNewOracle() external returns (address) {
         OCR2DROracle oracle = new OCR2DROracle();
+        oracle.transferOwnership(msg.sender);
         s_created.add(address(oracle));
         emit OracleCreated(address(oracle), msg.sender, msg.sender);
         return address(oracle);

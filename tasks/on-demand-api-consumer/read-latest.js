@@ -23,8 +23,10 @@ task(
 
         //Create connection to API Consumer Contract and call the createRequestTo function
         const apiConsumerContract = new ethers.Contract(contractAddr, APIConsumer.interface, signer)
-        let result = await apiConsumerContract.value()
-        console.log("Data is: ", result.toString())
+        let latestRequestId = await apiConsumerContract.latestRequestId()
+        let latestResponse = await apiConsumerContract.latestResponse()
+        let latestError = await apiConsumerContract.latestError()
+        console.log("Data is: ", latestResponse.toString())
     })
 
 module.exports = {}

@@ -21,18 +21,19 @@ async function deployOnDemandApiConsumer(chainId = network.config.chainId) {
 
         const mockOracleFactoryFactory = await ethers.getContractFactory("OCR2DROracleFactory")
         mockOracleFactory = await mockOracleFactoryFactory.connect(deployer).deploy()
-        const OracleDeploymentTransaction = await mockOracleFactory.deployNewOracle(
-            ethers.utils.toUtf8Bytes(networkConfig[chainId]["OCR2ODMockPublicKey"])
-        )
+        const OracleDeploymentTransaction = await mockOracleFactory.deployNewOracle()
         const OracleDeploymentReceipt = await OracleDeploymentTransaction.wait()
-        const OCR2DROracleAddress = OracleDeploymentReceipt.events[0].args.oracle
-        mockOracle = await ethers.getContractAt("OCR2DROracle", OCR2DROracleAddress)
+        const OCR2DROracleAddress = OracleDeploymentReceipt.events[1].args.oracle
+        mockOracle = await ethers.getContractAt("OCR2DROracle", OCR2DROracleAddress, deployer)
 
         linkTokenAddress = linkToken.address
         oracleAddress = mockOracle.address
 
         // Set up OCR2DR Oracle
-        await mockOracle.setAuthorizedSenders([deployer.address])
+        await mockOracle.acceptOwnership()
+        await mockOracle.setDONPublicKey(
+            ethers.utils.toUtf8Bytes(networkConfig[chainId]["OCR2ODMockPublicKey"])
+        )
     } else {
         oracleAddress = networkConfig[chainId]["ocr2odOracle"]
         linkTokenAddress = networkConfig[chainId]["linkToken"]

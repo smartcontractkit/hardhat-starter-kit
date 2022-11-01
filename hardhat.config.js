@@ -80,7 +80,7 @@ module.exports = {
             chainId: 137,
         },
     },
-    defaultNetwork: "goerli",
+    defaultNetwork: "hardhat",
     etherscan: {
         // yarn hardhat verify --network <NETWORK> <CONTRACT_ADDRESS> <CONSTRUCTOR_PARAMETERS>
         apiKey: {

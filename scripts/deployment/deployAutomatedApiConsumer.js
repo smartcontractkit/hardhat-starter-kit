@@ -5,7 +5,7 @@ const {
     developmentChains,
 } = require("../../helper-hardhat-config")
 const LINK_TOKEN_ABI = require("@chainlink/contracts/abi/v0.4/LinkToken.json")
-const { ocr2drRequest } = require("../../ocr2dr-config")
+const input = require("../../tasks/on-demand-api-consumer/_input")
 
 async function deployAutomatedApiConsumer(chainId = network.config.chainId) {
     const accounts = await ethers.getSigners()
@@ -39,10 +39,10 @@ async function deployAutomatedApiConsumer(chainId = network.config.chainId) {
         linkTokenAddress = networkConfig[chainId]["linkToken"]
         linkToken = new ethers.Contract(linkTokenAddress, LINK_TOKEN_ABI, deployer)
     }
-    const { args, queries, secrets, source } = ocr2drRequest[chainId]
+    const { arguments: args = [], secrets: secrets = [], sourceCode: source } = input
     const updateInterval = networkConfig[chainId]["keepersUpdateInterval"] || "30"
 
-    const arguments = [oracleAddress, source, args, queries, secrets, updateInterval]
+    const arguments = [oracleAddress, source, args, secrets, updateInterval]
     const apiConsumerFactory = await ethers.getContractFactory("AutomatedAPIConsumer")
     const apiConsumer = await apiConsumerFactory.deploy(...arguments)
 
