@@ -64,6 +64,7 @@ module.exports = {
             //   accounts: {
             //     mnemonic: MNEMONIC,
             //   },
+            gasMultiplier: 1000,
             chainId: 5,
         },
         mainnet: {
@@ -80,7 +81,7 @@ module.exports = {
             chainId: 137,
         },
     },
-    defaultNetwork: "hardhat",
+    defaultNetwork: "goerli",
     etherscan: {
         // yarn hardhat verify --network <NETWORK> <CONTRACT_ADDRESS> <CONSTRUCTOR_PARAMETERS>
         apiKey: {

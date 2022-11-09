@@ -1,5 +1,6 @@
-const input = require("./_input")
-const { encrypt } = require("../../scripts/encrypt")
+const { validateConfig } = require("../../scripts/onDemandRequestSimulator/RequestSimulator/ConfigValidator")
+const { executeRequest } = require("../../scripts/onDemandRequestSimulator/RequestSimulator/RequestSimulator")
+const { buildRequest } = require("../../scripts/onDemandRequestSimulator/RequestSimulator/RequestBuilder")
 
 task("on-demand-request", "Calls an On Demand API Consumer Contract to request external data")
     .addParam(
@@ -9,7 +10,18 @@ task("on-demand-request", "Calls an On Demand API Consumer Contract to request e
     .setAction(async (taskArgs) => {
         const contractAddr = taskArgs.contract
         const networkId = network.name
-        const chainId = network.config.chainId
+
+        console.log('Simulating on demand request locally...')
+
+        const config = require('../../on-demand-request-config')
+        validateConfig(config)
+        const { resultLog, error } = await executeRequest(config)
+        console.log(resultLog)
+        if (error) return
+
+        // Generate the request payload
+        const request = await buildRequest(config)
+
         console.log(
             "Requesting new data from On Demand API Consumer contract ",
             contractAddr,
@@ -24,36 +36,9 @@ task("on-demand-request", "Calls an On Demand API Consumer Contract to request e
 
         //Create connection to API Consumer Contract and call the createRequestTo function
         const apiConsumerContract = new ethers.Contract(contractAddr, APIConsumer.interface, signer)
-        const { arguments: args = [], secrets: rawSecrets = [], sourceCode: source } = input
-        if (!source) throw Error("Source code must be given to make a new request")
 
-        // Encrypt secrets
-        const PRIVATE_KEY = process.env.PRIVATE_KEY
-        if (!PRIVATE_KEY)
-            throw Error(
-                "Private key must be set for write commands using the PRIVATE_KEY environment variable"
-            )
-
-        const deployerWallet = new ethers.Wallet(PRIVATE_KEY)
-        const publicKeyBytesString = await apiConsumerContract.getDONPublicKey()
-        console.log(publicKeyBytesString)
-        const publicKeyBytes = ethers.utils.arrayify(publicKeyBytesString)
-        const publicKey = ethers.utils.toUtf8String(publicKeyBytes)
-        const secretsJsonString = JSON.stringify(rawSecrets)
-        const secretsEncryptedString = await encrypt(
-            deployerWallet.privateKey,
-            publicKey,
-            secretsJsonString
-        )
-
-        const secrets = ethers.utils.toUtf8Bytes(secretsEncryptedString)
-
-        console.log("Requesting with the following input:\n", {
-            args,
-            secrets: rawSecrets,
-            source,
-        })
-        const arguments = [source, secrets, args, 1]
+        console.log("Requesting with the following input:\n", { ...request })
+        const arguments = [request.source, request.secrets, request.args, 1]
         const transaction = await apiConsumerContract.executeRequest(...arguments)
         const receipt = await transaction
         const requestId = receipt.data
