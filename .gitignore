@@ -101,3 +101,6 @@ lint/tmp/
 gas-report.txt
 
 contracts/test/fuzzing/crytic-export
+
+# Generated on demand request data
+on-demand-request.json
