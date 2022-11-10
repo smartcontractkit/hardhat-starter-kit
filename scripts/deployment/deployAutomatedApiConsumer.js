@@ -5,9 +5,22 @@ const {
     developmentChains,
 } = require("../../helper-hardhat-config")
 const LINK_TOKEN_ABI = require("@chainlink/contracts/abi/v0.4/LinkToken.json")
-const input = require("../../tasks/on-demand-api-consumer/_input")
+
+const { validateConfig } = require("../../scripts/onDemandRequestSimulator/RequestSimulator/ConfigValidator")
+const { executeRequest } = require("../../scripts/onDemandRequestSimulator/RequestSimulator/RequestSimulator")
+const { buildRequest } = require("../../scripts/onDemandRequestSimulator/RequestSimulator/RequestBuilder")
 
 async function deployAutomatedApiConsumer(chainId = network.config.chainId) {
+    console.log('Simulating on demand request locally...')
+
+    const config = require('../../on-demand-request-config')
+    validateConfig(config)
+    const { resultLog, error } = await executeRequest(config)
+    console.log(resultLog)
+    if (error) return
+
+    const request = await buildRequest(config)
+
     const accounts = await ethers.getSigners()
     const deployer = accounts[0]
 
@@ -39,10 +52,9 @@ async function deployAutomatedApiConsumer(chainId = network.config.chainId) {
         linkTokenAddress = networkConfig[chainId]["linkToken"]
         linkToken = new ethers.Contract(linkTokenAddress, LINK_TOKEN_ABI, deployer)
     }
-    const { arguments: args = [], secrets: secrets = [], sourceCode: source } = input
     const updateInterval = networkConfig[chainId]["keepersUpdateInterval"] || "30"
 
-    const arguments = [oracleAddress, source, args, secrets, updateInterval]
+    const arguments = [oracleAddress, request.source, request.args ?? [], request.secrets ?? [], updateInterval]
     const apiConsumerFactory = await ethers.getContractFactory("AutomatedAPIConsumer")
     const apiConsumer = await apiConsumerFactory.deploy(...arguments)
 
