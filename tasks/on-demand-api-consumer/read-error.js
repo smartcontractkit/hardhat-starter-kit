@@ -26,7 +26,7 @@ task(
       let latestRequestId = await apiConsumerContract.latestRequestId()
       let latestError = await apiConsumerContract.latestError()
 
-      console.log(`💾 On-chain error message: ${Buffer.from(latestError.slice(2)).toString()}`)
+      console.log(`💾 On-chain error message: ${Buffer.from(latestError.slice(2), 'hex').toString()}`)
   })
 
 module.exports = {}
