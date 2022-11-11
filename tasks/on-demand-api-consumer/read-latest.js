@@ -25,7 +25,6 @@ task(
         const apiConsumerContract = new ethers.Contract(contractAddr, APIConsumer.interface, signer)
         let latestRequestId = await apiConsumerContract.latestRequestId()
         let latestResponse = await apiConsumerContract.latestResponse()
-        let latestError = await apiConsumerContract.latestError()
         let responseStr = latestResponse.toString()
 
         console.log(`💾 On-chain data represented as a hex string: ${responseStr}`)
