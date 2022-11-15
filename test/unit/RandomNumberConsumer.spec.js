@@ -83,12 +83,12 @@ const { assert, expect } = require("chai")
 
                       assert(
                           firstRandomNumber.gt(ethers.constants.Zero),
-                          "First random number is greather than zero"
+                          "First random number is greater than zero"
                       )
 
                       assert(
                           secondRandomNumber.gt(ethers.constants.Zero),
-                          "Second random number is greather than zero"
+                          "Second random number is greater than zero"
                       )
                   })
 
