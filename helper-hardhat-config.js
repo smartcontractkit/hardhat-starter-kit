@@ -34,7 +34,7 @@ const networkConfig = {
         keyHash: "0x79d3d8832d904592c0bf9818b621522c988bb8b0c05cdc3b15aea1b6e8db0c15",
         vrfCoordinator: "0x2Ca8E0C643bDe4C2E08ab1fA0da3401AdAD7734D",
         oracle: "0xCC79157eb46F5624204f47AB42b3906cAA40eaB7",
-        ocr2odOracle: "0x850114A9ED9cD504637B7016cac89fF79C956D71",
+        ocr2odOracle: "0x49A98D5B7fd9B258db53D712C48619A97d36f230",
         ocr2odOracleFactory: "0xA43B5DF6ff7d12B26c5de97fc7cB1261646208B6", // TODO remove me
         OCR2ODMockPublicKey:
             "971f006163a12ee3383a00d7743334480d6b1c83fdf60497e0c520b16d1a4ee421cc61375679b63466156fee6f2f1da5a7e630ba0b1cddb2704ef907ead223db", // TODO remove me
