@@ -38,7 +38,8 @@ contract OnDemandAPIConsumer is OCR2DRClient, ConfirmedOwner {
         string calldata source,
         bytes calldata secrets,
         string[] calldata args,
-        uint256 subscriptionId
+        uint64 subscriptionId,
+        uint32 gasLimit
     ) public onlyOwner returns (bytes32) {
         OCR2DR.Request memory req;
         req.initializeRequest(
@@ -49,7 +50,7 @@ contract OnDemandAPIConsumer is OCR2DRClient, ConfirmedOwner {
         if (secrets.length > 0) req.addInlineSecrets(secrets);
         if (args.length > 0) req.addArgs(args);
 
-        bytes32 assignedReqID = sendRequest(req, subscriptionId);
+        bytes32 assignedReqID = sendRequest(req, subscriptionId, gasLimit);
         latestRequestId = assignedReqID;
         return assignedReqID;
     }
