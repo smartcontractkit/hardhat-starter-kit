@@ -43,7 +43,7 @@ abstract contract AuthorizedReceiver is AuthorizedReceiverInterface {
      * @return array of addresses
      */
     function getAuthorizedSenders()
-        external
+        public
         view
         override
         returns (address[] memory)

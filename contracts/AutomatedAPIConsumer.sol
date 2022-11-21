@@ -19,7 +19,8 @@ contract AutomatedAPIConsumer is
 {
     using OCR2DR for OCR2DR.Request;
 
-    uint256 private constant MY_SUBSCRIPTION_ID = 2;
+    uint64 private constant MY_SUBSCRIPTION_ID = 2;
+    uint32 private constant MY_GAS_LIMIT = 100_000;
 
     OCR2DR.Request public request;
     bool public reqInFlight;
@@ -102,7 +103,11 @@ contract AutomatedAPIConsumer is
      * @return assignedReqID An identifier generated for this request execution
      */
     function executeRequest() internal returns (bytes32) {
-        bytes32 assignedReqID = sendRequest(request, MY_SUBSCRIPTION_ID);
+        bytes32 assignedReqID = sendRequest(
+            request,
+            MY_SUBSCRIPTION_ID,
+            MY_GAS_LIMIT
+        );
         reqInFlight = true;
         emit ExecuteRequestInvoked(assignedReqID);
         return assignedReqID;
