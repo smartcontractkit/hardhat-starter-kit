@@ -11,22 +11,56 @@ async function deployOnDemandApiConsumer(chainId = network.config.chainId) {
     const deployer = accounts[0]
 
     let linkToken
-    let mockOracle
     let linkTokenAddress
+    let mockRegistry
+    let mockOracle
+    let ethLinkFeedAddress
     let oracleAddress
+    let subscriptionId
 
     if (chainId == 31337) {
+        // Deploy LINK token
         const linkTokenFactory = await ethers.getContractFactory("LinkToken")
         linkToken = await linkTokenFactory.connect(deployer).deploy()
+        linkTokenAddress = linkToken.address
 
+        // Deploy LINK/ETH V3 Aggregator
+        const mockEthLinkFactory = await ethers.getContractFactory("MockV3Aggregator")
+        mockEthLinkFeed = await mockEthLinkFactory
+            .connect(deployer)
+            .deploy(0, ethers.BigNumber.from(5021530000000000))
+        ethLinkFeedAddress = mockEthLinkFeed.address
+
+        // Deploy Registry
+        const registryFactory = await ethers.getContractFactory("OCR2DRRegistry")
+        mockRegistry = await registryFactory
+            .connect(deployer)
+            .deploy(linkTokenAddress, ethLinkFeedAddress)
+
+        // Set up Registry
+        // const config = {
+        //     maxGasLimit: 1_000_000,
+        //     stalenessSeconds: 86_400,
+        //     gasAfterPaymentCalculation:
+        //         21_000 + 5_000 + 2_100 + 20_000 + 2 * 2_100 - 15_000 + 7_315,
+        //     weiPerUnitLink: ethers.BigNumber.from("5000000000000000"),
+        //     gasOverhead: 100_000,
+        // }
+        // await mockRegistry.setConfig(
+        //     config.maxGasLimit,
+        //     config.stalenessSeconds,
+        //     config.gasAfterPaymentCalculation,
+        //     config.weiPerUnitLink,
+        //     config.gasOverhead
+        // )
+
+        // Deploy Oracle
         const mockOracleFactoryFactory = await ethers.getContractFactory("OCR2DROracleFactory")
         mockOracleFactory = await mockOracleFactoryFactory.connect(deployer).deploy()
         const OracleDeploymentTransaction = await mockOracleFactory.deployNewOracle()
         const OracleDeploymentReceipt = await OracleDeploymentTransaction.wait()
         const OCR2DROracleAddress = OracleDeploymentReceipt.events[1].args.oracle
         mockOracle = await ethers.getContractAt("OCR2DROracle", OCR2DROracleAddress, deployer)
-
-        linkTokenAddress = linkToken.address
         oracleAddress = mockOracle.address
 
         // Set up OCR2DR Oracle
@@ -34,6 +68,19 @@ async function deployOnDemandApiConsumer(chainId = network.config.chainId) {
         await mockOracle.setDONPublicKey(
             ethers.utils.toUtf8Bytes(networkConfig[chainId]["OCR2ODMockPublicKey"])
         )
+        // await mockOracle.setRegistry(mockRegistry.address)
+
+        // Create subscription
+        // const createSubscriptionTx = await registry.createSubscription()
+        // const createSubscriptionReceipt = await createSubscriptionTx.wait()
+        // subscriptionId = createSubscriptionReceipt.events[0].args["subscriptionId"].toNumber()
+
+        // Fund subscription
+        // await linkToken.transferAndCall(
+        //     registry.address,
+        //     BigNumber.from("5").mul(1e18), // 5 LINK
+        //     ethers.utils.defaultAbiCoder.encode(["uint64"], [subscriptionId])
+        // )
     } else {
         oracleAddress = networkConfig[chainId]["ocr2odOracle"]
         linkTokenAddress = networkConfig[chainId]["linkToken"]
@@ -64,7 +111,7 @@ async function deployOnDemandApiConsumer(chainId = network.config.chainId) {
 
     console.log(`OnDemandAPIConsumer funded with ${fundAmount} JUELS`)
 
-    return { apiConsumer, mockOracle }
+    return { apiConsumer, mockOracle, mockRegistry, subscriptionId }
 }
 
 module.exports = {

@@ -21,9 +21,8 @@ const { decrypt } = require("../../scripts/decrypt")
                 return Math.round(avgPrice * args[0]);
             }`
               const arguments = [] // TODO
-              const queries = [] // TODO
               const secrets = [] // TODO
-              const args = [source, arguments, queries, secrets]
+              const args = [source, secrets, arguments, subscriptionId, gasLimit]
 
               const transaction = await apiConsumer.executeRequest(...args)
               const receipt = await transaction.wait()

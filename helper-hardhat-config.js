@@ -31,6 +31,7 @@ const networkConfig = {
         name: "goerli",
         linkToken: "0x326c977e6efc84e512bb9c30f76e30c160ed06fb",
         ethUsdPriceFeed: "0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e",
+        ethLinkPriceFeed: "0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e", // TODO remove me
         keyHash: "0x79d3d8832d904592c0bf9818b621522c988bb8b0c05cdc3b15aea1b6e8db0c15",
         vrfCoordinator: "0x2Ca8E0C643bDe4C2E08ab1fA0da3401AdAD7734D",
         oracle: "0xCC79157eb46F5624204f47AB42b3906cAA40eaB7",

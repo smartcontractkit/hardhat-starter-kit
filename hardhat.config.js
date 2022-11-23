@@ -1,6 +1,7 @@
 const ethers = require("ethers")
 const { networkConfig } = require("./helper-hardhat-config")
 require("@nomicfoundation/hardhat-toolbox")
+require("hardhat-contract-sizer")
 require("./tasks")
 require("dotenv").config()
 
@@ -96,13 +97,14 @@ module.exports = {
         // coinmarketcap: process.env.COINMARKETCAP_API_KEY,
     },
     contractSizer: {
-        runOnCompile: false,
+        runOnCompile: true,
         only: [
             "APIConsumer",
             "AutomationCounter",
             "NFTFloorPriceConsumerV3",
             "PriceConsumerV3",
             "RandomNumberConsumerV2",
+            "OCR2DRRegistry",
         ],
     },
     paths: {
