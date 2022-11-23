@@ -29,17 +29,36 @@ module.exports = {
         compilers: [
             {
                 version: "0.8.7",
+                settings: {
+                    optimizer: {
+                        enabled: true,
+                        runs: 200,
+                    },
+                },
             },
             {
                 version: "0.6.6",
+                settings: {
+                    optimizer: {
+                        enabled: true,
+                        runs: 200,
+                    },
+                },
             },
             {
                 version: "0.4.24",
+                settings: {
+                    optimizer: {
+                        enabled: true,
+                        runs: 200,
+                    },
+                },
             },
         ],
     },
     networks: {
         hardhat: {
+            allowUnlimitedContractSize: true,
             hardfork: "merge",
             // If you want to do some forking set `enabled` to true
             forking: {
@@ -81,7 +100,7 @@ module.exports = {
             chainId: 137,
         },
     },
-    defaultNetwork: "hardhat",
+    defaultNetwork: "goerli",
     etherscan: {
         // yarn hardhat verify --network <NETWORK> <CONTRACT_ADDRESS> <CONSTRUCTOR_PARAMETERS>
         apiKey: {
