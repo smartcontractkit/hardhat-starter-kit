@@ -31,12 +31,13 @@ const networkConfig = {
         name: "goerli",
         linkToken: "0x326c977e6efc84e512bb9c30f76e30c160ed06fb",
         ethUsdPriceFeed: "0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e",
-        ethLinkPriceFeed: "0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e", // TODO remove me
+        linkEthPriceFeed: "0x40296C73AC768F962c20558D19B1e2371e3A1a45", // TODO remove me
         keyHash: "0x79d3d8832d904592c0bf9818b621522c988bb8b0c05cdc3b15aea1b6e8db0c15",
         vrfCoordinator: "0x2Ca8E0C643bDe4C2E08ab1fA0da3401AdAD7734D",
         oracle: "0xCC79157eb46F5624204f47AB42b3906cAA40eaB7",
-        ocr2odOracle: "0x49A98D5B7fd9B258db53D712C48619A97d36f230",
-        ocr2odOracleFactory: "0xA43B5DF6ff7d12B26c5de97fc7cB1261646208B6", // TODO remove me
+        ocr2odOracle: "0xD08C36E96202e55AEfd90281C7692210A13Ec81c",
+        ocr2odOracleFactory: "0x8ccfDA427aC9D95332F0265F6E0ac74a18c5cA5f", // TODO remove me
+        ocr2odOracleRegistry: "0x8752f1432634485c13Af85138bD1b1e8a036e3fC", // TODO remove me
         OCR2ODMockPublicKey:
             "971f006163a12ee3383a00d7743334480d6b1c83fdf60497e0c520b16d1a4ee421cc61375679b63466156fee6f2f1da5a7e630ba0b1cddb2704ef907ead223db", // TODO remove me
         jobId: "ca98366cc7314957b8c012c72f05aeeb",
