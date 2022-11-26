@@ -1,5 +1,8 @@
 const fs = require('fs')
 
+// Loads environment variables from .env file (if it exists)
+require('dotenv').config()
+
 const Location = {
   Inline: 0
 }
@@ -35,6 +38,7 @@ const requestConfig = {
   // ETH wallet key used to sign secrets so they cannot be accessed by a 3rd party
   walletPrivateKey: process.env['PRIVATE_KEY'],
   // DON public key used to encrypt secrets so they are not exposed on-chain
+  // NOTE: The key below is only used by the `npm run build-on-request` command.  Else, the DON public key is automatically fetched from on-chain.
   DONPublicKey: '971f006163a12ee3383a00d7743334480d6b1c83fdf60497e0c520b16d1a4ee421cc61375679b63466156fee6f2f1da5a7e630ba0b1cddb2704ef907ead223db',
   // args can be accessed within the source code with `args[index]` (ie: args[0])
   args: [ '1', 'bitcoin', 'btc-bitcoin', 'btc' ],

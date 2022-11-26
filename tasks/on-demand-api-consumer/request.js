@@ -3,7 +3,7 @@ const { executeRequest } = require("../../scripts/onDemandRequestSimulator/Reque
 const { buildRequest } = require("../../scripts/onDemandRequestSimulator/RequestSimulator/RequestBuilder")
 const { VERIFICATION_BLOCK_CONFIRMATIONS, developmentChains } = require("../../helper-hardhat-config")
 
-task("on-demand-request", "Calls an On Demand API Consumer Contract to request external data")
+task("on-demand-request", "Calls an On Demand API Consumer contract to request external data")
     .addParam(
         "contract",
         "The address of the On Demand On Demand API Consumer contract that you want to call"
