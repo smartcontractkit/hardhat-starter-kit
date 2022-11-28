@@ -6,20 +6,20 @@ const {
 } = require("../../helper-hardhat-config")
 const LINK_TOKEN_ABI = require("@chainlink/contracts/abi/v0.4/LinkToken.json")
 
-const { validateConfig } = require("../../scripts/onDemandRequestSimulator/RequestSimulator/ConfigValidator")
-const { executeRequest } = require("../../scripts/onDemandRequestSimulator/RequestSimulator/RequestSimulator")
-const { buildRequest } = require("../../scripts/onDemandRequestSimulator/RequestSimulator/RequestBuilder")
+const { buildRequest, simulateRequest } = require("../../scripts/onDemandRequestSimulator")
 
 async function deployAutomatedApiConsumer(chainId = network.config.chainId) {
     console.log('Simulating on demand request locally...')
 
-    const config = require('../../on-demand-request-config')
-    validateConfig(config)
-    const { resultLog, error } = await executeRequest(config)
-    console.log(resultLog)
-    if (error) return
+    const { success, resultLog } = await simulateRequest('../../on-demand-request-config.js')
 
-    const request = await buildRequest(config)
+    console.log(resultLog)
+
+    if (!success) {
+      return
+    }
+
+    const request = await buildRequest('../../on-demand-request-config.js')
 
     const accounts = await ethers.getSigners()
     const deployer = accounts[0]

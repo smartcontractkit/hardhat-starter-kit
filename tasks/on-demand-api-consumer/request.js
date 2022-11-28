@@ -1,26 +1,38 @@
-const { validateConfig } = require("../../scripts/onDemandRequestSimulator/RequestSimulator/ConfigValidator")
-const { executeRequest } = require("../../scripts/onDemandRequestSimulator/RequestSimulator/RequestSimulator")
-const { buildRequest } = require("../../scripts/onDemandRequestSimulator/RequestSimulator/RequestBuilder")
+const { simulateRequest, buildRequest } = require('../../scripts/onDemandRequestSimulator')
 const { VERIFICATION_BLOCK_CONFIRMATIONS, developmentChains } = require("../../helper-hardhat-config")
 
 task("on-demand-request", "Calls an On Demand API Consumer contract to request external data")
     .addParam(
         "contract",
         "The address of the On Demand On Demand API Consumer contract that you want to call"
-    )
-    .setAction(async (taskArgs) => {
+    ).addParam(
+        "subid",
+        "The billing subscription ID used to pay for the request"
+    ).addOptionalParam(
+        "gaslimit",
+        "The maximum amount of gas that can be used to fulfill a request (defaults to 1,000,000)"
+    ).setAction(async (taskArgs) => {
         const contractAddr = taskArgs.contract
         const networkId = network.name
+        const subscriptionId = taskArgs.subid
+        const gasLimit = parseInt(taskArgs.gaslimit ?? '1000000')
 
         console.log('Simulating on demand request locally...')
 
-        const config = require('../../on-demand-request-config')
-        validateConfig(config)
-        const { resultLog, error } = await executeRequest(config)
+        const { success, resultLog } = await simulateRequest('../../on-demand-request-config.js')
+  
         console.log(resultLog)
-        if (error) return
 
-        const request = await buildRequest(config)
+        if (!success) {
+          return
+        }
+
+        const request = await buildRequest('../../on-demand-request-config.js')
+        
+        // TODO: Check if consumer contract is authorized to use sub & if not, add it
+
+        const APIConsumer = await ethers.getContractFactory("OnDemandAPIConsumer")
+        const apiConsumerContract = APIConsumer.attach(contractAddr)
 
         console.log(
             "Requesting new data from On Demand API Consumer contract ",
@@ -28,16 +40,18 @@ task("on-demand-request", "Calls an On Demand API Consumer contract to request e
             " on network ",
             networkId
         )
-        const APIConsumer = await ethers.getContractFactory("OnDemandAPIConsumer")
 
-        // Get signer information
-        const accounts = await ethers.getSigners()
-        const signer = accounts[0]
+        const requestTx = await apiConsumerContract.executeRequest(request.source, request.secrets, request.args, subscriptionId, gasLimit)
 
-        // Create connection to API Consumer Contract and call the createRequestTo function
-        const apiConsumerContract = new ethers.Contract(contractAddr, APIConsumer.interface, signer)
+        const waitBlockConfirmations = developmentChains.includes(network.name)
+            ? 1
+            : VERIFICATION_BLOCK_CONFIRMATIONS
+        console.log(`Waiting ${waitBlockConfirmations} blocks for transaction ${requestTx.hash} to be confirmed...`)
+        const requestTxReceipt = await requestTx.wait(waitBlockConfirmations)
+        
+        console.log(requestTxReceipt.events)
 
-        // Set up a listener to log the requestID
+        const requestId = createSubscriptionTx.events
 
         const waitForRequestSentEvent = new Promise((resolve, _) => {
             apiConsumerContract.on(
@@ -49,8 +63,7 @@ task("on-demand-request", "Calls an On Demand API Consumer contract to request e
             )
     
             console.log("Requesting with the following input:\n", { ...request })
-            const arguments = [request.source, request.secrets, request.args, 1]
-            apiConsumerContract.executeRequest(...arguments)
+
         })
 
         await waitForRequestSentEvent

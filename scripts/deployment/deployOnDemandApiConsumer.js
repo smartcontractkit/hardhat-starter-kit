@@ -92,11 +92,14 @@ async function deployOnDemandApiConsumer(chainId = network.config.chainId) {
 
     const args = [oracleAddress]
     const apiConsumerFactory = await ethers.getContractFactory("OnDemandAPIConsumer")
+
+    console.log(`Deploying OnDemandAPIConsumer contract to ${network.name}`)
     const apiConsumer = await apiConsumerFactory.deploy(...args)
 
     const waitBlockConfirmations = developmentChains.includes(network.name)
         ? 1
         : VERIFICATION_BLOCK_CONFIRMATIONS
+    console.log(`Waiting ${waitBlockConfirmations} blocks for transaction ${apiConsumer.deployTransaction.hash} to be confirmed...`)
     await apiConsumer.deployTransaction.wait(waitBlockConfirmations)
 
     console.log(`OnDemandAPIConsumer deployed to ${apiConsumer.address} on ${network.name}`)
@@ -112,12 +115,6 @@ async function deployOnDemandApiConsumer(chainId = network.config.chainId) {
             constructorArguments: args,
         })
     }
-
-    // auto-funding
-    const fundAmount = networkConfig[chainId]["fundAmount"]
-    await linkToken.transfer(apiConsumer.address, fundAmount)
-
-    console.log(`OnDemandAPIConsumer funded with ${fundAmount} JUELS`)
 
     return { apiConsumer, mockOracle, mockRegistry, subscriptionId }
 }
