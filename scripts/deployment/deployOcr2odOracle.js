@@ -34,12 +34,19 @@ async function deployOcr2odOracle(chainId = network.config.chainId) {
     const OCR2DROracleAddress = OracleDeploymentReceipt.events[1].args.oracle
     oracle = await ethers.getContractAt("OCR2DROracle", OCR2DROracleAddress, deployer)
 
+    console.log('oracle deployed')
+
     // Set up OCR2DR Oracle
-    await oracle.acceptOwnership()
+    const acceptTx = await oracle.acceptOwnership()
+    await acceptTx(waitBlockConfirmations)
+
+    console.log('ownership accepted')
 
     await oracle.setDONPublicKey(
         ethers.utils.toUtf8Bytes(networkConfig[chainId]["OCR2ODMockPublicKey"])
     )
+
+    console.log('public key set')
 
     // TODO: set OCR2 config
 

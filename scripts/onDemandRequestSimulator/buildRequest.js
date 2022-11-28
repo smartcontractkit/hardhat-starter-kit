@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildRequest = void 0;
 const getRequestConfig_1 = require("./getRequestConfig");
 const encryptSecrets_1 = require("./encryptSecrets");
-const fs_1 = require("fs");
 const buildRequest = async (pathToRequestConfig) => {
     const config = (0, getRequestConfig_1.getRequestConfig)(pathToRequestConfig);
     const request = { source: config.source };
@@ -18,6 +17,6 @@ const buildRequest = async (pathToRequestConfig) => {
     if (config.args) {
         request.args = config.args;
     }
-    (0, fs_1.writeFileSync)('on-demand-request.json', JSON.stringify(request));
+    return request;
 };
 exports.buildRequest = buildRequest;
