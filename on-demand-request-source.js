@@ -61,7 +61,7 @@ if (!badApiResponse.error) {
 }
   
 // At least 3 prices are needed to aggregate the median price
-if (prices.length < 2) {
+if (prices.length < 3) {
   // If an error is thrown, it will be returned back to the smart contract
   throw Error('More than 1 API failed');
 }
