@@ -1,4 +1,4 @@
-const { simulateRequest, buildRequest } = require('../../scripts/onDemandRequestSimulator')
+const { simulateRequest, buildRequest, getDecodedResultLog } = require('../../scripts/onDemandRequestSimulator')
 const { VERIFICATION_BLOCK_CONFIRMATIONS, developmentChains } = require("../../helper-hardhat-config")
 
 task("on-demand-request", "Calls an On Demand API Consumer contract to request external data")
@@ -16,6 +16,7 @@ task("on-demand-request", "Calls an On Demand API Consumer contract to request e
         const networkId = network.name
         const subscriptionId = taskArgs.subid
         const gasLimit = parseInt(taskArgs.gaslimit ?? '1000000')
+        const networkConfig = getNetworkConfig(network.name)
 
         console.log('Simulating on demand request locally...')
 
@@ -29,6 +30,31 @@ task("on-demand-request", "Calls an On Demand API Consumer contract to request e
 
         const request = await buildRequest('../../on-demand-request-config.js')
 
+        const RegistryFactory = await ethers.getContractFactory('OCR2DRRegistry')
+        const registry = await RegistryFactory.attach(networkConfig['ocr2odOracleRegistry'])
+
+        let subInfo
+        try {
+            subInfo = await registry.getSubscription(subscriptionId)
+        } catch (error) {
+            if (error.errorName === 'InvalidSubscription') {
+                throw Error(`Subscription ID "${subscriptionId}" is invalid or does not exist`)
+            }
+            throw error
+        }
+        
+        const existingConsumers = subInfo[2].map(addr => addr.toLowerCase())
+        if (!existingConsumers.includes(consumer.toLowerCase())) {
+            throw Error(`Consumer contract ${contractAddr} is not registered to use subscription ${subscriptionId}`)
+        }
+
+        // TODO: Check if subscription has enough funding using cost estimation (right now it checks for minimum of 1 LINK)
+        const juelsAmount = ethers.utils.parseUnits('1.0')
+        const linkBalance = ethers.utils.formatEther(subInfo[0])
+        if (subInfo[0].lt(juelsAmount)) {
+            throw Error(`Subscription ${subscriptionId} does not have sufficent funds. Minimum 1.0 LINK required, but has balance of ${linkBalance}`)
+        }
+
         const APIConsumer = await ethers.getContractFactory("OnDemandAPIConsumer")
         const apiConsumerContract = APIConsumer.attach(contractAddr)
 
@@ -38,10 +64,6 @@ task("on-demand-request", "Calls an On Demand API Consumer contract to request e
             " on network ",
             networkId
         )
-
-        // TODO:
-        //  1. Check if subscription is valid & that consumer is authorized
-        //  2. Check if subscription has enough funding
 
         await new Promise(async (resolve, _) => {
             const requestTx = await apiConsumerContract.executeRequest(request.source, request.secrets, request.args, subscriptionId, gasLimit)
@@ -58,16 +80,24 @@ task("on-demand-request", "Calls an On Demand API Consumer contract to request e
             console.log(`Waiting for fulfillment...`)
             // TODO: Add fulfill event to OnDemandAPIConsumer contract to print event fulfill data (decoded in expected format) or error
             apiConsumerContract.on(
-                'Fulfill',
-                (requestId) => {
-                    console.log("Request initiated with ID: ", requestId)
+                'OCRResponse',
+                (result, err) => {
+                    if (result !== '0x') {
+                        console.log(
+                            `Response represented as a hex string: ${result}\n${
+                                getDecodedResultLog(
+                                    require('../../on-demand-request-config'),
+                                    result
+                                )
+                            }`
+                        )
+                    } else {
+                        console.log(`Response error: ${Buffer.from(err.slice(2), 'hex')}`)
+                    }
+                    console.log()
                     resolve()
                 }
             )
-    
-            console.log("Requesting with the following input:\n", { ...request })
-            const arguments = [request.source, request.secrets, request.args, 1]
-            apiConsumerContract.executeRequest(...arguments)
         })
     })
 module.exports = {}

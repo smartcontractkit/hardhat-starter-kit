@@ -17,6 +17,8 @@ contract OnDemandAPIConsumer is OCR2DRClient, ConfirmedOwner {
     bytes public latestResponse;
     bytes public latestError;
 
+    event OCRResponse(bytes result, bytes err);
+
     /**
      * @notice Executes once when a contract is created to initialize state variables
      *
@@ -70,5 +72,6 @@ contract OnDemandAPIConsumer is OCR2DRClient, ConfirmedOwner {
     ) internal override {
         latestResponse = response;
         latestError = err;
+        emit OCRResponse(response, err);
     }
 }
