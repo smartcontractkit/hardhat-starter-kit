@@ -79,10 +79,11 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
             console.log(`Request ${requestId} initiated`)
 
             console.log(`Waiting for fulfillment...`)
-            // TODO: Add fulfill event to OnDemandAPIConsumer contract to print event fulfill data (decoded in expected format) or error
+
             apiConsumerContract.on(
                 'OCRResponse',
                 (result, err) => {
+                    console.log(`Request ${requestId} fulfilled!`)
                     if (result !== '0x') {
                         console.log(
                             `Response represented as a hex string: ${result}\n${
@@ -95,7 +96,6 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
                     } else {
                         console.log(`Response error: ${Buffer.from(err.slice(2), 'hex')}`)
                     }
-                    console.log()
                     resolve()
                 }
             )
