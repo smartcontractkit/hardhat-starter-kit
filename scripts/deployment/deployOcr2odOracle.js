@@ -25,38 +25,43 @@ async function deployOcr2odOracle(chainId = network.config.chainId) {
         )
     }
 
+    console.log(`Deploying new oracle using OCR2DROracleFactory contract ${oracleFactoryAddress}`)
     const OracleDeploymentTransaction = await oracleFactory.deployNewOracle()
 
-    const waitBlockConfirmations = developmentChains.includes(network.name)
-        ? 1
-        : VERIFICATION_BLOCK_CONFIRMATIONS
-    const OracleDeploymentReceipt = await OracleDeploymentTransaction.wait(waitBlockConfirmations)
+    console.log(`Waiting for transaction ${acceptTx.hash} to be confirmed...`)
+    const OracleDeploymentReceipt = await OracleDeploymentTransaction.wait(1)
+
     const OCR2DROracleAddress = OracleDeploymentReceipt.events[1].args.oracle
     oracle = await ethers.getContractAt("OCR2DROracle", OCR2DROracleAddress, deployer)
-
-    console.log('oracle deployed')
+    console.log(`OCR2ODOracle deployed to ${oracle.address} on ${network.name}`)
 
     // Set up OCR2DR Oracle
+    console.log(`Accepting oracle contract ownership`)
     const acceptTx = await oracle.acceptOwnership()
-    await acceptTx(waitBlockConfirmations)
 
-    console.log('ownership accepted')
+    console.log(`Waiting for transaction ${acceptTx.hash} to be confirmed...`)
+    await acceptTx.wait(1)
+    console.log('Oracle ownership accepted')
 
-    await oracle.setDONPublicKey(
+    console.log(`Setting DON public key to ${networkConfig[chainId]["OCR2ODMockPublicKey"]}`)
+    const setTx = await oracle.setDONPublicKey(
         ethers.utils.toUtf8Bytes(networkConfig[chainId]["OCR2ODMockPublicKey"])
     )
-
-    console.log('public key set')
+    console.log(`Waiting for transaction ${setTx.hash} to be confirmed...`)
+    await setTx.wait(1)
+    console.log('DON public key set')
 
     // TODO: set OCR2 config
 
     console.log(`OCR2ODOracle deployed to ${oracle.address} on ${network.name}`)
 
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
+        console.log('Verifying contract...')
         await run("verify:verify", {
             address: oracle.address,
             constructorArguments: [],
         })
+        console.log('Contract verified')
     }
 
     return { oracle }

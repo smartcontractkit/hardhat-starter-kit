@@ -90,11 +90,10 @@ async function deployOnDemandApiConsumer(chainId = network.config.chainId) {
         linkToken = new ethers.Contract(linkTokenAddress, LINK_TOKEN_ABI, deployer)
     }
 
-    const args = [oracleAddress]
     const apiConsumerFactory = await ethers.getContractFactory("OnDemandAPIConsumer")
 
-    console.log(`Deploying OnDemandAPIConsumer contract to ${network.name}`)
-    const apiConsumer = await apiConsumerFactory.deploy(...args)
+    console.log(`Deploying OnDemandAPIConsumer contract to ${network.name} using oracle address ${oracleAddress}`)
+    const apiConsumer = await apiConsumerFactory.deploy(oracleAddress)
 
     const waitBlockConfirmations = developmentChains.includes(network.name)
         ? 1
@@ -110,10 +109,12 @@ async function deployOnDemandApiConsumer(chainId = network.config.chainId) {
     }
 
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
+        console.log('Verifying contract...')
         await run("verify:verify", {
             address: apiConsumer.address,
             constructorArguments: args,
         })
+        console.log('Contract verified')
     }
 
     return { apiConsumer, mockOracle, mockRegistry, subscriptionId }
