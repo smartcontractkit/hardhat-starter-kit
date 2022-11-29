@@ -2,6 +2,7 @@ const { ethers, network, run } = require("hardhat")
 const {
     VERIFICATION_BLOCK_CONFIRMATIONS,
     developmentChains,
+    networkConfig
 } = require("../../helper-hardhat-config")
 
 const config = {
@@ -31,17 +32,17 @@ async function deployOcr2odRegistry(chainId = network.config.chainId) {
         linkToken = await linkTokenFactory.connect(deployer).deploy()
         linkTokenAddress = linkToken.address
     } else {
-        ethLinkFeedAddress = networkConfig[chainId]["ethLinkPriceFeed"]
+        ethLinkFeedAddress = networkConfig[chainId]["linkEthPriceFeed"]
         linkTokenAddress = networkConfig[chainId]["linkToken"]
     }
 
     const registryFactory = await ethers.getContractFactory("OCR2DRRegistry")
-    registry = await registryFactory.connect(deployer).deploy(linkTokenAddress, ethLinkFeedAddress)
+    registry = await registryFactory.deploy(linkTokenAddress, ethLinkFeedAddress)
 
     const waitBlockConfirmations = developmentChains.includes(network.name)
         ? 1
         : VERIFICATION_BLOCK_CONFIRMATIONS
-    await registryFactory.deployTransaction.wait(waitBlockConfirmations)
+    await registry.deployTransaction.wait(waitBlockConfirmations)
 
     // Set up OCR2DR Registry
     await registry.setConfig(

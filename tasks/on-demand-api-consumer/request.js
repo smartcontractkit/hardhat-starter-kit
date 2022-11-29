@@ -67,7 +67,13 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
         )
 
         await new Promise(async (resolve, reject) => {
-            const requestTx = await apiConsumerContract.executeRequest(request.source, request.secrets, request.args, subscriptionId, gasLimit)
+            const requestTx = await apiConsumerContract.executeRequest(
+                request.source,
+                request.secrets,
+                request.args,
+                subscriptionId,
+                gasLimit
+            )
 
             const waitBlockConfirmations = developmentChains.includes(network.name)
                 ? 1

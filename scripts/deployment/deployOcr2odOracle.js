@@ -25,10 +25,10 @@ async function deployOcr2odOracle(chainId = network.config.chainId) {
         )
     }
 
-    console.log(`Deploying new oracle using OCR2DROracleFactory contract ${oracleFactoryAddress}`)
+    console.log(`Deploying new oracle using OCR2DROracleFactory contract at address ${oracleFactoryAddress}`)
     const OracleDeploymentTransaction = await oracleFactory.deployNewOracle()
 
-    console.log(`Waiting for transaction ${acceptTx.hash} to be confirmed...`)
+    console.log(`Waiting for transaction ${OracleDeploymentTransaction.hash} to be confirmed...`)
     const OracleDeploymentReceipt = await OracleDeploymentTransaction.wait(1)
 
     const OCR2DROracleAddress = OracleDeploymentReceipt.events[1].args.oracle
@@ -38,33 +38,38 @@ async function deployOcr2odOracle(chainId = network.config.chainId) {
     // Set up OCR2DR Oracle
     console.log(`Accepting oracle contract ownership`)
     const acceptTx = await oracle.acceptOwnership()
-
     console.log(`Waiting for transaction ${acceptTx.hash} to be confirmed...`)
     await acceptTx.wait(1)
     console.log('Oracle ownership accepted')
 
     console.log(`Setting DON public key to ${networkConfig[chainId]["OCR2ODMockPublicKey"]}`)
-    const setTx = await oracle.setDONPublicKey(
+    const setKeyTx = await oracle.setDONPublicKey(
         ethers.utils.toUtf8Bytes(networkConfig[chainId]["OCR2ODMockPublicKey"])
     )
-    console.log(`Waiting for transaction ${setTx.hash} to be confirmed...`)
-    await setTx.wait(1)
+    console.log(`Waiting for transaction ${setKeyTx.hash} to be confirmed...`)
+    await setKeyTx.wait(1)
     console.log('DON public key set')
 
-    // TODO: set OCR2 config
-
     const ocrConfig = require('../../OCR2DROracleConfig.json')
-
+    console.log('Setting oracle OCR config')
     const setConfigTx = await oracle.setConfig(
-        ocrConfig.onchainPubKeys,
-        ocrConfig.transmitterAddresses,
-        1,
-        ethers.utils.defaultAbiCoderabi.encode([ "bytes[]" ], [ocrConfig.onchainPubKeys]),
-        1,
-        ethers.utils.defaultAbiCoderabi.encode([ "bytes[]" ], [ocrConfig.ocrConfig.offchainPubKeysHex]),
+        ocrConfig.Signers,
+        ocrConfig.Transmitters,
+        ocrConfig.F,
+        ocrConfig.OnchainConfig,
+        ocrConfig.OffchainConfigVersion,
+        ocrConfig.OffchainConfig,
     )
+    console.log(`Waiting for transaction ${setConfigTx.hash} to be confirmed...`)
+    await setConfigTx.wait(1)
+    console.log('OCR2Oracle Config set')
 
-    console.log(`OCR2ODOracle deployed to ${oracle.address} on ${network.name}`)
+    console.log(`Setting oracle registry to ${networkConfig[chainId]["ocr2odOracleRegistry"]}`)
+    const setRegistryTx = await oracle.setRegistry(networkConfig[chainId]["ocr2odOracleRegistry"])
+    console.log(`Waiting for transaction ${setRegistryTx.hash} to be confirmed...`)
+    console.log('Oracle registry set')
+
+    console.log(`OCR2ODOracle successfully configured and deployed to ${oracle.address} on ${network.name}`)
 
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
         console.log('Verifying contract...')
