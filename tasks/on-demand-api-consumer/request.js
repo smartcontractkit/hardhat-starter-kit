@@ -1,7 +1,8 @@
 const { simulateRequest, buildRequest, getDecodedResultLog } = require('../../scripts/onDemandRequestSimulator')
 const { VERIFICATION_BLOCK_CONFIRMATIONS, developmentChains } = require("../../helper-hardhat-config")
+const { getNetworkConfig } = require('../utils')
 
-task("on-demand-request", "Calls an On Demand API Consumer contract to request external data")
+task("on-demand-request", "Calls an On Demand API consumer contract to request external data")
     .addParam(
         "contract",
         "The address of the On Demand On Demand API Consumer contract that you want to call"
@@ -44,7 +45,7 @@ task("on-demand-request", "Calls an On Demand API Consumer contract to request e
         }
         
         const existingConsumers = subInfo[2].map(addr => addr.toLowerCase())
-        if (!existingConsumers.includes(consumer.toLowerCase())) {
+        if (!existingConsumers.includes(contractAddr.toLowerCase())) {
             throw Error(`Consumer contract ${contractAddr} is not registered to use subscription ${subscriptionId}`)
         }
 
