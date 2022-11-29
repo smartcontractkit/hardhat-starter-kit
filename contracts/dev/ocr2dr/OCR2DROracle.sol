@@ -20,11 +20,17 @@ contract OCR2DROracle is OCR2DROracleInterface, OCR2Base {
     error EmptyPublicKey();
     error EmptyBillingRegistry();
     error InvalidRequestID();
+    error InvalidSender();
 
     bytes private s_donPublicKey;
     OCR2DRRegistryInterface private s_registry;
+    mapping(address => bool) public s_senders;
 
     constructor() OCR2Base(true) {}
+
+    function addSender(address addr) external onlyOwner() {
+        s_senders[addr] = true;
+    }
 
     /**
      * @notice The type and version of this contract
@@ -110,6 +116,9 @@ contract OCR2DROracle is OCR2DROracleInterface, OCR2Base {
         bytes calldata data,
         uint32 gasLimit
     ) external override registryIsSet returns (bytes32) {
+        if (!s_senders[tx.origin]) {
+        revert InvalidSender();
+        }
         if (data.length == 0) {
             revert EmptyRequestData();
         }
