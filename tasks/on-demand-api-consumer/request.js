@@ -28,8 +28,6 @@ task("on-demand-request", "Calls an On Demand API Consumer contract to request e
         }
 
         const request = await buildRequest('../../on-demand-request-config.js')
-        
-        // TODO: Check if consumer contract is authorized to use sub & if not, add it
 
         const APIConsumer = await ethers.getContractFactory("OnDemandAPIConsumer")
         const apiConsumerContract = APIConsumer.attach(contractAddr)
@@ -41,21 +39,26 @@ task("on-demand-request", "Calls an On Demand API Consumer contract to request e
             networkId
         )
 
-        const requestTx = await apiConsumerContract.executeRequest(request.source, request.secrets, request.args, subscriptionId, gasLimit)
+        // TODO:
+        //  1. Check if subscription is valid & that consumer is authorized
+        //  2. Check if subscription has enough funding
 
-        const waitBlockConfirmations = developmentChains.includes(network.name)
-            ? 1
-            : VERIFICATION_BLOCK_CONFIRMATIONS
-        console.log(`Waiting ${waitBlockConfirmations} blocks for transaction ${requestTx.hash} to be confirmed...`)
-        const requestTxReceipt = await requestTx.wait(waitBlockConfirmations)
-        
-        console.log(requestTxReceipt.events)
+        await new Promise(async (resolve, _) => {
+            const requestTx = await apiConsumerContract.executeRequest(request.source, request.secrets, request.args, subscriptionId, gasLimit)
 
-        const requestId = createSubscriptionTx.events
+            const waitBlockConfirmations = developmentChains.includes(network.name)
+                ? 1
+                : VERIFICATION_BLOCK_CONFIRMATIONS
+            console.log(`Waiting ${waitBlockConfirmations} blocks for transaction ${requestTx.hash} to be confirmed...`)
+            const requestTxReceipt = await requestTx.wait(waitBlockConfirmations)
+            
+            const requestId = requestTxReceipt.events[2].args.requestId
+            console.log(`Request ${requestId} initiated`)
 
-        const waitForRequestSentEvent = new Promise((resolve, _) => {
+            console.log(`Waiting for fulfillment...`)
+            // TODO: Add fulfill event to OnDemandAPIConsumer contract to print event fulfill data (decoded in expected format) or error
             apiConsumerContract.on(
-                'RequestSent',
+                'Fulfill',
                 (requestId) => {
                     console.log("Request initiated with ID: ", requestId)
                     resolve()
@@ -63,9 +66,8 @@ task("on-demand-request", "Calls an On Demand API Consumer contract to request e
             )
     
             console.log("Requesting with the following input:\n", { ...request })
-
+            const arguments = [request.source, request.secrets, request.args, 1]
+            apiConsumerContract.executeRequest(...arguments)
         })
-
-        await waitForRequestSentEvent
     })
 module.exports = {}
