@@ -53,6 +53,17 @@ async function deployOcr2odOracle(chainId = network.config.chainId) {
 
     // TODO: set OCR2 config
 
+    const ocrConfig = require('../../OCR2DROracleConfig.json')
+
+    const setConfigTx = await oracle.setConfig(
+        ocrConfig.onchainPubKeys,
+        ocrConfig.transmitterAddresses,
+        1,
+        ethers.utils.defaultAbiCoderabi.encode([ "bytes[]" ], [ocrConfig.onchainPubKeys]),
+        1,
+        ethers.utils.defaultAbiCoderabi.encode([ "bytes[]" ], [ocrConfig.ocrConfig.offchainPubKeysHex]),
+    )
+
     console.log(`OCR2ODOracle deployed to ${oracle.address} on ${network.name}`)
 
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
