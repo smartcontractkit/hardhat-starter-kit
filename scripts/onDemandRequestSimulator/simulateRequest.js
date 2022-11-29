@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.simulateRequest = void 0;
+exports.getDecodedResultLog = exports.simulateRequest = void 0;
 const getRequestConfig_1 = require("./getRequestConfig");
 const handler_1 = require("./handler");
 const simulateRequest = async (pathToRequestConfig) => {
     const config = (0, getRequestConfig_1.getRequestConfig)(pathToRequestConfig);
     const savedEnv = {
-        'DISABLE_TMP_CLEAR_FOR_TESTING': process.env['DISABLE_TMP_CLEAR_FOR_TESTING'],
-        'ENABLE_CONSOLE_LOG_FROM_SANDBOX': process.env['ENABLE_CONSOLE_LOG_FROM_SANDBOX'],
+        DISABLE_TMP_CLEAR_FOR_TESTING: process.env['DISABLE_TMP_CLEAR_FOR_TESTING'],
+        ENABLE_CONSOLE_LOG_FROM_SANDBOX: process.env['ENABLE_CONSOLE_LOG_FROM_SANDBOX'],
     };
     process.env['DISABLE_TMP_CLEAR_FOR_TESTING'] = 'true';
     process.env['ENABLE_CONSOLE_LOG_FROM_SANDBOX'] = 'true';
@@ -29,18 +29,18 @@ const simulateRequest = async (pathToRequestConfig) => {
     if (result.success) {
         return {
             success: true,
-            resultLog: getSuccessResultLog(config, result.success)
+            resultLog: `__Output from sandboxed source code__\nOutput represented as a hex string: ${result.success}\n${(0, exports.getDecodedResultLog)(config, result.success)}`,
         };
     }
     const { name, message, details } = result.error;
     return {
         success: false,
-        resultLog: `__Error thrown in sandboxed source code__\n${name}\n${message}\n${details ? `${details}\n` : ''}`
+        resultLog: `__Error thrown in sandboxed source code__\n${name}\n${message}\n${details ? `${details}\n` : ''}`,
     };
 };
 exports.simulateRequest = simulateRequest;
-const getSuccessResultLog = (config, successResult) => {
-    let resultLog = `__Output from sandboxed source code__\nOutput represented as a hex string: ${successResult}\n`;
+const getDecodedResultLog = (config, successResult) => {
+    let resultLog = '';
     if (config.expectedReturnType && config.expectedReturnType !== 'Buffer') {
         let decodedOutput;
         switch (config.expectedReturnType) {
@@ -57,11 +57,12 @@ const getSuccessResultLog = (config, successResult) => {
                 const end = config.expectedReturnType;
                 throw new Error(`unused expectedReturnType ${end}`);
         }
-        const decodedOutputLog = `Output decoded as a ${config.expectedReturnType}: ${decodedOutput}\n`;
+        const decodedOutputLog = `Decoded as a ${config.expectedReturnType}: ${decodedOutput}\n`;
         resultLog += decodedOutputLog;
     }
     return resultLog;
 };
+exports.getDecodedResultLog = getDecodedResultLog;
 const signedInt256toBigInt = (hex) => {
     const binary = BigInt(hex).toString(2).padStart(256, '0');
     // if the first bit is 0, number is positive
