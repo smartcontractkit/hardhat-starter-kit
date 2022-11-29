@@ -66,7 +66,7 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
             networkId
         )
 
-        await new Promise(async (resolve, _) => {
+        await new Promise(async (resolve, reject) => {
             const requestTx = await apiConsumerContract.executeRequest(request.source, request.secrets, request.args, subscriptionId, gasLimit)
 
             const waitBlockConfirmations = developmentChains.includes(network.name)
@@ -74,6 +74,10 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
                 : VERIFICATION_BLOCK_CONFIRMATIONS
             console.log(`Waiting ${waitBlockConfirmations} blocks for transaction ${requestTx.hash} to be confirmed...`)
             const requestTxReceipt = await requestTx.wait(waitBlockConfirmations)
+
+            setTimeout(reject(
+                'A response not received within 5 minutes of the request being initiated and has been canceled. Your subscription was not charged. Please make a new request.'
+            ), 300000)
             
             const requestId = requestTxReceipt.events[2].args.requestId
             console.log(`Request ${requestId} initiated`)
