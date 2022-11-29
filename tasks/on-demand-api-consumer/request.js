@@ -48,7 +48,7 @@ task("on-demand-request", "Calls an On Demand API Consumer contract to request e
             throw Error(`Consumer contract ${contractAddr} is not registered to use subscription ${subscriptionId}`)
         }
 
-        // TODO: Check if subscription has enough funding using cost estimation (right now it checks for minimum of 1 LINK)
+        // TODO: Check if subscription has enough funding using accurate cost estimation instead of 1 link
         const juelsAmount = ethers.utils.parseUnits('1.0')
         const linkBalance = ethers.utils.formatEther(subInfo[0])
         if (subInfo[0].lt(juelsAmount)) {
