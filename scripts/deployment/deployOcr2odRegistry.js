@@ -44,13 +44,13 @@ async function deployOcr2odRegistry(chainId = network.config.chainId) {
     await registryFactory.deployTransaction.wait(waitBlockConfirmations)
 
     // Set up OCR2DR Registry
-    // await registry.setConfig(
-    //     config.maxGasLimit,
-    //     config.stalenessSeconds,
-    //     config.gasAfterPaymentCalculation,
-    //     config.weiPerUnitLink,
-    //     config.gasOverhead
-    // )
+    await registry.setConfig(
+        config.maxGasLimit,
+        config.stalenessSeconds,
+        config.gasAfterPaymentCalculation,
+        config.weiPerUnitLink,
+        config.gasOverhead
+    )
 
     console.log(`OCR2ODRegistry deployed to ${registry.address} on ${network.name}`)
 
