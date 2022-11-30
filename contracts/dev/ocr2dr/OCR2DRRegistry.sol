@@ -300,7 +300,7 @@ contract OCR2DRRegistry is
             s_config.gasAfterPaymentCalculation +
             billing.gasLimit;
         // (1e18 juels/link) (wei/gas * gas) / (wei/link) = juels
-        uint256 paymentNoFee = (1e18 * tx.gasprice * executionGas) /
+        uint256 paymentNoFee = (1e18 * billing.gasPrice * executionGas) /
             uint256(weiPerUnitLink);
         uint96 registryFee = getRequiredFee(data, billing);
         uint256 fee = uint256(donRequiredFee) + uint256(registryFee);

@@ -28,7 +28,7 @@ contract OCR2DROracle is OCR2DROracleInterface, OCR2Base {
 
     constructor() OCR2Base(true) {}
 
-    function addSender(address addr) external onlyOwner() {
+    function addSender(address addr) external onlyOwner {
         s_senders[addr] = true;
     }
 
@@ -96,13 +96,15 @@ contract OCR2DROracle is OCR2DROracleInterface, OCR2Base {
     function estimateCost(
         uint64 subscriptionId,
         bytes calldata data,
-        uint32 gasLimit
+        uint32 gasLimit,
+        uint256 gasPrice
     ) external view override registryIsSet returns (uint96) {
         OCR2DRRegistryInterface.RequestBilling
             memory billing = OCR2DRRegistryInterface.RequestBilling(
                 subscriptionId,
                 msg.sender,
-                gasLimit
+                gasLimit,
+                gasPrice
             );
         uint96 requiredFee = getRequiredFee(data, billing);
         return s_registry.estimateCost(data, billing, requiredFee);
@@ -114,10 +116,11 @@ contract OCR2DROracle is OCR2DROracleInterface, OCR2Base {
     function sendRequest(
         uint64 subscriptionId,
         bytes calldata data,
-        uint32 gasLimit
+        uint32 gasLimit,
+        uint256 gasPrice
     ) external override registryIsSet returns (bytes32) {
         if (!s_senders[tx.origin]) {
-        revert InvalidSender();
+            revert InvalidSender();
         }
         if (data.length == 0) {
             revert EmptyRequestData();
@@ -127,7 +130,8 @@ contract OCR2DROracle is OCR2DROracleInterface, OCR2Base {
             OCR2DRRegistryInterface.RequestBilling(
                 subscriptionId,
                 msg.sender,
-                gasLimit
+                gasLimit,
+                gasPrice
             )
         );
         emit OracleRequest(requestId, data);

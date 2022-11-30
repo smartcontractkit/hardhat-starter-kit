@@ -13,7 +13,7 @@ const { decrypt } = require("../../scripts/decrypt")
           // We use loadFixture to run this setup once, snapshot that state,
           // and reset Hardhat Network to that snapshot in every test.
 
-          it("should successfully make an API request and get a result", async () => {
+          it("should be able to estimate the cost of a request", async () => {
               const { apiConsumer, mockOracle, subscriptionId } = await loadFixture(
                   deployOnDemandApiConsumer
               )
@@ -25,25 +25,55 @@ const { decrypt } = require("../../scripts/decrypt")
               const arguments = [] // TODO
               const secrets = [] // TODO
               const gasLimit = 50_000
-              const args = [source, secrets, arguments, subscriptionId, gasLimit]
+              const gasPrice = 4_388_265
 
-              const transaction = await apiConsumer.executeRequest(...args)
-              const receipt = await transaction.wait()
-              const event = receipt.events.find(({ event }) => event === "RequestSent")
-              const requestId = event.args[0]
-              // Oracle fulfills request
-              const callbackValue = 888
-              await mockOracle.transmit(
-                  requestId,
-                  ethers.utils.formatBytes32String(String(callbackValue)),
-                  ethers.utils.formatBytes32String(0)
+              const estimatedCost = await apiConsumer.estimateCost(
+                  [
+                      0, // Inline
+                      0, // Inline
+                      0, // JavaScript
+                      source,
+                      secrets,
+                      arguments,
+                  ],
+                  subscriptionId,
+                  gasLimit,
+                  gasPrice
               )
-              await network.provider.send("evm_increaseTime", [1])
-              await network.provider.send("evm_mine")
-              // Check Consumer contract value
-              const value = await apiConsumer.value()
-              assert.equal(ethers.utils.parseBytes32String(String(value)), callbackValue)
+              assert.isTrue(estimatedCost.gt(0))
           })
+
+          //   it("should successfully make an API request and get a result", async () => {
+          //     const { apiConsumer, mockOracle, subscriptionId } = await loadFixture(
+          //         deployOnDemandApiConsumer
+          //     )
+          //     //   Consumer calls executeRequest
+          //     const source = `function run(args, queryResponses) {
+          //         const avgPrice = (queryResponses[0].data.price + queryResponses[1].data.price) / 2;
+          //         return Math.round(avgPrice * args[0]);
+          //     }`
+          //     const arguments = [] // TODO
+          //     const secrets = [] // TODO
+          //     const gasLimit = 50_000
+          //     const args = [source, secrets, arguments, subscriptionId, gasLimit]
+
+          //     const transaction = await apiConsumer.executeRequest(...args)
+          //     const receipt = await transaction.wait()
+          //     const event = receipt.events.find(({ event }) => event === "RequestSent")
+          //     const requestId = event.args[0]
+          //     // Oracle fulfills request
+          //     const callbackValue = 888
+          //     await mockOracle.transmit(
+          //         requestId,
+          //         ethers.utils.formatBytes32String(String(callbackValue)),
+          //         ethers.utils.formatBytes32String(0)
+          //     )
+          //     await network.provider.send("evm_increaseTime", [1])
+          //     await network.provider.send("evm_mine")
+          //     // Check Consumer contract value
+          //     const value = await apiConsumer.value()
+          //     assert.equal(ethers.utils.parseBytes32String(String(value)), callbackValue)
+          // })
 
           //   it("should reveal a public key to decrypt secrets with", async () => {
           //       const { apiConsumer } = await loadFixture(deployOnDemandApiConsumer)

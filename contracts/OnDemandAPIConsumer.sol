@@ -52,7 +52,12 @@ contract OnDemandAPIConsumer is OCR2DRClient, ConfirmedOwner {
         if (secrets.length > 0) req.addInlineSecrets(secrets);
         if (args.length > 0) req.addArgs(args);
 
-        bytes32 assignedReqID = sendRequest(req, subscriptionId, gasLimit);
+        bytes32 assignedReqID = sendRequest(
+            req,
+            subscriptionId,
+            gasLimit,
+            tx.gasprice
+        );
         latestRequestId = assignedReqID;
         return assignedReqID;
     }

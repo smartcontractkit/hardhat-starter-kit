@@ -106,7 +106,8 @@ contract AutomatedAPIConsumer is
         bytes32 assignedReqID = sendRequest(
             request,
             MY_SUBSCRIPTION_ID,
-            MY_GAS_LIMIT
+            MY_GAS_LIMIT,
+            tx.gasprice
         );
         reqInFlight = true;
         emit ExecuteRequestInvoked(assignedReqID);
