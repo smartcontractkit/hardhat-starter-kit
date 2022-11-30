@@ -64,6 +64,10 @@ async function deployOcr2odOracle(chainId = network.config.chainId) {
     await setConfigTx.wait(1)
     console.log('OCR2Oracle Config set')
 
+    const registryFactory = await ethers.getContractFactory("OCR2DRRegistry")
+    const registry = await registryFactory.attach(networkConfig[chainId]["ocr2odOracleRegistry"])
+    await registry.setAuthorizedSenders([oracle.address])
+
     console.log(`Setting oracle registry to ${networkConfig[chainId]["ocr2odOracleRegistry"]}`)
     const setRegistryTx = await oracle.setRegistry(networkConfig[chainId]["ocr2odOracleRegistry"])
     console.log(`Waiting for transaction ${setRegistryTx.hash} to be confirmed...`)
