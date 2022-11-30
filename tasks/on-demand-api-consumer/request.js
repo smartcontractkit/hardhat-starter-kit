@@ -81,11 +81,12 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
             console.log(`Waiting ${waitBlockConfirmations} blocks for transaction ${requestTx.hash} to be confirmed...`)
             const requestTxReceipt = await requestTx.wait(waitBlockConfirmations)
 
-            setTimeout(reject(
+            setTimeout(() => reject(
                 'A response not received within 5 minutes of the request being initiated and has been canceled. Your subscription was not charged. Please make a new request.'
             ), 3000000)
             
-            const requestId = requestTxReceipt.events[2].args.requestId
+            console.log(requestTxReceipt.events)
+            const requestId = requestTxReceipt.events[2].args.id
             console.log(`Request ${requestId} initiated`)
 
             console.log(`Waiting for fulfillment...`)
