@@ -41,13 +41,15 @@ abstract contract OCR2DRClient is OCR2DRClientInterface {
     function estimateCost(
         OCR2DR.Request memory req,
         uint64 subscriptionId,
-        uint32 gasLimit
+        uint32 gasLimit,
+        uint256 gasPrice
     ) public view returns (uint96) {
         return
             s_oracle.estimateCost(
                 subscriptionId,
                 OCR2DR.encodeCBOR(req),
-                gasLimit
+                gasLimit,
+                gasPrice
             );
     }
 
@@ -61,12 +63,14 @@ abstract contract OCR2DRClient is OCR2DRClientInterface {
     function sendRequest(
         OCR2DR.Request memory req,
         uint64 subscriptionId,
-        uint32 gasLimit
+        uint32 gasLimit,
+        uint256 gasPrice
     ) internal returns (bytes32) {
         bytes32 requestId = s_oracle.sendRequest(
             subscriptionId,
             OCR2DR.encodeCBOR(req),
-            gasLimit
+            gasLimit,
+            gasPrice
         );
         s_pendingRequests[requestId] = s_oracle.getRegistry();
         emit RequestSent(requestId);
