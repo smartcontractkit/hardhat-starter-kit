@@ -13,8 +13,6 @@ async function deployOcr2odOracleFactory() {
     const mockOracleFactoryFactory = await ethers.getContractFactory("OCR2DROracleFactory")
     mockOracleFactory = await mockOracleFactoryFactory.connect(deployer).deploy()
 
-    console.log(mockOracleFactory)
-
     const waitBlockConfirmations = developmentChains.includes(network.name)
         ? 1
         : VERIFICATION_BLOCK_CONFIRMATIONS
