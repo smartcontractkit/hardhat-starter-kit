@@ -25,9 +25,7 @@ async function deployOcr2odOracle(chainId = network.config.chainId) {
         )
     }
 
-    console.log(
-        `Deploying new oracle using OCR2DROracleFactory contract at address ${oracleFactoryAddress}`
-    )
+    console.log('Deploying new OCR2DR oracle')
     const OracleDeploymentTransaction = await oracleFactory.deployNewOracle()
 
     console.log(`Waiting for transaction ${OracleDeploymentTransaction.hash} to be confirmed...`)

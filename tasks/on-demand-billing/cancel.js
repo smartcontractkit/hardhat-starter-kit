@@ -5,7 +5,7 @@ const {
 } = require("../../helper-hardhat-config")
 
 task("on-demand-cancel-sub", "Cancels On-Demand billing subscription")
-    .addParam("subid", "Subscripton ID")
+    .addParam("subid", "Subscription ID")
     .addOptionalParam(
         "refundaddress",
         "Address where the remaining subscription is sent (defaults to caller's address)"

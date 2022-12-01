@@ -5,7 +5,7 @@ const {
 } = require("../../helper-hardhat-config")
 
 task("on-demand-remove-consumer", "Adds a client contract to the On-Demand billing subscription")
-    .addParam("subid", "Subscripton ID")
+    .addParam("subid", "Subscription ID")
     .addParam(
         "consumer",
         "Address of the On-Demand client contract to remove from billing subscription"

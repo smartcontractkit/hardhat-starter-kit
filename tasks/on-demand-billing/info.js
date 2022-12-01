@@ -4,7 +4,7 @@ task(
     "on-demand-sub-info",
     "Gets billing subscription balance and lists consumers for On-Demand Consumer contracts"
 )
-    .addParam("subid", "Subscripton ID")
+    .addParam("subid", "Subscription ID")
     .setAction(async (taskArgs) => {
         const networkConfig = getNetworkConfig(network.name)
 

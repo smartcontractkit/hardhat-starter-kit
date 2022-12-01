@@ -5,12 +5,7 @@ const {
     developmentChains,
 } = require("../../helper-hardhat-config")
 const { getNetworkConfig } = require("../utils")
-
 const readline = require("readline")
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-})
 
 task("on-demand-request", "Calls an On Demand API consumer contract to request external data")
     .addParam(
@@ -35,13 +30,13 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
         const registry = await RegistryFactory.attach(registryAddress)
         const networkId = network.name
         const subscriptionId = taskArgs.subid
-        const gasLimit = parseInt(taskArgs.gaslimit ?? "10000")
+        const gasLimit = parseInt(taskArgs.gaslimit ?? "100000")
 
         console.log("Simulating on demand request locally...")
 
         const { success, resultLog } = await simulateRequest("../../on-demand-request-config.js")
 
-        console.log(resultLog)
+        console.log(`\n${resultLog}`)
 
         if (!success) {
             return
@@ -72,8 +67,8 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
                 0, // Inline
                 0, // JavaScript
                 request.source,
-                request.secrets,
-                request.args,
+                request.secrets ?? [],
+                request.args ?? [],
             ],
             subscriptionId,
             gasLimit,
@@ -100,11 +95,18 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
                     18
                 )} LINK which is equal to $${hre.ethers.utils.formatUnits(estimatedCostUsd, 26)}\n`
             )
-            rl.question("Continue? (Yes/No)\n", async function (input) {
+
+            const rl = readline.createInterface({
+                input: process.stdin,
+                output: process.stdout,
+            })
+
+            rl.question("Continue? (y) Yes / (n) No\n", async function (input) {
                 if (input.toLowerCase() !== "y" && input.toLowerCase() !== "yes") {
                     rl.close()
                     return resolve()
                 }
+                rl.pause()
 
                 console.log(
                     "\nRequesting new data from On Demand API Consumer contract ",
@@ -115,8 +117,8 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
 
                 const requestTx = await apiConsumerContract.executeRequest(
                     request.source,
-                    request.secrets,
-                    request.args,
+                    request.secrets ?? [],
+                    request.args ?? [],
                     subscriptionId,
                     gasLimit
                 )
@@ -148,13 +150,13 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
                     console.log(`Request ${requestId} fulfilled!`)
                     if (result !== "0x") {
                         console.log(
-                            `Response represented as a hex string: ${result}\n${getDecodedResultLog(
+                            `\nResponse represented as a hex string: ${result}\n${getDecodedResultLog(
                                 require("../../on-demand-request-config"),
                                 result
                             )}`
                         )
                     } else {
-                        console.log(`Response error: ${Buffer.from(err.slice(2), "hex")}`)
+                        console.log(`\nResponse error: ${Buffer.from(err.slice(2), "hex")}\n`)
                     }
                     const eventBillingEnd = registry.filters.BillingEnd(null, requestId)
                     const event = await registry.queryFilter(eventBillingEnd)
