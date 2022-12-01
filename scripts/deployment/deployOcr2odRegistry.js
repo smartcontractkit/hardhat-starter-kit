@@ -6,7 +6,7 @@ const {
 } = require("../../helper-hardhat-config")
 
 const config = {
-    maxGasLimit: 1_000_000,
+    maxGasLimit: 450_000,
     stalenessSeconds: 86_400,
     gasAfterPaymentCalculation: 21_000 + 5_000 + 2_100 + 20_000 + 2 * 2_100 - 15_000 + 7_315,
     weiPerUnitLink: ethers.BigNumber.from("5000000000000000"),

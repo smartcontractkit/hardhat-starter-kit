@@ -1,8 +1,5 @@
-const {
-    simulateRequest,
-    buildRequest,
-    getDecodedResultLog,
-} = require("../../scripts/onDemandRequestSimulator")
+const { simulateRequest, buildRequest } = require("../../scripts/onDemandRequestSimulator")
+const { getDecodedResultLog } = require("../../scripts/onDemandRequestSimulator/simulateRequest")
 const {
     VERIFICATION_BLOCK_CONFIRMATIONS,
     developmentChains,
@@ -26,11 +23,19 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
         "The maximum amount of gas that can be used to fulfill a request (defaults to 80,000)"
     )
     .setAction(async (taskArgs, hre) => {
+        const networkConfig = getNetworkConfig(network.name)
         const contractAddr = taskArgs.contract
+        const APIConsumer = await ethers.getContractFactory("OnDemandAPIConsumer")
+        const apiConsumerContract = APIConsumer.attach(contractAddr)
+        const oracleAddress = networkConfig["ocr2odOracle"]
+        const OracleFactory = await ethers.getContractFactory("OCR2DROracle")
+        const oracleContract = OracleFactory.attach(oracleAddress)
+        const registryAddress = oracleContract.getRegistry()
+        const RegistryFactory = await ethers.getContractFactory("OCR2DRRegistry")
+        const registry = await RegistryFactory.attach(registryAddress)
         const networkId = network.name
         const subscriptionId = taskArgs.subid
-        const gasLimit = parseInt(taskArgs.gaslimit ?? "80000")
-        const networkConfig = getNetworkConfig(network.name)
+        const gasLimit = parseInt(taskArgs.gaslimit ?? "10000")
 
         console.log("Simulating on demand request locally...")
 
@@ -43,9 +48,6 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
         }
 
         const request = await buildRequest("../../on-demand-request-config.js")
-
-        const RegistryFactory = await ethers.getContractFactory("OCR2DRRegistry")
-        const registry = await RegistryFactory.attach(networkConfig["ocr2odOracleRegistry"])
 
         let subInfo
         try {
@@ -63,10 +65,7 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
                 `Consumer contract ${contractAddr} is not registered to use subscription ${subscriptionId}`
             )
         }
-
-        const APIConsumer = await ethers.getContractFactory("OnDemandAPIConsumer")
-        const apiConsumerContract = APIConsumer.attach(contractAddr)
-
+        const { lastBaseFeePerGas, maxPriorityFeePerGas } = await hre.ethers.provider.getFeeData()
         const estimatedCostJuels = await apiConsumerContract.estimateCost(
             [
                 0, // Inline
@@ -78,12 +77,12 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
             ],
             subscriptionId,
             gasLimit,
-            await hre.ethers.provider.getGasPrice()
+            maxPriorityFeePerGas.add(lastBaseFeePerGas)
         )
         const linkBalance = subInfo[0]
         if (subInfo[0].lt(estimatedCostJuels)) {
             throw Error(
-                `Subscription ${subscriptionId} does not have sufficent funds. The estimate cost is ${estimatedCost} Juels LINK, but has balance of ${linkBalance}`
+                `Subscription ${subscriptionId} does not have sufficent funds. The estimate cost is ${estimatedCostJuels} Juels LINK, but has balance of ${linkBalance}`
             )
         }
 
@@ -96,19 +95,19 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
             const { answer } = await LinkUsdFeed.latestRoundData()
             const estimatedCostUsd = estimatedCostJuels.mul(answer)
             console.log(
-                `This request is estimated to cost ${hre.ethers.utils.formatUnits(
+                `If all callback gas is used, this request is estimated to cost ${hre.ethers.utils.formatUnits(
                     estimatedCostJuels,
                     18
                 )} LINK which is equal to $${hre.ethers.utils.formatUnits(estimatedCostUsd, 26)}\n`
             )
-            rl.question("Continue? (Y/N)\n", async function (input) {
+            rl.question("Continue? (Yes/No)\n", async function (input) {
                 if (input.toLowerCase() !== "y" && input.toLowerCase() !== "yes") {
                     rl.close()
                     return resolve()
                 }
 
                 console.log(
-                    "Requesting new data from On Demand API Consumer contract ",
+                    "\nRequesting new data from On Demand API Consumer contract ",
                     contractAddr,
                     " on network ",
                     networkId
@@ -140,13 +139,12 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
                     300_000
                 )
 
-                console.log(requestTxReceipt.events)
                 const requestId = requestTxReceipt.events[2].args.id
                 console.log(`Request ${requestId} initiated`)
 
                 console.log(`Waiting for fulfillment...`)
 
-                apiConsumerContract.on("OCRResponse", (result, err) => {
+                apiConsumerContract.on("OCRResponse", async (result, err) => {
                     console.log(`Request ${requestId} fulfilled!`)
                     if (result !== "0x") {
                         console.log(
@@ -158,7 +156,19 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
                     } else {
                         console.log(`Response error: ${Buffer.from(err.slice(2), "hex")}`)
                     }
-                    resolve()
+                    const eventBillingEnd = registry.filters.BillingEnd(null, requestId)
+                    const event = await registry.queryFilter(eventBillingEnd)
+                    const { totalCost } = event[0].args
+                    console.log(
+                        `Total cost: ${hre.ethers.utils.formatUnits(
+                            totalCost,
+                            18
+                        )} LINK which is equal to $${hre.ethers.utils.formatUnits(
+                            totalCost.mul(answer),
+                            26
+                        )}\n`
+                    )
+                    return resolve()
                 })
             })
         })
