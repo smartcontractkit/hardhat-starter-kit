@@ -58,7 +58,7 @@ const networkConfig = {
 }
 
 const developmentChains = ["hardhat", "localhost"]
-const VERIFICATION_BLOCK_CONFIRMATIONS = 1
+const VERIFICATION_BLOCK_CONFIRMATIONS = 2
 
 module.exports = {
     networkConfig,
