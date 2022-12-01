@@ -23,13 +23,13 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
     .addParam("subid", "The billing subscription ID used to pay for the request")
     .addOptionalParam(
         "gaslimit",
-        "The maximum amount of gas that can be used to fulfill a request (defaults to 500,000)"
+        "The maximum amount of gas that can be used to fulfill a request (defaults to 80,000)"
     )
     .setAction(async (taskArgs, hre) => {
         const contractAddr = taskArgs.contract
         const networkId = network.name
         const subscriptionId = taskArgs.subid
-        const gasLimit = parseInt(taskArgs.gaslimit ?? "500000")
+        const gasLimit = parseInt(taskArgs.gaslimit ?? "80000")
         const networkConfig = getNetworkConfig(network.name)
 
         console.log("Simulating on demand request locally...")
@@ -67,7 +67,7 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
         const APIConsumer = await ethers.getContractFactory("OnDemandAPIConsumer")
         const apiConsumerContract = APIConsumer.attach(contractAddr)
 
-        const estimatedCost = await apiConsumerContract.estimateCost(
+        const estimatedCostJuels = await apiConsumerContract.estimateCost(
             [
                 0, // Inline
                 0, // Inline
@@ -81,14 +81,26 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
             await hre.ethers.provider.getGasPrice()
         )
         const linkBalance = subInfo[0]
-
-        if (subInfo[0].lt(estimatedCost)) {
+        if (subInfo[0].lt(estimatedCostJuels)) {
             throw Error(
                 `Subscription ${subscriptionId} does not have sufficent funds. The estimate cost is ${estimatedCost} Juels LINK, but has balance of ${linkBalance}`
             )
         }
 
         await new Promise(async (resolve, reject) => {
+            const LinkUsdFeed = new ethers.Contract(
+                networkConfig["linkUsdPriceFeed"],
+                (await ethers.getContractFactory("MockV3Aggregator")).interface,
+                await hre.ethers.getSigner()
+            )
+            const { answer } = await LinkUsdFeed.latestRoundData()
+            const estimatedCostUsd = estimatedCostJuels.mul(answer)
+            console.log(
+                `This request is estimated to cost ${hre.ethers.utils.formatUnits(
+                    estimatedCostJuels,
+                    18
+                )} LINK which is equal to $${hre.ethers.utils.formatUnits(estimatedCostUsd, 26)}\n`
+            )
             rl.question("Continue? (Y/N)\n", async function (input) {
                 if (input.toLowerCase() !== "y" && input.toLowerCase() !== "yes") {
                     rl.close()
@@ -125,7 +137,7 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
                         reject(
                             "A response not received within 5 minutes of the request being initiated and has been canceled. Your subscription was not charged. Please make a new request."
                         ),
-                    3000000
+                    300_000
                 )
 
                 console.log(requestTxReceipt.events)

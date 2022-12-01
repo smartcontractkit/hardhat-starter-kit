@@ -31,13 +31,14 @@ const networkConfig = {
         name: "goerli",
         linkToken: "0x326c977e6efc84e512bb9c30f76e30c160ed06fb",
         ethUsdPriceFeed: "0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e",
+        linkUsdPriceFeed: "0x47Db76c9c97F4bcFd54D8872FDb848Cab696092d",
         linkEthPriceFeed: "0xb4c4a493AB6356497713A78FFA6c60FB53517c63", // TODO remove me
         keyHash: "0x79d3d8832d904592c0bf9818b621522c988bb8b0c05cdc3b15aea1b6e8db0c15",
         vrfCoordinator: "0x2Ca8E0C643bDe4C2E08ab1fA0da3401AdAD7734D",
         oracle: "0xCC79157eb46F5624204f47AB42b3906cAA40eaB7",
-        ocr2odOracle: "0x8c9dF784147d960d46cca47190Dac9E9eA8061AD",
-        ocr2odOracleFactory: "0xBF66f81EDAA29c1e90b759c5946BF0FA1d40B1f8",
-        ocr2odOracleRegistry: "0x8204f48603933Fb3F4C870228709AB20b0683077",
+        ocr2odOracle: "0xd0528DE4B33789d8Cc9E9899FDC865ec551BBdF3",
+        ocr2odOracleFactory: "0xC40FC9E093689Ff0ccdaF68f7E60343816317Dff",
+        ocr2odOracleRegistry: "0x05baaf8e004b5800A36FfB74753491f6d3aFC49E",
         OCR2ODMockPublicKey:
             "971f006163a12ee3383a00d7743334480d6b1c83fdf60497e0c520b16d1a4ee421cc61375679b63466156fee6f2f1da5a7e630ba0b1cddb2704ef907ead223db", // TODO remove me
         jobId: "ca98366cc7314957b8c012c72f05aeeb",
