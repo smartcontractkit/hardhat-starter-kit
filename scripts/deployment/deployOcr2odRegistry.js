@@ -2,7 +2,7 @@ const { ethers, network, run } = require("hardhat")
 const {
     VERIFICATION_BLOCK_CONFIRMATIONS,
     developmentChains,
-    networkConfig
+    networkConfig,
 } = require("../../helper-hardhat-config")
 
 const config = {
