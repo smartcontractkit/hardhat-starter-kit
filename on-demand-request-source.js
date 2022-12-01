@@ -5,6 +5,10 @@ const badApiCoinId = args[3];
 
 const scalingFactor = parseInt(args[4]);
 
+if (!secrets.apiKey) {
+  throw Error('API_KEY environment variable not set for CoinMarketCap API.  Get a free key from https://coinmarketcap.com/api/')
+}
+
 // OCR2DR.makeHttpRequest function parameters:
 // - url
 // - method (optional, defaults to 'GET')
