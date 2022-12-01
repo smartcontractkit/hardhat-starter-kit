@@ -60,8 +60,7 @@ if (!coinPaprikaResponse.error) {
 if (!badApiResponse.error) {
   prices.push(httpResponses[3].data.price.usd);
 } else {
-  console.log('Bad API Error');
-  console.log({ ...badApiResponse });
+  console.log('Bad API request failed. (This message is expected and just for demonstration purposes.)')
 }
   
 // At least 3 prices are needed to aggregate the median price
