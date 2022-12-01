@@ -92,9 +92,7 @@ async function deployOnDemandApiConsumer(chainId = network.config.chainId) {
 
     const apiConsumerFactory = await ethers.getContractFactory("OnDemandAPIConsumer")
 
-    console.log(
-        `Deploying OnDemandAPIConsumer contract to ${network.name} using oracle address ${oracleAddress}`
-    )
+    console.log('Deploying OnDemandAPIConsumer contract')
     const apiConsumer = await apiConsumerFactory.deploy(oracleAddress)
 
     const waitBlockConfirmations = developmentChains.includes(network.name)

@@ -8,7 +8,7 @@ task(
     "on-demand-transfer-sub",
     "Accepts ownership of an On-Demand subscription after a a transfer is requested"
 )
-    .addParam("subid", "Subscripton ID")
+    .addParam("subid", "Subscription ID")
     .addParam("newowner", "Address of the new owner")
     .setAction(async (taskArgs) => {
         const networkConfig = getNetworkConfig(network.name)

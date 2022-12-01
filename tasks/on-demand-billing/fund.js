@@ -6,7 +6,7 @@ const {
 
 task("on-demand-fund-sub", "Funds a billing subscription for On-Demand Consumer contracts")
     .addParam("amount", "Amount to fund subscription in LINK")
-    .addParam("subid", "Subscripton ID to fund")
+    .addParam("subid", "Subscription ID to fund")
     .setAction(async (taskArgs) => {
         const networkConfig = getNetworkConfig(network.name)
 

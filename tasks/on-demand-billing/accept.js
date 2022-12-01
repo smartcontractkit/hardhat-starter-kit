@@ -9,7 +9,7 @@ task(
     'Request ownership of an On-Demand subscription be transferred to a new address'
 ).addParam(
     "subid",
-    "Subscripton ID"
+    "Subscription ID"
 ).setAction(async (taskArgs) => {
     const networkConfig = getNetworkConfig(network.name)
 
