@@ -1,4 +1,4 @@
-const EthCrypto = require("eth-crypto")
+const EthCrypto = require('eth-crypto')
 
 const generateKeys = () => {
     const { publicKey, privateKey } = EthCrypto.createIdentity()

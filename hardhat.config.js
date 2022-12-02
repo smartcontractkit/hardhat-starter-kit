@@ -1,26 +1,25 @@
-const ethers = require("ethers")
-const { networkConfig } = require("./helper-hardhat-config")
-require("@nomicfoundation/hardhat-toolbox")
-require("hardhat-contract-sizer")
-require("./tasks")
-require("dotenv").config()
+const ethers = require('ethers')
+const { networkConfig } = require('./helper-hardhat-config')
+require('@nomicfoundation/hardhat-toolbox')
+require('hardhat-contract-sizer')
+require('./tasks')
+require('dotenv').config()
 
 const MAINNET_RPC_URL =
     process.env.MAINNET_RPC_URL ||
     process.env.ALCHEMY_MAINNET_RPC_URL ||
-    "https://eth-mainnet.alchemyapi.io/v2/your-api-key"
+    'https://eth-mainnet.alchemyapi.io/v2/your-api-key'
 const POLYGON_MAINNET_RPC_URL =
-    process.env.POLYGON_MAINNET_RPC_URL || "https://polygon-mainnet.alchemyapi.io/v2/your-api-key"
-const GOERLI_RPC_URL =
-    process.env.GOERLI_RPC_URL || "https://eth-goerli.alchemyapi.io/v2/your-api-key"
+    process.env.POLYGON_MAINNET_RPC_URL || 'https://polygon-mainnet.alchemyapi.io/v2/your-api-key'
+const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL || 'https://eth-goerli.alchemyapi.io/v2/your-api-key'
 const PRIVATE_KEY = process.env.PRIVATE_KEY
 // optional
-const MNEMONIC = process.env.MNEMONIC || "Your mnemonic"
+const MNEMONIC = process.env.MNEMONIC || 'Your mnemonic'
 const FORKING_BLOCK_NUMBER = process.env.FORKING_BLOCK_NUMBER
 
 // Your API key for Etherscan, obtain one at https://etherscan.io/
-const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "Your etherscan API key"
-const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY || "Your polygonscan API key"
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || 'Your etherscan API key'
+const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY || 'Your polygonscan API key'
 const REPORT_GAS = process.env.REPORT_GAS || false
 
 /** @type import('hardhat/config').HardhatUserConfig */
@@ -28,7 +27,7 @@ module.exports = {
     solidity: {
         compilers: [
             {
-                version: "0.8.7",
+                version: '0.8.7',
                 settings: {
                     optimizer: {
                         enabled: true,
@@ -37,7 +36,7 @@ module.exports = {
                 },
             },
             {
-                version: "0.6.6",
+                version: '0.6.6',
                 settings: {
                     optimizer: {
                         enabled: true,
@@ -46,7 +45,7 @@ module.exports = {
                 },
             },
             {
-                version: "0.4.24",
+                version: '0.4.24',
                 settings: {
                     optimizer: {
                         enabled: true,
@@ -59,7 +58,7 @@ module.exports = {
     networks: {
         hardhat: {
             allowUnlimitedContractSize: true,
-            hardfork: "merge",
+            hardfork: 'merge',
             // If you want to do some forking set `enabled` to true
             forking: {
                 url: MAINNET_RPC_URL,
@@ -69,9 +68,8 @@ module.exports = {
             chainId: 31337,
             accounts: [
                 {
-                    privateKey: ethers.Wallet.fromMnemonic(networkConfig[31337].deployerMnemonic)
-                        .privateKey,
-                    balance: "10000000000000000000000",
+                    privateKey: ethers.Wallet.fromMnemonic(networkConfig[31337].deployerMnemonic).privateKey,
+                    balance: '10000000000000000000000',
                 },
             ],
         },
@@ -100,7 +98,7 @@ module.exports = {
             chainId: 137,
         },
     },
-    defaultNetwork: "goerli",
+    defaultNetwork: 'goerli',
     etherscan: {
         // yarn hardhat verify --network <NETWORK> <CONTRACT_ADDRESS> <CONSTRUCTOR_PARAMETERS>
         apiKey: {
@@ -110,27 +108,27 @@ module.exports = {
     },
     gasReporter: {
         enabled: REPORT_GAS,
-        currency: "USD",
-        outputFile: "gas-report.txt",
+        currency: 'USD',
+        outputFile: 'gas-report.txt',
         noColors: true,
         // coinmarketcap: process.env.COINMARKETCAP_API_KEY,
     },
     contractSizer: {
         runOnCompile: true,
         only: [
-            "APIConsumer",
-            "AutomationCounter",
-            "NFTFloorPriceConsumerV3",
-            "PriceConsumerV3",
-            "RandomNumberConsumerV2",
-            "OCR2DRRegistry",
+            'APIConsumer',
+            'AutomationCounter',
+            'NFTFloorPriceConsumerV3',
+            'PriceConsumerV3',
+            'RandomNumberConsumerV2',
+            'OCR2DRRegistry',
         ],
     },
     paths: {
-        sources: "./contracts",
-        tests: "./test",
-        cache: "./build/cache",
-        artifacts: "./build/artifacts",
+        sources: './contracts',
+        tests: './test',
+        cache: './build/cache',
+        artifacts: './build/artifacts',
     },
     mocha: {
         timeout: 200000, // 200 seconds max for running tests

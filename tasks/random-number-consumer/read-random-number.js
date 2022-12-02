@@ -1,37 +1,27 @@
-task("read-random-number", "Reads the random number returned to a contract by Chainlink VRF")
-    .addParam("contract", "The address of the VRF contract that you want to read")
+task('read-random-number', 'Reads the random number returned to a contract by Chainlink VRF')
+    .addParam('contract', 'The address of the VRF contract that you want to read')
     .setAction(async (taskArgs) => {
         const contractAddr = taskArgs.contract
         const networkId = network.name
-        console.log("Reading data from VRF contract ", contractAddr, " on network ", networkId)
-        const RandomNumberConsumerV2 = await ethers.getContractFactory("RandomNumberConsumerV2")
+        console.log('Reading data from VRF contract ', contractAddr, ' on network ', networkId)
+        const RandomNumberConsumerV2 = await ethers.getContractFactory('RandomNumberConsumerV2')
 
         //Get signer information
         const accounts = await hre.ethers.getSigners()
         const signer = accounts[0]
 
         //Create connection to VRF Contract and check for returned random values
-        const vrfConsumerContractV2 = new ethers.Contract(
-            contractAddr,
-            RandomNumberConsumerV2.interface,
-            signer
-        )
+        const vrfConsumerContractV2 = new ethers.Contract(contractAddr, RandomNumberConsumerV2.interface, signer)
 
         try {
             const firstRandomNumber = await vrfConsumerContractV2.s_randomWords(0)
             const secondRandomNumber = await vrfConsumerContractV2.s_randomWords(1)
-            console.log(
-                `Random Numbers are: ${firstRandomNumber.toString()} and ${secondRandomNumber.toString()}`
-            )
+            console.log(`Random Numbers are: ${firstRandomNumber.toString()} and ${secondRandomNumber.toString()}`)
         } catch (error) {
-            if (["hardhat", "localhost", "ganache"].includes(network.name)) {
-                console.log(
-                    "You'll have to manually update the value since you're on a local chain!"
-                )
+            if (['hardhat', 'localhost', 'ganache'].includes(network.name)) {
+                console.log("You'll have to manually update the value since you're on a local chain!")
             } else {
-                console.log(
-                    `Visit https://vrf.chain.link/ and make sure that your last request fulfillment is there`
-                )
+                console.log(`Visit https://vrf.chain.link/ and make sure that your last request fulfillment is there`)
             }
         }
     })

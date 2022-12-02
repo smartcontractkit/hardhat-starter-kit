@@ -1,1 +1,1 @@
-exports.readCounter = require("./read-automation-counter.js")
+exports.readCounter = require('./read-automation-counter.js')

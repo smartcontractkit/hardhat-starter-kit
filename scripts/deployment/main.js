@@ -4,20 +4,20 @@
 // You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
-const { network, run } = require("hardhat")
+const { network, run } = require('hardhat')
 
-const { deployApiConsumer } = require("./deployApiConsumer")
-const { deployAutomatedApiConsumer } = require("./deployAutomatedApiConsumer")
-const { deployOnDemandApiConsumer } = require("./deployOnDemandApiConsumer")
-const { deployOcr2odRegistry } = require("./deployOcr2odRegistry")
-const { deployOcr2odOracle } = require("./deployOcr2odOracle")
-const { deployOcr2odOracleFactory } = require("./deployOcr2odOracleFactory")
-const { deployAutomationCounter } = require("./deployAutomationCounter")
-const { deployPriceConsumerV3 } = require("./deployPriceConsumerV3")
-const { deployRandomNumberConsumer } = require("./deployRandomNumberConsumer")
+const { deployApiConsumer } = require('./deployApiConsumer')
+const { deployAutomatedApiConsumer } = require('./deployAutomatedApiConsumer')
+const { deployOnDemandApiConsumer } = require('./deployOnDemandApiConsumer')
+const { deployOcr2odRegistry } = require('./deployOcr2odRegistry')
+const { deployOcr2odOracle } = require('./deployOcr2odOracle')
+const { deployOcr2odOracleFactory } = require('./deployOcr2odOracleFactory')
+const { deployAutomationCounter } = require('./deployAutomationCounter')
+const { deployPriceConsumerV3 } = require('./deployPriceConsumerV3')
+const { deployRandomNumberConsumer } = require('./deployRandomNumberConsumer')
 
 async function main() {
-    await run("compile")
+    await run('compile')
     const chainId = network.config.chainId
     // await deployApiConsumer(chainId)
     // await deployAutomatedApiConsumer(chainId)
