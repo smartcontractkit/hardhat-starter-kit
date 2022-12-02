@@ -1,14 +1,12 @@
-const coinMarketCapCoinId = args[0]
-const coinGeckoCoinId = args[1]
-const coinPaprikaCoinId = args[2]
-const badApiCoinId = args[3]
+const coinMarketCapCoinId = args[0];
+const coinGeckoCoinId = args[1];
+const coinPaprikaCoinId = args[2];
+const badApiCoinId = args[3];
 
-const scalingFactor = parseInt(args[4])
+const scalingFactor = parseInt(args[4]);
 
 if (!secrets.apiKey) {
-    throw Error(
-        'API_KEY environment variable not set for CoinMarketCap API.  Get a free key from https://coinmarketcap.com/api/'
-    )
+  throw Error('API_KEY environment variable not set for CoinMarketCap API.  Get a free key from https://coinmarketcap.com/api/')
 }
 
 // OCR2DR.makeHttpRequest function parameters:
@@ -22,60 +20,61 @@ if (!secrets.apiKey) {
 
 // Use multiple APIs & aggregate the results to enhance decentralization
 const coinMarketCapResponse = await OCR2DR.makeHttpRequest({
-    url: `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?convert=USD&id=${coinMarketCapCoinId}`,
-    // Get a free API key from https://coinmarketcap.com/api/
-    headers: { 'X-CMC_PRO_API_KEY': secrets.apiKey },
-})
+  url: `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?convert=USD&id=${coinMarketCapCoinId}`,
+  // Get a free API key from https://coinmarketcap.com/api/
+  headers: { 'X-CMC_PRO_API_KEY': secrets.apiKey }
+});
 const coinGeckoResponse = await OCR2DR.makeHttpRequest({
-    url: `https://api.coingecko.com/api/v3/simple/price?ids=${coinGeckoCoinId}&vs_currencies=usd`,
-})
+  url: `https://api.coingecko.com/api/v3/simple/price?ids=${coinGeckoCoinId}&vs_currencies=usd`,
+});
 const coinPaprikaResponse = await OCR2DR.makeHttpRequest({
-    url: `https://api.coinpaprika.com/v1/tickers/${coinPaprikaCoinId}`,
-})
+  url: `https://api.coinpaprika.com/v1/tickers/${coinPaprikaCoinId}`
+});
 const badApiResponse = await OCR2DR.makeHttpRequest({
-    url: `https://badapi.com/price/symbol/${badApiCoinId}`,
-})
+  url: `https://badapi.com/price/symbol/${badApiCoinId}`
+});
 
-const prices = []
+const prices = [];
 
 if (!coinMarketCapResponse.error) {
-    prices.push(coinMarketCapResponse.data.data[coinMarketCapCoinId].quote.USD.price)
-} else {
-    console.log('CoinMarketCap Error')
-    console.log({ ...coinMarketCapResponse })
+  prices.push(coinMarketCapResponse.data.data[coinMarketCapCoinId].quote.USD.price);
+}
+else {
+  console.log('CoinMarketCap Error');
+  console.log({ ...coinMarketCapResponse });
 }
 if (!coinGeckoResponse.error) {
-    prices.push(coinGeckoResponse.data[coinGeckoCoinId].usd)
+  prices.push(coinGeckoResponse.data[coinGeckoCoinId].usd);
 } else {
-    console.log('CoinGecko Error')
-    console.log({ ...coinGeckoResponse })
+  console.log('CoinGecko Error');
+  console.log({ ...coinGeckoResponse });
 }
 if (!coinPaprikaResponse.error) {
-    prices.push(coinPaprikaResponse.data.quotes.USD.price)
+  prices.push(coinPaprikaResponse.data.quotes.USD.price);
 } else {
-    console.log('CoinPaprika Error')
-    console.log({ ...coinPaprikaResponse })
+  console.log('CoinPaprika Error');
+  console.log({ ...coinPaprikaResponse });
 }
-
+  
 // A single failed API request does not cause the whole request to fail
 if (!badApiResponse.error) {
-    prices.push(httpResponses[3].data.price.usd)
+  prices.push(httpResponses[3].data.price.usd);
 } else {
-    console.log('Bad API request failed. (This message is expected and just for demonstration purposes.)')
+  console.log('Bad API request failed. (This message is expected and just for demonstration purposes.)')
 }
-
+  
 // At least 3 prices are needed to aggregate the median price
 if (prices.length < 3) {
-    // If an error is thrown, it will be returned back to the smart contract
-    throw Error('More than 1 API failed')
+  // If an error is thrown, it will be returned back to the smart contract
+  throw Error('More than 1 API failed');
 }
 
-const medianPrice = prices.sort((a, b) => a - b)[Math.round(prices.length / 2)]
-console.log(`Median Bitcoin price: $${medianPrice.toFixed(2)}`)
+const medianPrice = prices.sort((a, b) => a - b)[Math.round(prices.length / 2)];
+console.log(`Median Bitcoin price: $${medianPrice.toFixed(2)}`);
 
 // Use the following functions to encode a single value:
 // - OCR2DR.encodeUint256
 // - OCR2DR.encodeInt256
 // - OCR2DR.encodeString
 // Or return a Buffer for a custom byte encoding
-return OCR2DR.encodeUint256(Math.round(medianPrice * 100))
+return OCR2DR.encodeUint256(Math.round(medianPrice * 100));

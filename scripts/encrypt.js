@@ -1,4 +1,4 @@
-const EthCrypto = require('eth-crypto')
+const EthCrypto = require("eth-crypto")
 
 const encrypt = async (signerPrivateKey, readerPublicKey, message) => {
     const signature = EthCrypto.sign(signerPrivateKey, EthCrypto.hash.keccak256(message))

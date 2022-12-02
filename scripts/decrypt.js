@@ -1,4 +1,4 @@
-const EthCrypto = require('eth-crypto')
+const EthCrypto = require("eth-crypto")
 
 const decrypt = async (privateKey, encryptedString) => {
     // we parse the string into the object again
@@ -13,7 +13,7 @@ const decrypt = async (privateKey, encryptedString) => {
         EthCrypto.hash.keccak256(decryptedPayload.message)
     )
 
-    console.log('Got message from ' + senderAddress + ': ' + decryptedPayload.message)
+    console.log("Got message from " + senderAddress + ": " + decryptedPayload.message)
     return { message: decryptedPayload.message, sender: senderAddress }
 }
 

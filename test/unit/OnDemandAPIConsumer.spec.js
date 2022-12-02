@@ -1,20 +1,22 @@
-const { assert, expect } = require('chai')
-const { loadFixture } = require('@nomicfoundation/hardhat-network-helpers')
-const { network, ethers } = require('hardhat')
-const { developmentChains, networkConfig } = require('../../helper-hardhat-config')
-const { deployOnDemandApiConsumer } = require('../../scripts/deployment/deployOnDemandApiConsumer')
-const { encrypt } = require('../../scripts/encrypt')
-const { decrypt } = require('../../scripts/decrypt')
+const { assert, expect } = require("chai")
+const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers")
+const { network, ethers } = require("hardhat")
+const { developmentChains, networkConfig } = require("../../helper-hardhat-config")
+const { deployOnDemandApiConsumer } = require("../../scripts/deployment/deployOnDemandApiConsumer")
+const { encrypt } = require("../../scripts/encrypt")
+const { decrypt } = require("../../scripts/decrypt")
 
 !developmentChains.includes(network.name)
     ? describe.skip
-    : describe('On Demand API Consumer Unit Tests', async function () {
+    : describe("On Demand API Consumer Unit Tests", async function () {
           // We define a fixture to reuse the same setup in every test.
           // We use loadFixture to run this setup once, snapshot that state,
           // and reset Hardhat Network to that snapshot in every test.
 
-          it('should be able to estimate the cost of a request', async () => {
-              const { apiConsumer, mockOracle, subscriptionId } = await loadFixture(deployOnDemandApiConsumer)
+          it("should be able to estimate the cost of a request", async () => {
+              const { apiConsumer, mockOracle, subscriptionId } = await loadFixture(
+                  deployOnDemandApiConsumer
+              )
               //   Consumer calls executeRequest
               const source = `function run(args, queryResponses) {
                   const avgPrice = (queryResponses[0].data.price + queryResponses[1].data.price) / 2;
