@@ -4,7 +4,7 @@ const {
     developmentChains,
 } = require("../../helper-hardhat-config")
 
-task("on-demand-remove-consumer", "Adds a client contract to the On-Demand billing subscription")
+task("on-demand-sub-remove-consumer", "Adds a client contract to the On-Demand billing subscription")
     .addParam("subid", "Subscription ID")
     .addParam(
         "consumer",

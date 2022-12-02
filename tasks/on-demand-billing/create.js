@@ -4,7 +4,7 @@ const {
     developmentChains,
 } = require("../../helper-hardhat-config")
 
-task("on-demand-create-sub", "Creates a new billing subscription for On-Demand Consumer contracts")
+task("on-demand-sub-create", "Creates a new billing subscription for On-Demand Consumer contracts")
     .addOptionalParam("amount", "Inital amount used to fund the subscription in LINK")
     .addOptionalParam("consumer", "Inital On-Demand client address to add to subscription")
     .setAction(async (taskArgs) => {
@@ -31,6 +31,7 @@ task("on-demand-create-sub", "Creates a new billing subscription for On-Demand C
         )
 
         const subscriptionId = createSubscriptionReceipt.events[0].args["subscriptionId"].toNumber()
+
         console.log(`Subscription created with ID: ${subscriptionId}`)
 
         if (linkAmount) {
@@ -90,4 +91,15 @@ task("on-demand-create-sub", "Creates a new billing subscription for On-Demand C
 
             console.log(`Authorized consumer contract: ${consumer}`)
         }
+
+        const subInfo = await registry.getSubscription(subscriptionId)
+        console.log(`Subscription ID: ${subscriptionId}`)
+        console.log(`Owner: ${subInfo[1]}`)
+        console.log(`Balance: ${ethers.utils.formatEther(subInfo[0])} LINK`)
+        console.log(
+            `${subInfo[2].length} authorized consumer contract${
+                subInfo[2].length === 1 ? "" : "s"
+            }:`
+        )
+        console.log(subInfo[2])
     })

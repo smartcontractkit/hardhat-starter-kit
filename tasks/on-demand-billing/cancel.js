@@ -4,7 +4,7 @@ const {
     developmentChains,
 } = require("../../helper-hardhat-config")
 
-task("on-demand-cancel-sub", "Cancels On-Demand billing subscription")
+task("on-demand-sub-cancel", "Cancels On-Demand billing subscription")
     .addParam("subid", "Subscription ID")
     .addOptionalParam(
         "refundaddress",

@@ -4,7 +4,7 @@ const {
     developmentChains,
 } = require("../../helper-hardhat-config")
 
-task("on-demand-fund-sub", "Funds a billing subscription for On-Demand Consumer contracts")
+task("on-demand-sub-fund", "Funds a billing subscription for On-Demand Consumer contracts")
     .addParam("amount", "Amount to fund subscription in LINK")
     .addParam("subid", "Subscription ID to fund")
     .setAction(async (taskArgs) => {

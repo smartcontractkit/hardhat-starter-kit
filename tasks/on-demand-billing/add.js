@@ -4,7 +4,7 @@ const {
     developmentChains,
 } = require("../../helper-hardhat-config")
 
-task("on-demand-add-consumer", "Adds a client contract to the On-Demand billing subscription")
+task("on-demand-sub-add-consumer", "Adds a client contract to the On-Demand billing subscription")
     .addParam("subid", "Subscription ID")
     .addParam("consumer", "Address of the On-Demand client contract to authorize for billing")
     .setAction(async (taskArgs) => {

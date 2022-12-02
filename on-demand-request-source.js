@@ -5,6 +5,10 @@ const badApiCoinId = args[3];
 
 const scalingFactor = parseInt(args[4]);
 
+if (!secrets.apiKey) {
+  throw Error('API_KEY environment variable not set for CoinMarketCap API.  Get a free key from https://coinmarketcap.com/api/')
+}
+
 // OCR2DR.makeHttpRequest function parameters:
 // - url
 // - method (optional, defaults to 'GET')
@@ -56,8 +60,7 @@ if (!coinPaprikaResponse.error) {
 if (!badApiResponse.error) {
   prices.push(httpResponses[3].data.price.usd);
 } else {
-  console.log('Bad API Error');
-  console.log({ ...badApiResponse });
+  console.log('Bad API request failed. (This message is expected and just for demonstration purposes.)')
 }
   
 // At least 3 prices are needed to aggregate the median price
