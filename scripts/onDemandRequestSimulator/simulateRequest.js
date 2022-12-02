@@ -57,7 +57,7 @@ const getDecodedResultLog = (config, successResult) => {
                 const end = config.expectedReturnType;
                 throw new Error(`unused expectedReturnType ${end}`);
         }
-        const decodedOutputLog = `Decoded as a ${config.expectedReturnType}: ${decodedOutput}\n`;
+        const decodedOutputLog = `Decoded as a ${config.expectedReturnType}: ${decodedOutput}`;
         resultLog += decodedOutputLog;
     }
     return resultLog;

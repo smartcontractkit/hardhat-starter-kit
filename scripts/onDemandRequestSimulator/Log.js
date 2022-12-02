@@ -49,7 +49,7 @@ Log.trace = (message, requestId) => {
     }
 };
 const secretsRedactorFactory = (secrets) => {
-    const secretsToRedact = Array.from(new Set(getSecretsToRedact(secrets))).filter(s => s !== '<REDACTED SECRET>');
+    const secretsToRedact = Array.from(new Set(getSecretsToRedact(secrets))).filter((s) => s !== '<REDACTED SECRET>');
     return function secretsRedactor(data) {
         if (typeof data === 'number') {
             for (const secret of secretsToRedact) {
@@ -79,6 +79,7 @@ const secretsRedactorFactory = (secrets) => {
             // Make a copy to avoid modifying the original object
             const newData = { ...data };
             for (const key in newData) {
+                ;
                 newData[key] = secretsRedactor(newData[key]);
             }
             return newData;

@@ -15,7 +15,7 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
     .addParam("subid", "The billing subscription ID used to pay for the request")
     .addOptionalParam(
         "gaslimit",
-        "The maximum amount of gas that can be used to fulfill a request (defaults to 80,000)"
+        "The maximum amount of gas that can be used to fulfill a request (defaults to 100,000)"
     )
     .setAction(async (taskArgs, hre) => {
         const networkConfig = getNetworkConfig(network.name)
@@ -31,6 +31,10 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
         const networkId = network.name
         const subscriptionId = taskArgs.subid
         const gasLimit = parseInt(taskArgs.gaslimit ?? "100000")
+
+        if (gasLimit >= 400000) {
+            throw Error("Gas limit must be less than 400,000")
+        }
 
         console.log("Simulating on demand request locally...")
 
@@ -106,7 +110,7 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
                     rl.close()
                     return resolve()
                 }
-                rl.pause()
+                rl.close()
 
                 console.log(
                     "\nRequesting new data from On Demand API Consumer contract ",
