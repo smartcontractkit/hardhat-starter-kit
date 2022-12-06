@@ -323,7 +323,7 @@ The VRFConsumer contract has two tasks, one to request a random number, and one 
 ```javascript
 5: {
     // rest of the config
-    subscriptionId = "777"
+    subscriptionId: "777"
 }
 ```
 
