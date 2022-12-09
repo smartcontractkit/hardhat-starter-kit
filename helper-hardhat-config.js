@@ -36,9 +36,9 @@ const networkConfig = {
         keyHash: "0x79d3d8832d904592c0bf9818b621522c988bb8b0c05cdc3b15aea1b6e8db0c15",
         vrfCoordinator: "0x2Ca8E0C643bDe4C2E08ab1fA0da3401AdAD7734D",
         oracle: "0xCC79157eb46F5624204f47AB42b3906cAA40eaB7",
-        ocr2odOracle: "0xd0528DE4B33789d8Cc9E9899FDC865ec551BBdF3",
-        ocr2odOracleFactory: "0xC40FC9E093689Ff0ccdaF68f7E60343816317Dff",
-        ocr2odOracleRegistry: "0x05baaf8e004b5800A36FfB74753491f6d3aFC49E",
+        ocr2odOracle: "0xBAE17CF0694dF955F715D2eDC6cF0C86246Ed7Af",
+        ocr2odOracleFactory: "0x5b2E2a078c6CF99c7Aa61555034CaD28cA08a54f",
+        ocr2odOracleRegistry: "0x70511301892257bbD0071043E41385dF40Cd99f5",
         OCR2ODMockPublicKey:
             "971f006163a12ee3383a00d7743334480d6b1c83fdf60497e0c520b16d1a4ee421cc61375679b63466156fee6f2f1da5a7e630ba0b1cddb2704ef907ead223db", // TODO remove me
         jobId: "ca98366cc7314957b8c012c72f05aeeb",

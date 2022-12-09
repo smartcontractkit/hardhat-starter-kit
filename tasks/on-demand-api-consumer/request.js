@@ -176,7 +176,15 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
                     )
                     return resolve()
                 })
+
+                oracleContract.on("UserCallbackError", async (eventRequestId, msg) => {
+                    console.log('Error in client contract callback function')
+                })
             })
         })
     })
 module.exports = {}
+
+const eventListenerActions = ({ resolve, requestId, oracleContract, apiConsumerContract }) => {
+
+}

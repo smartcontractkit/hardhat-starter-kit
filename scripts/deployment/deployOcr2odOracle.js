@@ -53,12 +53,12 @@ async function deployOcr2odOracle(chainId = network.config.chainId) {
     const ocrConfig = require("../../OCR2DROracleConfig.json")
     console.log("Setting oracle OCR config")
     const setConfigTx = await oracle.setConfig(
-        ocrConfig.Signers,
-        ocrConfig.Transmitters,
-        ocrConfig.F,
-        ocrConfig.OnchainConfig,
-        ocrConfig.OffchainConfigVersion,
-        ocrConfig.OffchainConfig
+        ocrConfig.signers,
+        ocrConfig.transmitters,
+        ocrConfig.f,
+        ocrConfig.onchainConfig,
+        ocrConfig.offchainConfigVersion,
+        ocrConfig.offchainConfig
     )
     console.log(`Waiting for transaction ${setConfigTx.hash} to be confirmed...`)
     await setConfigTx.wait(1)
