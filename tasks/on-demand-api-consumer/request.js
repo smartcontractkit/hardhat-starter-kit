@@ -25,7 +25,7 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
         const oracleAddress = networkConfig["ocr2odOracle"]
         const OracleFactory = await ethers.getContractFactory("OCR2DROracle")
         const oracleContract = OracleFactory.attach(oracleAddress)
-        const registryAddress = oracleContract.getRegistry()
+        const registryAddress = await oracleContract.getRegistry()
         const RegistryFactory = await ethers.getContractFactory("OCR2DRRegistry")
         const registry = await RegistryFactory.attach(registryAddress)
         const networkId = network.name
@@ -159,21 +159,23 @@ task("on-demand-request", "Calls an On Demand API consumer contract to request e
                                 result
                             )}`
                         )
-                    } else {
+                    } if (err !== "0x") {
                         console.log(`\nResponse error: ${Buffer.from(err.slice(2), "hex")}\n`)
                     }
-                    const eventBillingEnd = registry.filters.BillingEnd(null, requestId)
-                    const event = await registry.queryFilter(eventBillingEnd)
-                    const { totalCost } = event[0].args
-                    console.log(
-                        `Total cost: ${hre.ethers.utils.formatUnits(
-                            totalCost,
-                            18
-                        )} LINK which is equal to $${hre.ethers.utils.formatUnits(
-                            totalCost.mul(answer),
-                            26
-                        )}\n`
-                    )
+                    try {
+                        const eventBillingEnd = registry.filters.BillingEnd(null, requestId)
+                        const event = await registry.queryFilter(eventBillingEnd)
+                        const { totalCost } = event[0].args
+                        console.log(
+                            `Total cost: ${hre.ethers.utils.formatUnits(
+                                totalCost,
+                                18
+                            )} LINK which is equal to $${hre.ethers.utils.formatUnits(
+                                totalCost.mul(answer),
+                                26
+                            )}\n`
+                        )
+                    } catch {}
                     return resolve()
                 })
 
