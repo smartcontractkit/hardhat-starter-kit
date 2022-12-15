@@ -10,9 +10,11 @@ import "@chainlink/contracts/src/v0.8/interfaces/ERC677ReceiverInterface.sol";
 import "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
 import "./AuthorizedReceiver.sol";
 import "./vendor/openzeppelin-solidity/v.4.8.0/contracts/utils/SafeCast.sol";
+import "./vendor/openzeppelin-solidity/v.4.8.0/contracts/security/Pausable.sol";
 
 contract OCR2DRRegistry is
     ConfirmedOwner,
+    Pausable,
     OCR2DRRegistryInterface,
     ERC677ReceiverInterface,
     AuthorizedReceiver
@@ -42,7 +44,8 @@ contract OCR2DRRegistry is
 
     struct Subscription {
         // There are only 1e9*1e18 = 1e27 juels in existence, so the balance can fit in uint96 (2^96 ~ 7e28)
-        uint96 balance; // Common link balance used for all consumer requests.
+        uint96 balance; // Common LINK balance that is controlled by the Registry to be used for all consumer requests.
+        uint96 blockedBalance; // LINK balance that is reserved to pay for pending consumer requests.
     }
     // We use the config for the mgmt APIs
     struct SubscriptionConfig {
@@ -113,9 +116,12 @@ contract OCR2DRRegistry is
         uint64 subscriptionId;
         address client;
         uint32 gasLimit;
+        uint256 gasPrice;
         address don;
         uint96 donFee;
         uint96 registryFee;
+        uint96 estimatedCost;
+        uint256 timestamp;
     }
     mapping(bytes32 => Commitment) /* requestID */ /* Commitment */
         private s_requestCommitments;
@@ -133,8 +139,10 @@ contract OCR2DRRegistry is
         uint96 totalCost,
         bool success
     );
+    event RequestTimedOut(bytes32 indexed requestId);
 
     struct Config {
+        // Maxiumum amount of gas that can be given to a request's client callback
         uint32 maxGasLimit;
         // Reentrancy protection.
         bool reentrancyLock;
@@ -146,6 +154,8 @@ contract OCR2DRRegistry is
         uint256 gasAfterPaymentCalculation;
         // Represents the average gas execution cost. Used in estimating cost beforehand.
         uint32 gasOverhead;
+        // how many seconds it takes before we consider a request to be timed out
+        uint32 requestTimeoutSeconds;
     }
     int256 private s_fallbackWeiPerUnitLink;
     Config private s_config;
@@ -169,13 +179,15 @@ contract OCR2DRRegistry is
      * @param gasAfterPaymentCalculation gas used in doing accounting after completing the gas measurement
      * @param fallbackWeiPerUnitLink fallback eth/link price in the case of a stale feed
      * @param gasOverhead fallback eth/link price in the case of a stale feed
+     * @param requestTimeoutSeconds fallback eth/link price in the case of a stale feed
      */
     function setConfig(
         uint32 maxGasLimit,
         uint32 stalenessSeconds,
         uint256 gasAfterPaymentCalculation,
         int256 fallbackWeiPerUnitLink,
-        uint32 gasOverhead
+        uint32 gasOverhead,
+        uint32 requestTimeoutSeconds
     ) external onlyOwner {
         if (fallbackWeiPerUnitLink <= 0) {
             revert InvalidLinkWeiPrice(fallbackWeiPerUnitLink);
@@ -185,7 +197,8 @@ contract OCR2DRRegistry is
             stalenessSeconds: stalenessSeconds,
             gasAfterPaymentCalculation: gasAfterPaymentCalculation,
             reentrancyLock: false,
-            gasOverhead: gasOverhead
+            gasOverhead: gasOverhead,
+            requestTimeoutSeconds: requestTimeoutSeconds
         });
         s_fallbackWeiPerUnitLink = fallbackWeiPerUnitLink;
         emit ConfigSet(
@@ -223,6 +236,14 @@ contract OCR2DRRegistry is
             s_fallbackWeiPerUnitLink,
             s_config.gasOverhead
         );
+    }
+
+    function pause() external onlyOwner {
+        _pause();
+    }
+
+    function unpause() external onlyOwner {
+        _unpause();
     }
 
     function getTotalBalance() external view returns (uint256) {
@@ -287,9 +308,10 @@ contract OCR2DRRegistry is
      * @inheritdoc OCR2DRRegistryInterface
      */
     function estimateCost(
-        bytes calldata data,
-        OCR2DRRegistryInterface.RequestBilling memory billing,
-        uint96 donRequiredFee
+        uint32 gasLimit,
+        uint256 gasPrice,
+        uint96 donFee,
+        uint96 registryFee
     ) public view override returns (uint96) {
         int256 weiPerUnitLink;
         weiPerUnitLink = getFeedData();
@@ -298,12 +320,11 @@ contract OCR2DRRegistry is
         }
         uint256 executionGas = s_config.gasOverhead +
             s_config.gasAfterPaymentCalculation +
-            billing.gasLimit;
+            gasLimit;
         // (1e18 juels/link) (wei/gas * gas) / (wei/link) = juels
-        uint256 paymentNoFee = (1e18 * billing.gasPrice * executionGas) /
+        uint256 paymentNoFee = (1e18 * gasPrice * executionGas) /
             uint256(weiPerUnitLink);
-        uint96 registryFee = getRequiredFee(data, billing);
-        uint256 fee = uint256(donRequiredFee) + uint256(registryFee);
+        uint256 fee = uint256(donFee) + uint256(registryFee);
         if (paymentNoFee > (1e27 - fee)) {
             revert PaymentTooLarge(); // Payment + fee cannot be more than all of the link in existence.
         }
@@ -318,6 +339,7 @@ contract OCR2DRRegistry is
         override
         validateAuthorizedSender
         nonReentrant
+        whenNotPaused
         returns (bytes32)
     {
         // Input validation using the subscription storage.
@@ -344,8 +366,16 @@ contract OCR2DRRegistry is
             data,
             billing
         );
-        uint256 estimatedCost = estimateCost(data, billing, oracleFee);
-        if (s_subscriptions[billing.subscriptionId].balance < estimatedCost) {
+        uint96 registryFee = getRequiredFee(data, billing);
+        uint96 estimatedCost = estimateCost(
+            billing.gasLimit,
+            billing.gasPrice,
+            oracleFee,
+            registryFee
+        );
+        uint96 effectiveBalance = s_subscriptions[billing.subscriptionId]
+            .balance - s_subscriptions[billing.subscriptionId].blockedBalance;
+        if (effectiveBalance < estimatedCost) {
             revert InsufficientBalance();
         }
 
@@ -361,11 +391,15 @@ contract OCR2DRRegistry is
             billing.subscriptionId,
             billing.client,
             billing.gasLimit,
+            billing.gasPrice,
             msg.sender,
             oracleFee,
-            getRequiredFee(data, billing)
+            registryFee,
+            estimatedCost,
+            block.timestamp
         );
         s_requestCommitments[requestId] = commitment;
+        s_subscriptions[billing.subscriptionId].blockedBalance += estimatedCost;
 
         emit BillingStart(requestId, commitment);
         s_consumers[billing.client][billing.subscriptionId] = nonce;
@@ -445,6 +479,7 @@ contract OCR2DRRegistry is
         override
         validateAuthorizedSender
         nonReentrant
+        whenNotPaused
         returns (bool success)
     {
         Commitment memory commitment = s_requestCommitments[requestId];
@@ -501,6 +536,9 @@ contract OCR2DRRegistry is
         s_withdrawableTokens[owner()] += commitment.registryFee;
         // Reimburse the transmitter for the execution gas cost + pay them their portion of the DON fee
         s_withdrawableTokens[transmitter] += bill.transmitterPayment;
+        // Remove blocked balance
+        s_subscriptions[commitment.subscriptionId].blockedBalance -= commitment
+            .estimatedCost;
         // Include payment in the event for tracking costs.
         emit BillingEnd(
             commitment.subscriptionId,
@@ -565,6 +603,7 @@ contract OCR2DRRegistry is
     function oracleWithdraw(address recipient, uint96 amount)
         external
         nonReentrant
+        whenNotPaused
     {
         if (amount == 0) {
             amount = s_withdrawableTokens[msg.sender];
@@ -583,7 +622,7 @@ contract OCR2DRRegistry is
         address, /* sender */
         uint256 amount,
         bytes calldata data
-    ) external override nonReentrant {
+    ) external override nonReentrant whenNotPaused {
         if (msg.sender != address(LINK)) {
             revert OnlyCallableFromLink();
         }
@@ -646,11 +685,19 @@ contract OCR2DRRegistry is
      * @dev    amount,
      * @dev    abi.encode(subscriptionId));
      */
-    function createSubscription() external nonReentrant returns (uint64) {
+    function createSubscription()
+        external
+        nonReentrant
+        whenNotPaused
+        returns (uint64)
+    {
         s_currentsubscriptionId++;
         uint64 currentsubscriptionId = s_currentsubscriptionId;
         address[] memory consumers = new address[](0);
-        s_subscriptions[currentsubscriptionId] = Subscription({balance: 0});
+        s_subscriptions[currentsubscriptionId] = Subscription({
+            balance: 0,
+            blockedBalance: 0
+        });
         s_subscriptionConfigs[currentsubscriptionId] = SubscriptionConfig({
             owner: msg.sender,
             requestedOwner: address(0),
@@ -669,7 +716,7 @@ contract OCR2DRRegistry is
     function requestSubscriptionOwnerTransfer(
         uint64 subscriptionId,
         address newOwner
-    ) external onlySubOwner(subscriptionId) nonReentrant {
+    ) external onlySubOwner(subscriptionId) nonReentrant whenNotPaused {
         // Proposing to address(0) would never be claimable so don't need to check.
         if (s_subscriptionConfigs[subscriptionId].requestedOwner != newOwner) {
             s_subscriptionConfigs[subscriptionId].requestedOwner = newOwner;
@@ -690,6 +737,7 @@ contract OCR2DRRegistry is
     function acceptSubscriptionOwnerTransfer(uint64 subscriptionId)
         external
         nonReentrant
+        whenNotPaused
     {
         if (s_subscriptionConfigs[subscriptionId].owner == address(0)) {
             revert InvalidSubscription();
@@ -716,6 +764,7 @@ contract OCR2DRRegistry is
         external
         onlySubOwner(subscriptionId)
         nonReentrant
+        whenNotPaused
     {
         if (s_consumers[consumer][subscriptionId] == 0) {
             revert InvalidConsumer(subscriptionId, consumer);
@@ -747,6 +796,7 @@ contract OCR2DRRegistry is
         external
         onlySubOwner(subscriptionId)
         nonReentrant
+        whenNotPaused
     {
         // Already maxed, cannot add any more consumers.
         if (
@@ -776,6 +826,7 @@ contract OCR2DRRegistry is
         external
         onlySubOwner(subscriptionId)
         nonReentrant
+        whenNotPaused
     {
         if (pendingRequestExists(subscriptionId)) {
             revert PendingRequestExists();
@@ -836,6 +887,40 @@ contract OCR2DRRegistry is
             }
         }
         return false;
+    }
+
+    /**
+     * @notice Time out all expired requests: unlocks funds and removes the ability for the request to be fulfilled
+     * @param requestIdsToTimeout - A list of request IDs to time out
+     */
+
+    function timeoutRequests(bytes32[] calldata requestIdsToTimeout) external {
+        for (uint256 i = 0; i < requestIdsToTimeout.length; i++) {
+            bytes32 requestId = requestIdsToTimeout[i];
+            Commitment memory commitment = s_requestCommitments[requestId];
+
+            // Check that the message sender is the subscription owner
+            if (
+                msg.sender !=
+                s_subscriptionConfigs[commitment.subscriptionId].owner
+            ) {
+                revert MustBeSubOwner(
+                    s_subscriptionConfigs[commitment.subscriptionId].owner
+                );
+            }
+
+            if (
+                commitment.timestamp + s_config.requestTimeoutSeconds >
+                block.timestamp
+            ) {
+                // Decrement blocked balance
+                s_subscriptions[commitment.subscriptionId]
+                    .blockedBalance -= commitment.estimatedCost;
+                // Delete commitment
+                delete s_requestCommitments[requestId];
+                emit RequestTimedOut(requestId);
+            }
+        }
     }
 
     modifier onlySubOwner(uint64 subscriptionId) {
