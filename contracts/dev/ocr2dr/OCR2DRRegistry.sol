@@ -3,9 +3,9 @@ pragma solidity ^0.8.6;
 
 import "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
-import "./interfaces/OCR2DRRegistryInterface.sol";
-import "./interfaces/OCR2DROracleInterface.sol";
-import "./interfaces/OCR2DRClientInterface.sol";
+import "../interfaces/OCR2DRRegistryInterface.sol";
+import "../interfaces/OCR2DROracleInterface.sol";
+import "../interfaces/OCR2DRClientInterface.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/ERC677ReceiverInterface.sol";
 import "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
 import "./AuthorizedReceiver.sol";

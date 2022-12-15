@@ -2,7 +2,7 @@
 pragma solidity ^0.8.6;
 
 import "./EnumerableSet.sol";
-import "./interfaces/AuthorizedReceiverInterface.sol";
+import "../interfaces/AuthorizedReceiverInterface.sol";
 
 abstract contract AuthorizedReceiver is AuthorizedReceiverInterface {
     using EnumerableSet for EnumerableSet.AddressSet;
