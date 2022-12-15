@@ -4,33 +4,36 @@ pragma solidity ^0.8.6;
 import "./interfaces/OCR2DRClientInterface.sol";
 import "./interfaces/OCR2DROracleInterface.sol";
 import "../ocr2/OCR2Base.sol";
+import "../AuthorizedOriginReceiver.sol";
 
 /**
  * @title OCR2DR oracle contract
  * @dev THIS CONTRACT HAS NOT GONE THROUGH ANY SECURITY REVIEW. DO NOT USE IN PROD.
  */
-contract OCR2DROracle is OCR2DROracleInterface, OCR2Base {
-    event OracleRequest(bytes32 requestId, bytes data);
-    event OracleResponse(bytes32 requestId);
-    event UserCallbackError(bytes32 requestId, string reason);
-    event UserCallbackRawError(bytes32 requestId, bytes lowLevelData);
+contract OCR2DROracle is
+    OCR2DROracleInterface,
+    OCR2Base,
+    AuthorizedOriginReceiver
+{
+    event OracleRequest(
+        bytes32 indexed requestId,
+        uint64 subscriptionId,
+        bytes data
+    );
+    event OracleResponse(bytes32 indexed requestId);
+    event UserCallbackError(bytes32 indexed requestId, string reason);
+    event UserCallbackRawError(bytes32 indexed requestId, bytes lowLevelData);
 
     error EmptyRequestData();
     error InconsistentReportData();
     error EmptyPublicKey();
     error EmptyBillingRegistry();
     error InvalidRequestID();
-    error InvalidSender();
 
     bytes private s_donPublicKey;
     OCR2DRRegistryInterface private s_registry;
-    mapping(address => bool) public s_senders;
 
     constructor() OCR2Base(true) {}
-
-    function addSender(address addr) external onlyOwner {
-        s_senders[addr] = true;
-    }
 
     /**
      * @notice The type and version of this contract
@@ -107,7 +110,14 @@ contract OCR2DROracle is OCR2DROracleInterface, OCR2Base {
                 gasPrice
             );
         uint96 requiredFee = getRequiredFee(data, billing);
-        return s_registry.estimateCost(data, billing, requiredFee);
+        uint96 registryFee = getRequiredFee(data, billing);
+        return
+            s_registry.estimateCost(
+                gasLimit,
+                gasPrice,
+                requiredFee,
+                registryFee
+            );
     }
 
     /**
@@ -119,9 +129,6 @@ contract OCR2DROracle is OCR2DROracleInterface, OCR2Base {
         uint32 gasLimit,
         uint256 gasPrice
     ) external override registryIsSet returns (bytes32) {
-        if (!s_senders[tx.origin]) {
-            revert InvalidSender();
-        }
         if (data.length == 0) {
             revert EmptyRequestData();
         }
@@ -134,7 +141,7 @@ contract OCR2DROracle is OCR2DROracleInterface, OCR2Base {
                 gasPrice
             )
         );
-        emit OracleRequest(requestId, data);
+        emit OracleRequest(requestId, subscriptionId, data);
         return requestId;
     }
 
@@ -213,5 +220,9 @@ contract OCR2DROracle is OCR2DROracleInterface, OCR2Base {
             revert EmptyBillingRegistry();
         }
         _;
+    }
+
+    function _canSetAuthorizedSenders() internal view override returns (bool) {
+        return msg.sender == owner();
     }
 }

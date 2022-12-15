@@ -11,6 +11,7 @@ const config = {
     gasAfterPaymentCalculation: 21_000 + 5_000 + 2_100 + 20_000 + 2 * 2_100 - 15_000 + 7_315,
     weiPerUnitLink: ethers.BigNumber.from("5000000000000000"),
     gasOverhead: 100_000,
+    requestTimeoutSeconds: 300,
 }
 
 async function deployOcr2odRegistry(chainId = network.config.chainId) {
@@ -50,7 +51,8 @@ async function deployOcr2odRegistry(chainId = network.config.chainId) {
         config.stalenessSeconds,
         config.gasAfterPaymentCalculation,
         config.weiPerUnitLink,
-        config.gasOverhead
+        config.gasOverhead,
+        config.requestTimeoutSeconds
     )
 
     console.log(`OCR2ODRegistry deployed to ${registry.address} on ${network.name}`)

@@ -12,20 +12,21 @@ async function deployOcr2odOracle(chainId = network.config.chainId) {
     const ethLinkFeedAddress = networkConfig[chainId]["linkEthPriceFeed"]
     const linkTokenAddress = networkConfig[chainId]["linkToken"]
 
-    console.log('Deploying OCR2DR registry')
+    console.log("Deploying OCR2DR registry")
     const registryFactory = await ethers.getContractFactory("OCR2DRRegistry")
     const registry = await registryFactory.deploy(linkTokenAddress, ethLinkFeedAddress)
     console.log(`Waiting for transaction ${registry.deployTransaction.hash} to be confirmed...`)
     await registry.deployTransaction.wait(1)
     console.log(`OCR2ODRegistry deployed to ${registry.address} on ${network.name}`)
 
-    console.log('Setting registy configuration')
+    console.log("Setting registy configuration")
     const config = {
         maxGasLimit: 450_000,
         stalenessSeconds: 86_400,
         gasAfterPaymentCalculation: 21_000 + 5_000 + 2_100 + 20_000 + 2 * 2_100 - 15_000 + 7_315,
         weiPerUnitLink: ethers.BigNumber.from("5000000000000000"),
         gasOverhead: 100_000,
+        requestTimeoutSeconds: 300,
     }
     const setConfigTx = await registry.setConfig(
         config.maxGasLimit,
@@ -33,19 +34,22 @@ async function deployOcr2odOracle(chainId = network.config.chainId) {
         config.gasAfterPaymentCalculation,
         config.weiPerUnitLink,
         config.gasOverhead,
+        config.requestTimeoutSeconds
     )
     console.log(`Waiting for transaction ${setConfigTx.hash} to be confirmed...`)
     await setConfigTx.wait(1)
-    console.log('Registry configuration set')
+    console.log("Registry configuration set")
 
-    console.log('Deploying OCR2DR oracle factory')
+    console.log("Deploying OCR2DR oracle factory")
     const oracleFactoryFactory = await ethers.getContractFactory("OCR2DROracleFactory")
     const oracleFactory = await oracleFactoryFactory.deploy()
-    console.log(`Waiting for transaction ${oracleFactory.deployTransaction.hash} to be confirmed...`)
+    console.log(
+        `Waiting for transaction ${oracleFactory.deployTransaction.hash} to be confirmed...`
+    )
     await oracleFactory.deployTransaction.wait(1)
     console.log(`OCR2ODOracleFactory deployed to ${oracleFactory.address} on ${network.name}`)
 
-    console.log('Deploying OCR2DR oracle')
+    console.log("Deploying OCR2DR oracle")
     const OracleDeploymentTransaction = await oracleFactory.deployNewOracle()
     console.log(`Waiting for transaction ${OracleDeploymentTransaction.hash} to be confirmed...`)
     const OracleDeploymentReceipt = await OracleDeploymentTransaction.wait(1)
@@ -79,9 +83,7 @@ async function deployOcr2odOracle(chainId = network.config.chainId) {
     console.log(`Waiting for transaction ${setRegistryTx.hash} to be confirmed...`)
     console.log("Oracle registry set")
 
-    console.log(
-        `OCR2ODOracle successfully deployed to ${oracle.address} on ${network.name}`
-    )
+    console.log(`OCR2ODOracle successfully deployed to ${oracle.address} on ${network.name}`)
 
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
         console.log("Verifying registry contract...")
