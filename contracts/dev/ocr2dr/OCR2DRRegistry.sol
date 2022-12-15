@@ -8,7 +8,7 @@ import "../interfaces/OCR2DROracleInterface.sol";
 import "../interfaces/OCR2DRClientInterface.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/ERC677ReceiverInterface.sol";
 import "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
-import "./AuthorizedReceiver.sol";
+import "../AuthorizedReceiver.sol";
 import "./vendor/openzeppelin-solidity/v.4.8.0/contracts/utils/SafeCast.sol";
 import "./vendor/openzeppelin-solidity/v.4.8.0/contracts/security/Pausable.sol";
 

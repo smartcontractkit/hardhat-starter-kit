@@ -4,7 +4,7 @@ pragma solidity ^0.8.6;
 import "../interfaces/OCR2DRClientInterface.sol";
 import "../interfaces/OCR2DROracleInterface.sol";
 import "../ocr2/OCR2Base.sol";
-import "../AuthorizedOriginReceiver.sol";
+import "./AuthorizedOriginReceiver.sol";
 
 /**
  * @title OCR2DR oracle contract
