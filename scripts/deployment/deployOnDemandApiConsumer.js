@@ -45,13 +45,15 @@ async function deployOnDemandApiConsumer(chainId = network.config.chainId) {
                 21_000 + 5_000 + 2_100 + 20_000 + 2 * 2_100 - 15_000 + 7_315,
             weiPerUnitLink: ethers.BigNumber.from("5000000000000000"),
             gasOverhead: 100_000,
+            requestTimeoutSeconds: 300,
         }
         await mockRegistry.setConfig(
             config.maxGasLimit,
             config.stalenessSeconds,
             config.gasAfterPaymentCalculation,
             config.weiPerUnitLink,
-            config.gasOverhead
+            config.gasOverhead,
+            config.requestTimeoutSeconds
         )
 
         // Deploy Oracle
@@ -92,7 +94,7 @@ async function deployOnDemandApiConsumer(chainId = network.config.chainId) {
 
     const apiConsumerFactory = await ethers.getContractFactory("OnDemandAPIConsumer")
 
-    console.log('Deploying OnDemandAPIConsumer contract')
+    console.log("Deploying OnDemandAPIConsumer contract")
     const apiConsumer = await apiConsumerFactory.deploy(oracleAddress)
 
     const waitBlockConfirmations = developmentChains.includes(network.name)
