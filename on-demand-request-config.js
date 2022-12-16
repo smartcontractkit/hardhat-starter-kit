@@ -34,7 +34,7 @@ const requestConfig = {
   // number of HTTP queries the source code is allowed to make
   numAllowedQueries: 4,
   // secrets can be accessed within the source code with `secrets.varName` (ie: secrets.apiKey)
-  secrets: { apiKey: process.env['API_KEY'] },
+  secrets: { apiKey: "<API_KEY_GOES_HERE>" },
   // ETH wallet key used to sign secrets so they cannot be accessed by a 3rd party
   walletPrivateKey: process.env['PRIVATE_KEY'],
   // DON public key used to encrypt secrets so they are not exposed on-chain

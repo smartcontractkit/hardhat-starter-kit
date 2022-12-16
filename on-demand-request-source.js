@@ -63,8 +63,8 @@ if (!badApiResponse.error) {
   console.log('Bad API request failed. (This message is expected and just for demonstration purposes.)')
 }
   
-// At least 3 prices are needed to aggregate the median price
-if (prices.length < 3) {
+// At least 2 out of 4 prices are needed to aggregate the median price
+if (prices.length < 2) {
   // If an error is thrown, it will be returned back to the smart contract
   throw Error('More than 1 API failed');
 }
