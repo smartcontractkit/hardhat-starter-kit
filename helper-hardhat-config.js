@@ -61,9 +61,9 @@ const networkConfig = {
         linkEthPriceFeed: "0x12162c3E810393dEC01362aBf156D7ecf6159528",
         linkUsdPriceFeed: "0x1C2252aeeD50e0c9B64bDfF2735Ee3C932F5C408",
         ethUsdPriceFeed: "0x0715A7794a1dc8e42615F059dD6e406A6594651A",
-        ocr2odOracle: "0x5F4E0D9a4E989663E7D2919dD4A7BBD2C6023C0a",
+        ocr2odOracle: "0x0e9C779d5f2aDe5cf642433C584904B249441eFb", //"0x5F4E0D9a4E989663E7D2919dD4A7BBD2C6023C0a",
         ocr2odOracleFactory: "0xF4387B2Ad01B479d1ba18e9A101C35d96A83d5a5",
-        ocr2odOracleRegistry: "0x2B8442D94C653FA1189b4f2ba78EDA649Bd3beB3",
+        ocr2odOracleRegistry: "0xE7e4882E6cc98b4c20A5155ca83A18C85aaBfCe6",
         fee: "100000000000000000",
         fundAmount: "100000000000000000", // 0.1
         automationUpdateInterval: "30",
