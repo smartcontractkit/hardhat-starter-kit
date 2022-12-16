@@ -78,8 +78,8 @@ async function deployOcr2odOracle(chainId = network.config.chainId) {
     console.log(`Waiting for transaction ${authTx.hash} to be confirmed...`)
     console.log("Oracle authorized with registry")
 
-    console.log(`Setting oracle registry to ${networkConfig[chainId]["ocr2odOracleRegistry"]}`)
-    const setRegistryTx = await oracle.setRegistry(networkConfig[chainId]["ocr2odOracleRegistry"])
+    console.log(`Setting oracle registry to ${registry.address}`)
+    const setRegistryTx = await oracle.setRegistry(registry.address)
     console.log(`Waiting for transaction ${setRegistryTx.hash} to be confirmed...`)
     console.log("Oracle registry set")
 
