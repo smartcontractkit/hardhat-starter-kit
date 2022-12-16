@@ -12,7 +12,7 @@ async function addOrRemove(action, taskArgs) {
   const oracleFactory = await ethers.getContractFactory("OCR2DROracle")
   const oracle = oracleFactory.attach(networkConfig["ocr2odOracle"])
 
-  const addresses = taskArgs.addresses.split(", ")
+  const addresses = taskArgs.addresses.split(/, /g)
   console.log(addresses)
 
   if (action == Action.Add) {
