@@ -2,6 +2,16 @@ require("@nomicfoundation/hardhat-toolbox")
 require("./tasks")
 require("dotenv").config()
 
+const COMPILER_SETTINGS = {
+    optimizer: {
+        enabled: true,
+        runs: 1000000,
+    },
+    metadata: {
+        bytecodeHash: "none",
+    },
+}
+
 const MAINNET_RPC_URL =
     process.env.MAINNET_RPC_URL ||
     process.env.ALCHEMY_MAINNET_RPC_URL ||
@@ -10,6 +20,8 @@ const POLYGON_MAINNET_RPC_URL =
     process.env.POLYGON_MAINNET_RPC_URL || "https://polygon-mainnet.alchemyapi.io/v2/your-api-key"
 const GOERLI_RPC_URL =
     process.env.GOERLI_RPC_URL || "https://eth-goerli.alchemyapi.io/v2/your-api-key"
+const MATIC_RPC_URL =
+    process.env.MATIC_RPC_URL || "https://polygon-mumbai.g.alchemy.com/v2/your-api-key"
 const PRIVATE_KEY = process.env.PRIVATE_KEY
 // optional
 const MNEMONIC = process.env.MNEMONIC || "Your mnemonic"
@@ -26,12 +38,15 @@ module.exports = {
         compilers: [
             {
                 version: "0.8.7",
+                COMPILER_SETTINGS,
             },
             {
                 version: "0.6.6",
+                COMPILER_SETTINGS,
             },
             {
                 version: "0.4.24",
+                COMPILER_SETTINGS,
             },
         ],
     },
@@ -70,6 +85,11 @@ module.exports = {
             accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
             chainId: 137,
         },
+        mumbai: {
+            url: MATIC_RPC_URL,
+            accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+            chainId: 80001,
+        },
     },
     defaultNetwork: "hardhat",
     etherscan: {
@@ -77,6 +97,7 @@ module.exports = {
         apiKey: {
             polygon: POLYGONSCAN_API_KEY,
             goerli: ETHERSCAN_API_KEY,
+            polygonMumbai: POLYGONSCAN_API_KEY,
         },
     },
     gasReporter: {
@@ -94,6 +115,7 @@ module.exports = {
             "NFTFloorPriceConsumerV3",
             "PriceConsumerV3",
             "RandomNumberConsumerV2",
+            "RandomNumberDirectFundingConsumerV2",
         ],
     },
     paths: {
@@ -103,6 +125,6 @@ module.exports = {
         artifacts: "./build/artifacts",
     },
     mocha: {
-        timeout: 200000, // 200 seconds max for running tests
+        timeout: 300000, // 300 seconds max for running tests
     },
 }

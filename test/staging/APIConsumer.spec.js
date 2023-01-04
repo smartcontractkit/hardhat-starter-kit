@@ -32,7 +32,7 @@ developmentChains.includes(network.name)
               await linkToken.connect(deployer).transfer(apiConsumer.address, fundAmount)
           })
 
-          it.skip("Our event should successfully fire on callback", async function () {
+          it("Our event should successfully fire on callback", async function () {
               // we setup a promise so we can wait for our callback from the `once` function
               await new Promise(async (resolve, reject) => {
                   // setup listener for our event

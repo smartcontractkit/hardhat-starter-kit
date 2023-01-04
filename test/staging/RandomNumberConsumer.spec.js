@@ -49,7 +49,7 @@ developmentChains.includes(network.name)
               await vrfCoordinator.addConsumer(subscriptionId, randomNumberConsumerV2.address)
           })
 
-          it.only("Our event should successfully fire event on callback", async function () {
+          it("Our event should successfully fire event on callback", async function () {
               // we setup a promise so we can wait for our callback from the `once` function
               await new Promise(async (resolve, reject) => {
                   // setup listener for our event
@@ -74,8 +74,11 @@ developmentChains.includes(network.name)
                           reject(e)
                       }
                   })
-
-                  await randomNumberConsumerV2.requestRandomWords()
+                  try {
+                      await randomNumberConsumerV2.requestRandomWords()
+                  } catch (error) {
+                      reject(error)
+                  }
               })
           })
       })
