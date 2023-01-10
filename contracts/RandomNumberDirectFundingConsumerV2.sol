@@ -26,6 +26,7 @@ contract RandomNumberDirectFundingConsumerV2 is
         uint256[] randomWords,
         uint256 payment
     );
+    error InsufficientFunds(uint256 balance, uint256 paid);
     error RequestNotFound(uint256 requestId);
     error LinkTransferError(address sender, address receiver, uint256 amount);
 
@@ -41,9 +42,6 @@ contract RandomNumberDirectFundingConsumerV2 is
     uint256[] public requestIds;
     uint256 public lastRequestId;
 
-    // Address LINK
-    address public immutable linkAddress;
-
     // configuration: https://docs.chain.link/vrf/v2/direct-funding/supported-networks#configurations
     constructor(
         address _linkAddress,
@@ -51,9 +49,7 @@ contract RandomNumberDirectFundingConsumerV2 is
     )
         ConfirmedOwner(msg.sender)
         VRFV2WrapperConsumerBase(_linkAddress, _wrapperAddress)
-    {
-        linkAddress = _linkAddress;
-    }
+    {}
 
     // Depends on the number of requested values that you want sent to the
     // fulfillRandomWords() function. Test and adjust
@@ -74,6 +70,8 @@ contract RandomNumberDirectFundingConsumerV2 is
             _numWords
         );
         uint256 paid = VRF_V2_WRAPPER.calculateRequestPrice(_callbackGasLimit);
+        uint256 balance = LINK.balanceOf(address(this));
+        if (balance < paid) revert InsufficientFunds(balance, paid);
         s_requests[requestId] = RequestStatus({
             paid: paid,
             randomWords: new uint256[](0),
@@ -89,11 +87,10 @@ contract RandomNumberDirectFundingConsumerV2 is
         uint256 _requestId,
         uint256[] memory _randomWords
     ) internal override {
-        RequestStatus memory request = s_requests[_requestId];
+        RequestStatus storage request = s_requests[_requestId];
         if (request.paid == 0) revert RequestNotFound(_requestId);
         request.fulfilled = true;
         request.randomWords = _randomWords;
-        s_requests[_requestId] = request;
         emit RequestFulfilled(_requestId, _randomWords, request.paid);
     }
 
@@ -117,13 +114,12 @@ contract RandomNumberDirectFundingConsumerV2 is
      * Allow withdraw of Link tokens from the contract
      */
     function withdrawLink(address _receiver) public onlyOwner {
-        LinkTokenInterface link = LinkTokenInterface(linkAddress);
-        bool success = link.transfer(_receiver, link.balanceOf(address(this)));
+        bool success = LINK.transfer(_receiver, LINK.balanceOf(address(this)));
         if (!success)
             revert LinkTransferError(
                 msg.sender,
                 _receiver,
-                link.balanceOf(address(this))
+                LINK.balanceOf(address(this))
             );
     }
 }
