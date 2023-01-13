@@ -20,8 +20,8 @@ const POLYGON_MAINNET_RPC_URL =
     process.env.POLYGON_MAINNET_RPC_URL || "https://polygon-mainnet.alchemyapi.io/v2/your-api-key"
 const GOERLI_RPC_URL =
     process.env.GOERLI_RPC_URL || "https://eth-goerli.alchemyapi.io/v2/your-api-key"
-const MATIC_RPC_URL =
-    process.env.MATIC_RPC_URL || "https://polygon-mumbai.g.alchemy.com/v2/your-api-key"
+const MUMBAI_RPC_URL =
+    process.env.MUMBAI_RPC_URL || "https://polygon-mumbai.g.alchemy.com/v2/your-api-key"
 const PRIVATE_KEY = process.env.PRIVATE_KEY
 // optional
 const MNEMONIC = process.env.MNEMONIC || "Your mnemonic"
@@ -86,7 +86,7 @@ module.exports = {
             chainId: 137,
         },
         mumbai: {
-            url: MATIC_RPC_URL,
+            url: MUMBAI_RPC_URL,
             accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
             chainId: 80001,
         },
