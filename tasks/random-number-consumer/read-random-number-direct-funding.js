@@ -1,13 +1,19 @@
+const { assert } = require("chai")
+
 task(
-    "read-random-number",
-    "Reads the random number returned to a contract by Chainlink VRF Subscription Method"
+    "read-random-number-direct-funding",
+    "Reads the random number returned to a contract by Chainlink VRF Direct Funding method"
 )
     .addParam("contract", "The address of the VRF contract that you want to read")
+    .addOptionalParam("requestid", "Request id")
     .setAction(async (taskArgs) => {
         const contractAddr = taskArgs.contract
+        const requestId = taskArgs.requestid
         const networkId = network.name
         console.log("Reading data from VRF contract ", contractAddr, " on network ", networkId)
-        const RandomNumberConsumerV2 = await ethers.getContractFactory("RandomNumberConsumerV2")
+        const RandomNumberConsumerV2 = await ethers.getContractFactory(
+            "RandomNumberDirectFundingConsumerV2"
+        )
 
         //Get signer information
         const accounts = await hre.ethers.getSigners()
@@ -20,12 +26,15 @@ task(
             signer
         )
 
+        const chosentRequestId = requestId || (await vrfConsumerContractV2.lastRequestId())
+        const { fulfilled, randomWords } = await vrfConsumerContractV2.getRequestStatus(
+            chosentRequestId
+        )
+
         try {
-            const firstRandomNumber = await vrfConsumerContractV2.s_randomWords(0)
-            const secondRandomNumber = await vrfConsumerContractV2.s_randomWords(1)
-            console.log(
-                `Random Numbers are: ${firstRandomNumber.toString()} and ${secondRandomNumber.toString()}`
-            )
+            assert(fulfilled === true, `requestId ${chosentRequestId} not fulfilled`)
+            assert(randomWords.length > 0, "randomness not received")
+            console.log(`Random Numbers are: ${randomWords.toString()}`)
         } catch (error) {
             if (["hardhat", "localhost", "ganache"].includes(network.name)) {
                 console.log(
@@ -33,7 +42,7 @@ task(
                 )
             } else {
                 console.log(
-                    `Visit https://vrf.chain.link/ and make sure that your last request fulfillment is there`
+                    `Open your contract in the block explorer and check in internal transactions if the callback has been made`
                 )
             }
         }

@@ -1,5 +1,8 @@
-task("request-random-number", "Requests a random number for a Chainlink VRF enabled smart contract")
-    .addParam("contract", "The address of the API Consumer contract that you want to call")
+task(
+    "request-random-number",
+    "Requests a random number for a Chainlink VRF enabled smart contract using the Subscription method"
+)
+    .addParam("contract", "The address of the VRF Consumer contract that you want to call")
     .setAction(async (taskArgs) => {
         const contractAddr = taskArgs.contract
         const networkId = network.name
@@ -22,11 +25,14 @@ task("request-random-number", "Requests a random number for a Chainlink VRF enab
             signer
         )
         const transaction = await vrfConsumerContractV2.requestRandomWords()
+        const requestId = await vrfConsumerContractV2.lastRequestId()
         console.log(
             "Contract ",
             contractAddr,
             " random number request successfully called. Transaction Hash: ",
-            transaction.hash
+            transaction.hash,
+            " requestId: ",
+            requestId.toString()
         )
         console.log("Run the following to read the returned random number:")
         console.log(

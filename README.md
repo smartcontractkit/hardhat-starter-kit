@@ -318,7 +318,15 @@ npx hardhat read-data --contract insert-contract-address-here --network network
 
 
 ## VRF Get a random number
-The VRFConsumer contract has two tasks, one to request a random number, and one to read the result of the random number request. To start, go to [VRF Subscription Page](https://vrf.chain.link/goerli) and create the new subscription. Save your subscription ID and put it in `helper-hardhat-config.js` file as `subscriptionId`:
+The VRFConsumer contract has two tasks, one to request a random number, and one to read the result of the random number request. 
+As explained in the [developer documentation](https://docs.chain.link/vrf/v2/introduction), there are two methods:
+- The [Subscription method](https://docs.chain.link/vrf/v2/subscription)
+- The [Direct Funding method](https://docs.chain.link/vrf/v2/direct-funding)
+
+Read the docs first to understand which method is the most suitable for your usecase.
+
+### VRF Subscription method
+To start, go to [VRF Subscription Page](https://vrf.chain.link/goerli) and create the new subscription. Save your subscription ID and put it in `helper-hardhat-config.js` file as `subscriptionId`:
 
 ```javascript
 5: {
@@ -343,6 +351,37 @@ Once you have successfully made a request for a random number, you can see the r
 
 ```bash
 npx hardhat read-random-number --contract insert-contract-address-here --network network
+```
+
+### VRF Direct Funding method
+Deploy your VRF V2 contract consumer to the network.
+
+```bash
+npm run deploy --network network   
+```
+
+or (if you are using yarn)
+
+```bash
+yarn deploy --network network   
+```
+
+Now you have to fund your consumer contract with LINK tokens:
+
+```bash
+npx hardhat transfer-link --recipient insert-contract-address-here --amount insert-amount-in-juels-here --network network
+```
+
+Once that's done, you can perform a VRF request with the request-random-number task:
+
+```bash
+npx hardhat request-random-number-direct-funding --callbackgaslimit insert-callback-gas-limit-here --requestconfirmations insert-request-confirmations-here --numwords insert-number-words-here --contract insert-contract-address-here --network network
+```
+
+Once you have successfully made a request for a random number, you can see the result via the read-random-number task:
+
+```bash
+npx hardhat read-random-number-direct-funding --contract insert-contract-address-here --network network
 ```
 
 ## Automation
