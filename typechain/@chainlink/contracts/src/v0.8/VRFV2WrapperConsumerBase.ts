@@ -4,6 +4,7 @@
 import type {
   BaseContract,
   BigNumber,
+  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -20,45 +21,36 @@ import type {
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../../../../common";
+} from "../../../../common";
 
-export interface KeeperCompatibleInterfaceInterface extends utils.Interface {
+export interface VRFV2WrapperConsumerBaseInterface extends utils.Interface {
   functions: {
-    "checkUpkeep(bytes)": FunctionFragment;
-    "performUpkeep(bytes)": FunctionFragment;
+    "rawFulfillRandomWords(uint256,uint256[])": FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "checkUpkeep" | "performUpkeep"
+    nameOrSignatureOrTopic: "rawFulfillRandomWords"
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "checkUpkeep",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "performUpkeep",
-    values: [PromiseOrValue<BytesLike>]
+    functionFragment: "rawFulfillRandomWords",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>[]]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "checkUpkeep",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "performUpkeep",
+    functionFragment: "rawFulfillRandomWords",
     data: BytesLike
   ): Result;
 
   events: {};
 }
 
-export interface KeeperCompatibleInterface extends BaseContract {
+export interface VRFV2WrapperConsumerBase extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: KeeperCompatibleInterfaceInterface;
+  interface: VRFV2WrapperConsumerBaseInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -80,37 +72,23 @@ export interface KeeperCompatibleInterface extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    checkUpkeep(
-      checkData: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    performUpkeep(
-      performData: PromiseOrValue<BytesLike>,
+    rawFulfillRandomWords(
+      _requestId: PromiseOrValue<BigNumberish>,
+      _randomWords: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
-  checkUpkeep(
-    checkData: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  performUpkeep(
-    performData: PromiseOrValue<BytesLike>,
+  rawFulfillRandomWords(
+    _requestId: PromiseOrValue<BigNumberish>,
+    _randomWords: PromiseOrValue<BigNumberish>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    checkUpkeep(
-      checkData: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<
-      [boolean, string] & { upkeepNeeded: boolean; performData: string }
-    >;
-
-    performUpkeep(
-      performData: PromiseOrValue<BytesLike>,
+    rawFulfillRandomWords(
+      _requestId: PromiseOrValue<BigNumberish>,
+      _randomWords: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -118,25 +96,17 @@ export interface KeeperCompatibleInterface extends BaseContract {
   filters: {};
 
   estimateGas: {
-    checkUpkeep(
-      checkData: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    performUpkeep(
-      performData: PromiseOrValue<BytesLike>,
+    rawFulfillRandomWords(
+      _requestId: PromiseOrValue<BigNumberish>,
+      _randomWords: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    checkUpkeep(
-      checkData: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    performUpkeep(
-      performData: PromiseOrValue<BytesLike>,
+    rawFulfillRandomWords(
+      _requestId: PromiseOrValue<BigNumberish>,
+      _randomWords: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

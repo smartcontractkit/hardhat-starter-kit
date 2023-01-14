@@ -2,11 +2,14 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { AggregatorV3Interface } from "./AggregatorV3Interface";
+export type { AutomationCompatibleInterface } from "./AutomationCompatibleInterface";
 export type { ChainlinkRequestInterface } from "./ChainlinkRequestInterface";
 export type { ENSInterface } from "./ENSInterface";
-export type { KeeperCompatibleInterface } from "./KeeperCompatibleInterface";
 export type { LinkTokenInterface } from "./LinkTokenInterface";
 export type { OperatorInterface } from "./OperatorInterface";
 export type { OracleInterface } from "./OracleInterface";
+export type { OwnableInterface } from "./OwnableInterface";
 export type { PointerInterface } from "./PointerInterface";
+export type { TypeAndVersionInterface } from "./TypeAndVersionInterface";
 export type { VRFCoordinatorV2Interface } from "./VRFCoordinatorV2Interface";
+export type { VRFV2WrapperInterface } from "./VRFV2WrapperInterface";

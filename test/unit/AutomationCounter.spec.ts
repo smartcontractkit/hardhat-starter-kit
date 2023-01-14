@@ -3,16 +3,16 @@ import { assert, expect } from "chai"
 import { BigNumber } from "ethers"
 import { deployments, network, ethers } from "hardhat"
 import { developmentChains } from "../../helper-hardhat-config"
-import { KeepersCounter } from "../../typechain"
+import { AutomationCounter } from "../../typechain"
 
 !developmentChains.includes(network.name)
     ? describe.skip
-    : describe("Keepers Counter Unit Tests", async function () {
-          let counter: KeepersCounter
+    : describe("automation Counter Unit Tests", async function () {
+          let counter: AutomationCounter
 
           beforeEach(async () => {
-              await deployments.fixture(["mocks", "keepers"])
-              counter = await ethers.getContract("KeepersCounter")
+              await deployments.fixture(["mocks", "automation"])
+              counter = await ethers.getContract("AutomationCounter")
           })
 
           it("should be able to call checkUpkeep", async () => {

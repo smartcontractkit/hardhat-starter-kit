@@ -55,3 +55,30 @@ export const verify = async (contractAddress: string, args: any[]) => {
         }
     }
 }
+
+
+// https://github.com/smartcontractkit/chainlink/blob/dbabde12def11a803d995e482e5fc4287d9cfce4/contracts/test/test-helpers/helpers.ts#L93
+const stripHexPrefix = (hex: string) => {
+    if (!ethers.utils.isHexString(hex)) {
+        throw Error(`Expected valid hex string, got: "${hex}"`)
+    }
+
+    return hex.replace("0x", "")
+}
+
+// https://github.com/smartcontractkit/chainlink/blob/dbabde12def11a803d995e482e5fc4287d9cfce4/contracts/test/test-helpers/helpers.ts#L21
+const addHexPrefix = (hex: string) => {
+    return hex.startsWith("0x") ? hex : `0x${hex}`
+}
+
+// https://github.com/smartcontractkit/chainlink/blob/dbabde12def11a803d995e482e5fc4287d9cfce4/contracts/test/test-helpers/helpers.ts#L30
+export const numToBytes32 = (num: number | bigint | BigNumber ) => {
+    const hexNum = ethers.utils.hexlify(num)
+    const strippedNum = stripHexPrefix(hexNum)
+    if (strippedNum.length > 32 * 2) {
+        throw Error(
+            "Cannot convert number to bytes32 format, value is greater than maximum bytes32 value"
+        )
+    }
+    return addHexPrefix(strippedNum.padStart(32 * 2, "0"))
+}

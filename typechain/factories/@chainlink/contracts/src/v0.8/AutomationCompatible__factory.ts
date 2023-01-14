@@ -5,11 +5,16 @@
 import { Contract, Signer, utils } from "ethers";
 import type { Provider } from "@ethersproject/providers";
 import type {
-  KeeperCompatibleInterface,
-  KeeperCompatibleInterfaceInterface,
-} from "../../../../../../@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface";
+  AutomationCompatible,
+  AutomationCompatibleInterface,
+} from "../../../../../@chainlink/contracts/src/v0.8/AutomationCompatible";
 
 const _abi = [
+  {
+    inputs: [],
+    name: "OnlySimulatedBackend",
+    type: "error",
+  },
   {
     inputs: [
       {
@@ -49,19 +54,19 @@ const _abi = [
   },
 ];
 
-export class KeeperCompatibleInterface__factory {
+export class AutomationCompatible__factory {
   static readonly abi = _abi;
-  static createInterface(): KeeperCompatibleInterfaceInterface {
-    return new utils.Interface(_abi) as KeeperCompatibleInterfaceInterface;
+  static createInterface(): AutomationCompatibleInterface {
+    return new utils.Interface(_abi) as AutomationCompatibleInterface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): KeeperCompatibleInterface {
+  ): AutomationCompatible {
     return new Contract(
       address,
       _abi,
       signerOrProvider
-    ) as KeeperCompatibleInterface;
+    ) as AutomationCompatible;
   }
 }

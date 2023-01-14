@@ -20,35 +20,22 @@ import type {
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../common";
+} from "../../../../../common";
 
-export interface KeepersCounterInterface extends utils.Interface {
+export interface AutomationCompatibleInterfaceInterface
+  extends utils.Interface {
   functions: {
     "checkUpkeep(bytes)": FunctionFragment;
-    "counter()": FunctionFragment;
-    "interval()": FunctionFragment;
-    "lastTimeStamp()": FunctionFragment;
     "performUpkeep(bytes)": FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic:
-      | "checkUpkeep"
-      | "counter"
-      | "interval"
-      | "lastTimeStamp"
-      | "performUpkeep"
+    nameOrSignatureOrTopic: "checkUpkeep" | "performUpkeep"
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "checkUpkeep",
     values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(functionFragment: "counter", values?: undefined): string;
-  encodeFunctionData(functionFragment: "interval", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "lastTimeStamp",
-    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "performUpkeep",
@@ -57,12 +44,6 @@ export interface KeepersCounterInterface extends utils.Interface {
 
   decodeFunctionResult(
     functionFragment: "checkUpkeep",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "counter", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "interval", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "lastTimeStamp",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -73,12 +54,12 @@ export interface KeepersCounterInterface extends utils.Interface {
   events: {};
 }
 
-export interface KeepersCounter extends BaseContract {
+export interface AutomationCompatibleInterface extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: KeepersCounterInterface;
+  interface: AutomationCompatibleInterfaceInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -101,52 +82,36 @@ export interface KeepersCounter extends BaseContract {
 
   functions: {
     checkUpkeep(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[boolean, string] & { upkeepNeeded: boolean }>;
-
-    counter(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    interval(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    lastTimeStamp(overrides?: CallOverrides): Promise<[BigNumber]>;
+      checkData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     performUpkeep(
-      arg0: PromiseOrValue<BytesLike>,
+      performData: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   checkUpkeep(
-    arg0: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<[boolean, string] & { upkeepNeeded: boolean }>;
-
-  counter(overrides?: CallOverrides): Promise<BigNumber>;
-
-  interval(overrides?: CallOverrides): Promise<BigNumber>;
-
-  lastTimeStamp(overrides?: CallOverrides): Promise<BigNumber>;
+    checkData: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   performUpkeep(
-    arg0: PromiseOrValue<BytesLike>,
+    performData: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     checkUpkeep(
-      arg0: PromiseOrValue<BytesLike>,
+      checkData: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<[boolean, string] & { upkeepNeeded: boolean }>;
-
-    counter(overrides?: CallOverrides): Promise<BigNumber>;
-
-    interval(overrides?: CallOverrides): Promise<BigNumber>;
-
-    lastTimeStamp(overrides?: CallOverrides): Promise<BigNumber>;
+    ): Promise<
+      [boolean, string] & { upkeepNeeded: boolean; performData: string }
+    >;
 
     performUpkeep(
-      arg0: PromiseOrValue<BytesLike>,
+      performData: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -155,36 +120,24 @@ export interface KeepersCounter extends BaseContract {
 
   estimateGas: {
     checkUpkeep(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      checkData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    counter(overrides?: CallOverrides): Promise<BigNumber>;
-
-    interval(overrides?: CallOverrides): Promise<BigNumber>;
-
-    lastTimeStamp(overrides?: CallOverrides): Promise<BigNumber>;
-
     performUpkeep(
-      arg0: PromiseOrValue<BytesLike>,
+      performData: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     checkUpkeep(
-      arg0: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      checkData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    counter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    interval(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    lastTimeStamp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     performUpkeep(
-      arg0: PromiseOrValue<BytesLike>,
+      performData: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

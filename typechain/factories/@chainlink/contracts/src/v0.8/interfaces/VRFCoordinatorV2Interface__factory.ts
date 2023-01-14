@@ -136,6 +136,25 @@ const _abi = [
         name: "subId",
         type: "uint64",
       },
+    ],
+    name: "pendingRequestExists",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint64",
+        name: "subId",
+        type: "uint64",
+      },
       {
         internalType: "address",
         name: "consumer",

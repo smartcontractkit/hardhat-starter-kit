@@ -31,6 +31,7 @@ export interface VRFCoordinatorV2InterfaceInterface extends utils.Interface {
     "createSubscription()": FunctionFragment;
     "getRequestConfig()": FunctionFragment;
     "getSubscription(uint64)": FunctionFragment;
+    "pendingRequestExists(uint64)": FunctionFragment;
     "removeConsumer(uint64,address)": FunctionFragment;
     "requestRandomWords(bytes32,uint64,uint16,uint32,uint32)": FunctionFragment;
     "requestSubscriptionOwnerTransfer(uint64,address)": FunctionFragment;
@@ -44,6 +45,7 @@ export interface VRFCoordinatorV2InterfaceInterface extends utils.Interface {
       | "createSubscription"
       | "getRequestConfig"
       | "getSubscription"
+      | "pendingRequestExists"
       | "removeConsumer"
       | "requestRandomWords"
       | "requestSubscriptionOwnerTransfer"
@@ -71,6 +73,10 @@ export interface VRFCoordinatorV2InterfaceInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getSubscription",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "pendingRequestExists",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -114,6 +120,10 @@ export interface VRFCoordinatorV2InterfaceInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getSubscription",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "pendingRequestExists",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -196,6 +206,11 @@ export interface VRFCoordinatorV2Interface extends BaseContract {
       }
     >;
 
+    pendingRequestExists(
+      subId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     removeConsumer(
       subId: PromiseOrValue<BigNumberish>,
       consumer: PromiseOrValue<string>,
@@ -255,6 +270,11 @@ export interface VRFCoordinatorV2Interface extends BaseContract {
     }
   >;
 
+  pendingRequestExists(
+    subId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   removeConsumer(
     subId: PromiseOrValue<BigNumberish>,
     consumer: PromiseOrValue<string>,
@@ -312,6 +332,11 @@ export interface VRFCoordinatorV2Interface extends BaseContract {
       }
     >;
 
+    pendingRequestExists(
+      subId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     removeConsumer(
       subId: PromiseOrValue<BigNumberish>,
       consumer: PromiseOrValue<string>,
@@ -365,6 +390,11 @@ export interface VRFCoordinatorV2Interface extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    pendingRequestExists(
+      subId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     removeConsumer(
       subId: PromiseOrValue<BigNumberish>,
       consumer: PromiseOrValue<string>,
@@ -412,6 +442,11 @@ export interface VRFCoordinatorV2Interface extends BaseContract {
     getRequestConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getSubscription(
+      subId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    pendingRequestExists(
       subId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;

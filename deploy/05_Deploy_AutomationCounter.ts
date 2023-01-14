@@ -14,13 +14,13 @@ const deployFunction: DeployFunction = async ({ getNamedAccounts, deployments, g
     const chainId: number | undefined = network.config.chainId
     if (!chainId) return
 
-    const keepersUpdateInterval: string = networkConfig[chainId].keepersUpdateInterval || "30"
+    const automationUpdateInterval: string = networkConfig[chainId].automationUpdateInterval || "30"
 
     const waitBlockConfirmations: number = developmentChains.includes(network.name)
         ? 1
         : VERIFICATION_BLOCK_CONFIRMATIONS
-    const args = [keepersUpdateInterval]
-    const keepersCounter = await deploy("KeepersCounter", {
+    const args = [automationUpdateInterval]
+    const automationCounter = await deploy("AutomationCounter", {
         from: deployer,
         args: args,
         log: true,
@@ -29,18 +29,18 @@ const deployFunction: DeployFunction = async ({ getNamedAccounts, deployments, g
 
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
         log("Verifying...")
-        await verify(keepersCounter.address, args)
+        await verify(automationCounter.address, args)
     }
 
     log(
-        "Head to https://keepers.chain.link/ to register your contract for upkeeps. Then run the following command to track the counter updates: "
+        "Head to https://automation.chain.link/ to register your contract for upkeeps. Then run the following command to track the counter updates: "
     )
     const networkName = network.name == "hardhat" ? "localhost" : network.name
     log(
-        `yarn hardhat read-keepers-counter --contract ${keepersCounter.address} --network ${networkName}`
+        `yarn hardhat read-automation-counter --contract ${automationCounter.address} --network ${networkName}`
     )
     log("----------------------------------------------------")
 }
 
 export default deployFunction
-deployFunction.tags = [`all`, `keepers`]
+deployFunction.tags = [`all`, `automation`]

@@ -4,6 +4,7 @@
 import type * as test from "./test";
 export type { test };
 export type { APIConsumer } from "./APIConsumer";
-export type { KeepersCounter } from "./KeepersCounter";
+export type { AutomationCounter } from "./AutomationCounter";
 export type { PriceConsumerV3 } from "./PriceConsumerV3";
 export type { RandomNumberConsumerV2 } from "./RandomNumberConsumerV2";
+export type { RandomNumberDirectFundingConsumerV2 } from "./RandomNumberDirectFundingConsumerV2";

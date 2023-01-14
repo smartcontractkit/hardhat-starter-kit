@@ -22,7 +22,7 @@ import type {
   PromiseOrValue,
 } from "../../../common";
 
-export interface KeepersCounterEchidnaTestInterface extends utils.Interface {
+export interface AutomationCounterEchidnaTestInterface extends utils.Interface {
   functions: {
     "checkUpkeep(bytes)": FunctionFragment;
     "counter()": FunctionFragment;
@@ -83,12 +83,12 @@ export interface KeepersCounterEchidnaTestInterface extends utils.Interface {
   events: {};
 }
 
-export interface KeepersCounterEchidnaTest extends BaseContract {
+export interface AutomationCounterEchidnaTest extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: KeepersCounterEchidnaTestInterface;
+  interface: AutomationCounterEchidnaTestInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

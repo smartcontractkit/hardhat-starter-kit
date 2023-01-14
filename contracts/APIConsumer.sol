@@ -2,6 +2,7 @@
 pragma solidity ^0.8.7;
 
 import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
+import "@openzeppelin/contracts/interfaces/IERC20.sol";
 
 /**
  * @title The APIConsumer contract
@@ -14,7 +15,6 @@ contract APIConsumer is ChainlinkClient {
     address private immutable oracle;
     bytes32 private immutable jobId;
     uint256 private immutable fee;
-
     event DataFullfilled(uint256 volume);
 
     /**
@@ -104,5 +104,8 @@ contract APIConsumer is ChainlinkClient {
      * @notice Witdraws LINK from the contract
      * @dev Implement a withdraw function to avoid locking your LINK in the contract
      */
-    function withdrawLink() external {}
+    function withdrawLink(address _receiver) external {
+        IERC20 link = IERC20(chainlinkTokenAddress());
+        link.transfer(_receiver, link.balanceOf(address(this)));
+    }
 }

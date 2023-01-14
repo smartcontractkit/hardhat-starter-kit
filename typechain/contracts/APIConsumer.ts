@@ -32,7 +32,7 @@ export interface APIConsumerInterface extends utils.Interface {
     "fulfill(bytes32,uint256)": FunctionFragment;
     "requestVolumeData()": FunctionFragment;
     "volume()": FunctionFragment;
-    "withdrawLink()": FunctionFragment;
+    "withdrawLink(address)": FunctionFragment;
   };
 
   getFunction(
@@ -54,7 +54,7 @@ export interface APIConsumerInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "volume", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "withdrawLink",
-    values?: undefined
+    values: [PromiseOrValue<string>]
   ): string;
 
   decodeFunctionResult(functionFragment: "fulfill", data: BytesLike): Result;
@@ -164,6 +164,7 @@ export interface APIConsumer extends BaseContract {
     volume(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdrawLink(
+      _receiver: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
@@ -181,6 +182,7 @@ export interface APIConsumer extends BaseContract {
   volume(overrides?: CallOverrides): Promise<BigNumber>;
 
   withdrawLink(
+    _receiver: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -195,7 +197,10 @@ export interface APIConsumer extends BaseContract {
 
     volume(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdrawLink(overrides?: CallOverrides): Promise<void>;
+    withdrawLink(
+      _receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {
@@ -238,6 +243,7 @@ export interface APIConsumer extends BaseContract {
     volume(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawLink(
+      _receiver: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -256,6 +262,7 @@ export interface APIConsumer extends BaseContract {
     volume(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdrawLink(
+      _receiver: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
