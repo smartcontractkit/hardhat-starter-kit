@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "hardhat compile",
     "test": "hardhat test test/unit/*.spec.js",
-    "test-staging": "hardhat test test/staging/*.spec.js --network goerli",
+    "test-staging": "hardhat test test/staging/*.spec.js --network sepolia",
     "deploy": "hardhat run scripts/deployment/main.js",
     "lint": "solhint 'contracts/*.sol'",
     "lint:fix": "solhint 'contracts/**/*.sol' --fix",

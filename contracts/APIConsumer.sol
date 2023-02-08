@@ -25,17 +25,12 @@ contract APIConsumer is ChainlinkClient {
      * @param _fee - node operator price per API call / data request
      * @param _link - LINK token address on the corresponding network
      *
-     * Network: Goerli
-     * Oracle: 0xCC79157eb46F5624204f47AB42b3906cAA40eaB7
+     * Network: Sepolia
+     * Oracle: 0x6090149792dAAeE9D1D568c9f9a6F6B46AA29eFD
      * Job ID: ca98366cc7314957b8c012c72f05aeeb
      * Fee: 0.1 LINK
      */
-    constructor(
-        address _oracle,
-        bytes32 _jobId,
-        uint256 _fee,
-        address _link
-    ) {
+    constructor(address _oracle, bytes32 _jobId, uint256 _fee, address _link) {
         if (_link == address(0)) {
             setPublicChainlinkToken();
         } else {
@@ -79,7 +74,7 @@ contract APIConsumer is ChainlinkClient {
         request.add("path", "RAW,ETH,USD,VOLUME24HOUR"); // Chainlink nodes 1.0.0 and later support this format
 
         // Multiply the result by 1000000000000000000 to remove decimals
-        int256 timesAmount = 10**18;
+        int256 timesAmount = 10 ** 18;
         request.addInt("times", timesAmount);
 
         // Sends the request
@@ -92,10 +87,10 @@ contract APIConsumer is ChainlinkClient {
      * @param _requestId - id of the request
      * @param _volume - response; requested 24h trading volume of ETH in USD
      */
-    function fulfill(bytes32 _requestId, uint256 _volume)
-        public
-        recordChainlinkFulfillment(_requestId)
-    {
+    function fulfill(
+        bytes32 _requestId,
+        uint256 _volume
+    ) public recordChainlinkFulfillment(_requestId) {
         volume = _volume;
         emit DataFullfilled(volume);
     }
