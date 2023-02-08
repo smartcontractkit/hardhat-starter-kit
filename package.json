@@ -5,7 +5,7 @@
   "scripts": {
     "compile": "hardhat compile",
     "test": "hardhat test ./test/unit/*.spec.ts --network hardhat",
-    "test-staging": "hardhat test ./test/staging/*.spec.ts --network goerli",
+    "test-staging": "hardhat test ./test/staging/*.spec.ts --network sepolia",
     "lint": "solhint 'contracts/*.sol'",
     "lint:fix": "solhint 'contracts/**/*.sol' --fix",
     "format": "prettier --write .",

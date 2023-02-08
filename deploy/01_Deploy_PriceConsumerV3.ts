@@ -24,7 +24,7 @@ const deployFunction: DeployFunction = async ({ getNamedAccounts, deployments })
     }
 
     // Price Feed Address, values can be obtained at https://docs.chain.link/docs/reference-contracts
-    // Default one below is ETH/USD contract on Goerli
+    // Default one below is ETH/USD contract on Sepolia
     const waitBlockConfirmations: number = developmentChains.includes(network.name)
         ? 1
         : VERIFICATION_BLOCK_CONFIRMATIONS
