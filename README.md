@@ -19,7 +19,7 @@
   - [Deploying Contracts](#deploying-contracts)
   - [Run a Local Network](#run-a-local-network)
   - [Using a Testnet or Live Network (like Mainnet or Polygon)](#using-a-testnet-or-live-network-like-mainnet-or-polygon)
-    - [Goerli Ethereum Testnet Setup](#goerli-ethereum-testnet-setup)
+    - [Sepolia Ethereum Testnet Setup](#sepolia-ethereum-testnet-setup)
   - [Forking](#forking)
   - [Auto-Funding](#auto-funding)
 - [Test](#test)
@@ -156,15 +156,15 @@ To interact with a live or test network, you'll need:
 2. A Private Key
 3. ETH & LINK token (either testnet or real)
 
-Let's look at an example of setting these up using the Goerli testnet. 
+Let's look at an example of setting these up using the Sepolia testnet. 
 
-### Goerli Ethereum Testnet Setup
+### Sepolia Ethereum Testnet Setup
 
 First, we will need to set environment variables. We can do so by setting them in our `.env` file (create it if it's not there). You can also read more about [environment variables](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) from the linked twilio blog. You'll find a sample of what this file will look like in `.env.example`
 
 > IMPORTANT: MAKE SURE YOU'D DON'T EXPOSE THE KEYS YOU PUT IN THIS `.env` FILE. By that, I mean don't push them to a public repo, and please try to keep them keys you use in development not associated with any real funds. 
 
-1. Set your `GOERLI_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html)
+1. Set your `SEPOLIA_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html)
 
 You can get one for free from [Alchemy](https://www.alchemy.com/), [Infura](https://infura.io/), or [Moralis](https://moralis.io/speedy-nodes/). This is your connection to the blockchain. 
 
@@ -180,12 +180,12 @@ Don't commit and push any changes to .env files that may contain sensitive infor
 
 `.env` example:
 ```
-GOERLI_RPC_URL='www.infura.io/asdfadsfafdadf'
+SEPOLIA_RPC_URL='https://sepolia.infura.io/v3/asdfadsfafdadf'
 PRIVATE_KEY='abcdef'
 ```
 `bash` example
 ```
-export GOERLI_RPC_URL='www.infura.io/asdfadsfafdadf'
+export SEPOLIA_RPC_URL='https://sepolia.infura.io/v3/asdfadsfafdadf'
 export PRIVATE_KEY='abcdef'
 ```
 
@@ -193,22 +193,22 @@ export PRIVATE_KEY='abcdef'
 
 For other networks like mainnet and polygon, you can use different environment variables for your RPC URL and your private key. See the `hardhat.config.js` to learn more. 
 
-3. Get some Goerli Testnet ETH and LINK 
+3. Get some Sepolia Testnet ETH and LINK 
 
 Head over to the [Chainlink faucets](https://faucets.chain.link/) and get some ETH and LINK. Please follow [the chainlink documentation](https://docs.chain.link/docs/acquire-link/) if unfamiliar. 
 
 4. Create VRF V2 subscription
 
-Head over to [VRF Subscription Page](https://vrf.chain.link/goerli) and create the new subscription. Save your subscription ID and put it in `helper-hardhat-config.js` file as `subscriptionId`
+Head over to [VRF Subscription Page](https://vrf.chain.link/sepolia) and create the new subscription. Save your subscription ID and put it in `helper-hardhat-config.js` file as `subscriptionId`
 
 5. Running commands
 
-You should now be all setup! You can run any command and just pass the `--network goerli` now!
+You should now be all setup! You can run any command and just pass the `--network sepolia` now!
 
 To deploy contracts:
 
 ```
-npm run deploy --network goerli
+npm run deploy --network sepolia
 ```
 
 To run staging testnet tests
@@ -263,10 +263,10 @@ or
 yarn test
 ```
 
-To run staging tests on Goerli network:
+To run staging tests on Sepolia network:
 
 ```
-npx hardhat test --network goerli
+npx hardhat test --network sepolia
 ```
 or
 ```bash
@@ -326,7 +326,7 @@ As explained in the [developer documentation](https://docs.chain.link/vrf/v2/int
 Read the docs first to understand which method is the most suitable for your usecase.
 
 ### VRF Subscription method
-To start, go to [VRF Subscription Page](https://vrf.chain.link/goerli) and create the new subscription. Save your subscription ID and put it in `helper-hardhat-config.js` file as `subscriptionId`:
+To start, go to [VRF Subscription Page](https://vrf.chain.link/sepolia) and create the new subscription. Save your subscription ID and put it in `helper-hardhat-config.js` file as `subscriptionId`:
 
 ```javascript
 5: {
@@ -402,7 +402,7 @@ npx hardhat verify --network <NETWORK> <CONTRACT_ADDRESS> <CONSTRUCTOR_PARAMETER
 example:
 
 ```
-npx hardhat verify --network goerli 0x9279791897f112a41FfDa267ff7DbBC46b96c296 "0x9326BFA02ADD2366b30bacB125260Af641031331"
+npx hardhat verify --network sepolia 0x9279791897f112a41FfDa267ff7DbBC46b96c296 "0x694AA1769357215DE4FAC081bf1f309aDC325306"
 ```
 
 # Linting
