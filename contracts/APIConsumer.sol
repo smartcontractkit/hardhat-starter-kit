@@ -25,8 +25,8 @@ contract APIConsumer is ChainlinkClient {
      * @param _fee - node operator price per API call / data request
      * @param _link - LINK token address on the corresponding network
      *
-     * Network: Goerli
-     * Oracle: 0xCC79157eb46F5624204f47AB42b3906cAA40eaB7
+     * Network: Sepolia
+     * Oracle: 0x6090149792dAAeE9D1D568c9f9a6F6B46AA29eFD
      * Job ID: ca98366cc7314957b8c012c72f05aeeb
      * Fee: 0.1 LINK
      */

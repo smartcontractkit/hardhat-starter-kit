@@ -32,7 +32,7 @@ task("read-random-number", "Reads the random number returned to a contract by Ch
                 )
             } else {
                 console.log(
-                    `Visit https://vrf.chain.link/goerli/${process.env.VRF_SUBSCRIPTION_ID} and make sure that your last request fulfillment is there`
+                    `Visit https://vrf.chain.link/sepolia/${process.env.VRF_SUBSCRIPTION_ID} and make sure that your last request fulfillment is there`
                 )
             }
         }
