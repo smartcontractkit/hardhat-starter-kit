@@ -5,7 +5,7 @@ import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 /**
  * @title The PriceConsumerV3 contract
- * @notice Acontract that returns latest price from Chainlink Price Feeds
+ * @notice A contract that returns latest price from Chainlink Price Feeds
  */
 contract PriceConsumerV3 {
     AggregatorV3Interface internal immutable priceFeed;
