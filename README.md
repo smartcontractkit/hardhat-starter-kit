@@ -53,7 +53,7 @@ It's recommended that you've gone through the [hardhat getting started documenta
 ## Requirements
 
 - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-  - You'll know you did it right if you can run `git --version` and you see a response like `git version x.x.x`
+  - You'll know you did it right if you can run `git --version` and see a response like `git version x.x.x`
 - [Nodejs](https://nodejs.org/en/)
   - You'll know you've installed nodejs right if you can run:
     - `node --version` and get an output like: `vx.x.x`
@@ -130,7 +130,7 @@ This will deploy your contracts to a local network. Additionally, if on a local 
 
 ## Run a Local Network
 
-One of the best ways to test and interact with smart contracts is with a local network. To run a local network with all your contracts in it, run the following:
+One of the best ways to test and interact with smart contracts is by using a local network. To run a local network with all your contracts in it, execute the following command:
 
 ```
 npx hardhat node
@@ -183,7 +183,7 @@ Don't commit and push any changes to .env files that may contain sensitive infor
 SEPOLIA_RPC_URL='https://sepolia.infura.io/v3/asdfadsfafdadf'
 PRIVATE_KEY='abcdef'
 ```
-`bash` example
+`bash` example:
 ```
 export SEPOLIA_RPC_URL='https://sepolia.infura.io/v3/asdfadsfafdadf'
 export PRIVATE_KEY='abcdef'
@@ -218,7 +218,8 @@ npm run test-staging
 
 ## Forking 
  
-If you'd like to run tests or on a network that is a [forked network](https://hardhat.org/hardhat-network/guides/mainnet-forking.html)
+If you would like to run tests on a [forked network](https://hardhat.org/hardhat-network/guides/mainnet-forking.html), follow these steps: 
+
 1. Set a `MAINNET_RPC_URL` environment variable that connects to the mainnet.
 2. Choose a block number to select a state of the network you are forking and set it as `FORKING_BLOCK_NUMBER` environment variable. If ignored, it will use the latest block each time which can lead to test inconsistency.
 3. Set `enabled` flag to `true`/`false` to enable/disable forking feature
