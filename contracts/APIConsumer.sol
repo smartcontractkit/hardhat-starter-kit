@@ -96,7 +96,7 @@ contract APIConsumer is ChainlinkClient {
     }
 
     /**
-     * @notice Witdraws LINK from the contract
+     * @notice Withdraws LINK from the contract
      * @dev Implement a withdraw function to avoid locking your LINK in the contract
      */
     function withdrawLink() external {}

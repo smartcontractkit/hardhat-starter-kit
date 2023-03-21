@@ -26,7 +26,7 @@ const autoFundCheck = async (contractAddr, networkName, linkTokenAddress, additi
     } else {
         //user doesn't have enough LINK, print a warning
         console.log(
-            "Account doesn't have enough LINK to fund contracts, you're deploying to a network where auto funding isnt' done by default, the contract is already funded, or you set AUTO_FUND to false."
+            "Account doesn't have enough LINK to fund contracts, you're deploying to a network where auto funding isn't done by default, the contract is already funded, or you set AUTO_FUND to false."
         )
         console.log(
             `Please obtain LINK via the faucet at https://faucets.chain.link/${networkName} then run the following command to fund contract with LINK:`
