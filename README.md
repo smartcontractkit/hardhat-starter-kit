@@ -153,7 +153,7 @@ This section of the file is where you define which networks you want to interact
 To interact with a live or test network, you'll need:
 
 1. An rpc URL 
-2. A Private Key
+2. A wallet private Key
 3. ETH & LINK token (either testnet or real)
 
 Let's look at an example of setting these up using the Sepolia testnet. 
@@ -168,7 +168,7 @@ First, we will need to set environment variables. We can do so by setting them i
 
 You can get one for free from [Alchemy](https://www.alchemy.com/), [Infura](https://infura.io/), or [Moralis](https://moralis.io/speedy-nodes/). This is your connection to the blockchain. 
 
-2. Set your `PRIVATE_KEY` environment variable. 
+2. Set your `WALLET_PRIVATE_KEY` environment variable. 
 
 This is your private key from your wallet, ie [MetaMask](https://metamask.io/). This is needed for deploying contracts to public networks. You can optionally set your `MNEMONIC` environment variable instead with some changes to the `hardhat.config.js`.
 
@@ -181,15 +181,15 @@ Don't commit and push any changes to .env files that may contain sensitive infor
 `.env` example:
 ```
 SEPOLIA_RPC_URL='https://sepolia.infura.io/v3/asdfadsfafdadf'
-PRIVATE_KEY='abcdef'
+WALLET_PRIVATE_KEY='abcdef'
 ```
 `bash` example:
 ```
 export SEPOLIA_RPC_URL='https://sepolia.infura.io/v3/asdfadsfafdadf'
-export PRIVATE_KEY='abcdef'
+export WALLET_PRIVATE_KEY='abcdef'
 ```
 
-> You can also use a `MNEMONIC` instead of a `PRIVATE_KEY` environment variable by uncommenting the section in the `hardhat.config.js`, and commenting out the `PRIVATE_KEY` line. However this is not recommended. 
+> You can also use a `MNEMONIC` instead of a `WALLET_PRIVATE_KEY` environment variable by uncommenting the section in the `hardhat.config.js`, and commenting out the `WALLET_PRIVATE_KEY` line. However this is not recommended. 
 
 For other networks like mainnet and polygon, you can use different environment variables for your RPC URL and your private key. See the `hardhat.config.js` to learn more. 
 
