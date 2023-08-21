@@ -43,8 +43,8 @@
  Implementation of the following 4 Chainlink features using the [Hardhat](https://hardhat.org/) development environment:
  - [Chainlink Price Feeds](https://docs.chain.link/docs/using-chainlink-reference-contracts)
  - [Chainlink VRF](https://docs.chain.link/docs/chainlink-vrf)
- - [Chainlink Keepers](https://docs.chain.link/docs/chainlink-keepers/introduction/)
- - [Request & Receive data](https://docs.chain.link/docs/request-and-receive-data)
+ - [Chainlink Automation](https://docs.chain.link/chainlink-automation/introduction)
+ - [Request & Receive data (AnyAPI)](https://docs.chain.link/any-api/introduction)
 
 # Getting Started 
 
