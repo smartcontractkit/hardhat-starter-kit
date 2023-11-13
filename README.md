@@ -27,6 +27,7 @@
   - [Chainlink Price Feeds](#chainlink-price-feeds)
   - [Request & Receive Data](#request--receive-data)
   - [VRF Get a random number](#vrf-get-a-random-number)
+  - [Automation](#automation)
   - [Verify on Etherscan](#verify-on-etherscan)
 - [Linting](#linting)
 - [Code Formatting](#code-formatting)
