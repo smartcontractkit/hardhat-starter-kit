@@ -22,7 +22,7 @@ const SEPOLIA_RPC_URL =
     process.env.SEPOLIA_RPC_URL;
 const MUMBAI_RPC_URL =
     process.env.MUMBAI_RPC_URL || "https://polygon-mumbai.g.alchemy.com/v2/your-api-key"
-const PRIVATE_KEY = process.env.PRIVATE_KEY
+const WALLET_PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY
 // optional
 const MNEMONIC = process.env.MNEMONIC || "Your mnemonic"
 const FORKING_BLOCK_NUMBER = parseInt(process.env.FORKING_BLOCK_NUMBER) || 0
@@ -66,7 +66,7 @@ module.exports = {
         },
         sepolia: {
             url: SEPOLIA_RPC_URL !== undefined ? SEPOLIA_RPC_URL : "",
-            accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+            accounts: WALLET_PRIVATE_KEY !== undefined ? [WALLET_PRIVATE_KEY] : [],
             //   accounts: {
             //     mnemonic: MNEMONIC,
             //   },
@@ -74,7 +74,7 @@ module.exports = {
         },
         mainnet: {
             url: MAINNET_RPC_URL,
-            accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+            accounts: WALLET_PRIVATE_KEY !== undefined ? [WALLET_PRIVATE_KEY] : [],
             //   accounts: {
             //     mnemonic: MNEMONIC,
             //   },
@@ -82,12 +82,12 @@ module.exports = {
         },
         polygon: {
             url: POLYGON_MAINNET_RPC_URL,
-            accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+            accounts: WALLET_PRIVATE_KEY !== undefined ? [WALLET_PRIVATE_KEY] : [],
             chainId: 137,
         },
         mumbai: {
             url: MUMBAI_RPC_URL,
-            accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+            accounts: WALLET_PRIVATE_KEY !== undefined ? [WALLET_PRIVATE_KEY] : [],
             chainId: 80001,
         },
     },
