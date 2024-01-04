@@ -5,7 +5,7 @@
   "description": "A repo for boilerplate code for testing, deploying, and shipping chainlink solidity code.",
   "scripts": {
     "compile": "hardhat compile",
-    "test": "hardhat test test/unit/*.spec.js",
+    "test": "hardhat test",
     "test-staging": "hardhat test test/staging/*.spec.js --network sepolia",
     "deploy": "hardhat run scripts/deployment/main.js",
     "lint": "solhint 'contracts/*.sol'",
@@ -36,7 +36,9 @@
     "solhint": "^3.3.7",
     "solhint-plugin-prettier": "^0.0.5",
     "solidity-coverage": "^0.8.2",
-    "typechain": "^8.1.0"
+    "ts-node": "^10.9.2",
+    "typechain": "^8.1.0",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "dotenv": "^16.0.3"
