@@ -39,7 +39,7 @@ async function deployRandomNumberDirectFundingConsumer(chainId) {
         const linkEthFeedFactory = await ethers.getContractFactory("MockV3Aggregator")
         const linkEthFeed = await linkEthFeedFactory.deploy(18, weiPerUnitLink) // 1 LINK = 0.003 ETH
 
-        const linkFactory = await ethers.getContractFactory("LinkToken")
+        const linkFactory = await ethers.getContractFactory("MockLinkToken")
         const link = await linkFactory.deploy()
         linkAddress = link.address
 

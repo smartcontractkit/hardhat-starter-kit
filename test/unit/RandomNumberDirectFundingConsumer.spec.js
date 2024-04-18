@@ -76,7 +76,7 @@ const { assert, expect } = require("chai")
               const linkEthFeedFactory = await ethers.getContractFactory("MockV3Aggregator", owner)
               const linkEthFeed = await linkEthFeedFactory.deploy(18, weiPerUnitLink) // 1 LINK = 0.003 ETH
 
-              const linkFactory = await ethers.getContractFactory("LinkToken", owner)
+              const linkFactory = await ethers.getContractFactory("MockLinkToken", owner)
               const link = await linkFactory.deploy()
 
               const wrapperFactory = await ethers.getContractFactory("VRFV2Wrapper", owner)

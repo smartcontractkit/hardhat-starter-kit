@@ -13,7 +13,7 @@ const autoFundCheck = async (contractAddr, networkName, linkTokenAddress, additi
     //check to see if user has enough LINK
     const accounts = await ethers.getSigners()
     const signer = accounts[0]
-    const LinkToken = await ethers.getContractFactory("LinkToken")
+    const LinkToken = await ethers.getContractFactory("MockLinkToken")
     const linkTokenContract = new ethers.Contract(linkTokenAddress, LinkToken.interface, signer)
     const balanceBN = await linkTokenContract.balanceOf(signer.address)
     const balance = balanceBN.toString()

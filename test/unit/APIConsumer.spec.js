@@ -18,7 +18,7 @@ const { assert, expect } = require("chai")
 
               const chainId = network.config.chainId
 
-              const linkTokenFactory = await ethers.getContractFactory("LinkToken")
+              const linkTokenFactory = await ethers.getContractFactory("MockLinkToken")
               const linkToken = await linkTokenFactory.connect(deployer).deploy()
 
               const mockOracleFactory = await ethers.getContractFactory("MockOracle")
