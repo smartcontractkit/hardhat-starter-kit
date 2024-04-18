@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity >=0.8.6;
 
 import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 
@@ -32,9 +32,9 @@ contract APIConsumer is ChainlinkClient {
      */
     constructor(address _oracle, bytes32 _jobId, uint256 _fee, address _link) {
         if (_link == address(0)) {
-            setPublicChainlinkToken();
+            _setPublicChainlinkToken();
         } else {
-            setChainlinkToken(_link);
+            _setChainlinkToken(_link);
         }
         oracle = _oracle;
         jobId = _jobId;
@@ -48,14 +48,14 @@ contract APIConsumer is ChainlinkClient {
      * @return requestId - id of the request
      */
     function requestVolumeData() public returns (bytes32 requestId) {
-        Chainlink.Request memory request = buildChainlinkRequest(
+        Chainlink.Request memory request = _buildChainlinkRequest(
             jobId,
             address(this),
             this.fulfill.selector
         );
 
         // Set the URL to perform the GET request on
-        request.add(
+        request._add(
             "get",
             "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD"
         );
@@ -71,14 +71,14 @@ contract APIConsumer is ChainlinkClient {
         //   }
         //  }
         // request.add("path", "RAW.ETH.USD.VOLUME24HOUR"); // Chainlink nodes prior to 1.0.0 support this format
-        request.add("path", "RAW,ETH,USD,VOLUME24HOUR"); // Chainlink nodes 1.0.0 and later support this format
+        request._add("path", "RAW,ETH,USD,VOLUME24HOUR"); // Chainlink nodes 1.0.0 and later support this format
 
         // Multiply the result by 1000000000000000000 to remove decimals
         int256 timesAmount = 10 ** 18;
-        request.addInt("times", timesAmount);
+        request._addInt("times", timesAmount);
 
         // Sends the request
-        return sendChainlinkRequestTo(oracle, request, fee);
+        return _sendChainlinkRequestTo(oracle, request, fee);
     }
 
     /**

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 // An example of a consumer contract that directly pays for each request.
-pragma solidity ^0.8.7;
+pragma solidity >=0.8.6;
 
-import "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
-import "@chainlink/contracts/src/v0.8/VRFV2WrapperConsumerBase.sol";
+import "@chainlink/contracts/src/v0.8/shared/access/ConfirmedOwner.sol";
+import "@chainlink/contracts/src/v0.8/vrf/VRFV2WrapperConsumerBase.sol";
 
 /**
  * Request testnet LINK and ETH here: https://faucets.chain.link/
