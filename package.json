@@ -1,7 +1,7 @@
 {
   "name": "hardhat-starter-kit",
   "license": "MIT",
-  "version": "2.0.0",
+  "version": "2.1.1",
   "description": "A repo for boilerplate code for testing, deploying, and shipping chainlink solidity code.",
   "scripts": {
     "compile": "hardhat compile",
