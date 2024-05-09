@@ -2,8 +2,8 @@
 // An example of a consumer contract that directly pays for each request.
 pragma solidity ^0.8.7;
 
-import "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
-import "@chainlink/contracts/src/v0.8/VRFV2WrapperConsumerBase.sol";
+import "@chainlink/contracts/src/v0.8/shared/access/ConfirmedOwner.sol";
+import "@chainlink/contracts/src/v0.8/vrf/VRFV2WrapperConsumerBase.sol";
 
 /**
  * Request testnet LINK and ETH here: https://faucets.chain.link/
@@ -35,18 +35,14 @@ contract RandomNumberDirectFundingConsumerV2 is
         bool fulfilled; // whether the request has been successfully fulfilled
         uint256[] randomWords;
     }
-    mapping(uint256 => RequestStatus)
-        public s_requests; /* requestId --> requestStatus */
+    mapping(uint256 => RequestStatus) public s_requests; /* requestId --> requestStatus */
 
     // past requests Id.
     uint256[] public requestIds;
     uint256 public lastRequestId;
 
     // configuration: https://docs.chain.link/vrf/v2/direct-funding/supported-networks#configurations
-    constructor(
-        address _linkAddress,
-        address _wrapperAddress
-    )
+    constructor(address _linkAddress, address _wrapperAddress)
         ConfirmedOwner(msg.sender)
         VRFV2WrapperConsumerBase(_linkAddress, _wrapperAddress)
     {}
@@ -98,12 +94,14 @@ contract RandomNumberDirectFundingConsumerV2 is
         return requestIds.length;
     }
 
-    function getRequestStatus(
-        uint256 _requestId
-    )
+    function getRequestStatus(uint256 _requestId)
         external
         view
-        returns (uint256 paid, bool fulfilled, uint256[] memory randomWords)
+        returns (
+            uint256 paid,
+            bool fulfilled,
+            uint256[] memory randomWords
+        )
     {
         RequestStatus memory request = s_requests[_requestId];
         if (request.paid == 0) revert RequestNotFound(_requestId);

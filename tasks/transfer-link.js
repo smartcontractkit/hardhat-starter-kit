@@ -17,7 +17,7 @@ task("transfer-link", "Transfer LINK tokens to a recipient")
         const signer = accounts[0]
 
         const linkTokenAddress = networkConfig[networkId]["linkToken"] || taskArgs.linkaddress
-        const LinkToken = await ethers.getContractFactory("LinkToken")
+        const LinkToken = await ethers.getContractFactory("MockLinkToken")
         const linkTokenContract = await LinkToken.attach(linkTokenAddress)
         console.log("linktokenaddress", linkTokenAddress)
         const balance = await linkTokenContract.balanceOf(signer.address)

@@ -18,8 +18,7 @@ const MAINNET_RPC_URL =
     "https://eth-mainnet.alchemyapi.io/v2/your-api-key"
 const POLYGON_MAINNET_RPC_URL =
     process.env.POLYGON_MAINNET_RPC_URL || "https://polygon-mainnet.alchemyapi.io/v2/your-api-key"
-const SEPOLIA_RPC_URL =
-    process.env.SEPOLIA_RPC_URL;
+const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL
 const MUMBAI_RPC_URL =
     process.env.MUMBAI_RPC_URL || "https://polygon-mumbai.g.alchemy.com/v2/your-api-key"
 const PRIVATE_KEY = process.env.PRIVATE_KEY
@@ -37,15 +36,19 @@ module.exports = {
     solidity: {
         compilers: [
             {
+                version: "0.8.19",
+                COMPILER_SETTINGS,
+            },
+            {
                 version: "0.8.7",
                 COMPILER_SETTINGS,
             },
             {
-                version: "0.6.6",
+                version: "0.8.6",
                 COMPILER_SETTINGS,
             },
             {
-                version: "0.4.24",
+                version: "0.8.0",
                 COMPILER_SETTINGS,
             },
         ],

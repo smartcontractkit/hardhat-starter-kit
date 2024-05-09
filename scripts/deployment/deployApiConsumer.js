@@ -4,7 +4,7 @@ const {
     networkConfig,
     developmentChains,
 } = require("../../helper-hardhat-config")
-const LINK_TOKEN_ABI = require("@chainlink/contracts/abi/v0.4/LinkToken.json")
+const LINK_TOKEN_ABI = require("@chainlink/contracts/abi/v0.8/LinkToken.json")
 
 async function deployApiConsumer(chainId) {
     //set log level to ignore non errors
@@ -19,7 +19,7 @@ async function deployApiConsumer(chainId) {
     let oracleAddress
 
     if (chainId == 31337) {
-        const linkTokenFactory = await ethers.getContractFactory("LinkToken")
+        const linkTokenFactory = await ethers.getContractFactory("MockLinkToken")
         linkToken = await linkTokenFactory.connect(deployer).deploy()
 
         const mockOracleFactory = await ethers.getContractFactory("MockOracle")
