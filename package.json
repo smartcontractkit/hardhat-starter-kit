@@ -15,7 +15,7 @@
     "fuzzing": "docker run -it --rm -v $PWD:/src trailofbits/eth-security-toolbox"
   },
   "devDependencies": {
-    "@chainlink/contracts": "^1.1.0-beta.0",
+    "@chainlink/contracts": "^1.1.0",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/providers": "^5.7.1",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.3",
@@ -35,7 +35,7 @@
     "prettier-plugin-solidity": "^1.0.0-beta.24",
     "solhint": "^3.3.7",
     "solhint-plugin-prettier": "^0.0.5",
-    "solidity-coverage": "^0.8.2",
+    "solidity-coverage": "^0.8.12",
     "typechain": "^8.1.0"
   },
   "dependencies": {
