@@ -66,7 +66,12 @@ contract MockOracle is ChainlinkRequestInterface, LinkTokenReceiver {
         uint256 _nonce,
         uint256 _dataVersion,
         bytes calldata _data
-    ) external override validateFromLINK checkCallbackAddress(_callbackAddress) {
+    )
+        external
+        override
+        validateFromLINK
+        checkCallbackAddress(_callbackAddress)
+    {
         bytes32 requestId = keccak256(abi.encodePacked(_sender, _nonce));
         require(
             commitments[requestId].callbackAddr == address(0),
@@ -157,8 +162,15 @@ contract MockOracle is ChainlinkRequestInterface, LinkTokenReceiver {
     }
 
     // @notice Validate the function called on token transfer.
-    function _validateTokenTransferAction(bytes4 funcSelector, bytes memory) internal pure override {
-        require(funcSelector == this.oracleRequest.selector, "Must use oracleRequest function");
+    function _validateTokenTransferAction(bytes4 funcSelector, bytes memory)
+        internal
+        pure
+        override
+    {
+        require(
+            funcSelector == this.oracleRequest.selector,
+            "Must use oracleRequest function"
+        );
     }
 
     // MODIFIERS

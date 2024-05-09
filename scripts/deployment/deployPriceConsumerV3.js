@@ -6,7 +6,7 @@ const {
 } = require("../../helper-hardhat-config")
 
 async function deployPriceConsumerV3(chainId) {
-    let priceFeedAddress;
+    let priceFeedAddress
 
     if (developmentChains.includes(network.name)) {
         const DECIMALS = "18"
@@ -15,7 +15,7 @@ async function deployPriceConsumerV3(chainId) {
         const mockV3AggregatorFactory = await ethers.getContractFactory("MockV3Aggregator")
         const mockV3Aggregator = await mockV3AggregatorFactory.deploy(DECIMALS, INITIAL_PRICE)
 
-        priceFeedAddress = mockV3Aggregator.address;
+        priceFeedAddress = mockV3Aggregator.address
     } else {
         priceFeedAddress = networkConfig[chainId]["ethUsdPriceFeed"]
     }
