@@ -2,18 +2,16 @@
 // An example of a consumer contract that relies on a subscription for funding.
 pragma solidity ^0.8.7;
 
-import "@chainlink/contracts/src/v0.8/vrf/interfaces/VRFCoordinatorV2Interface.sol";
-import "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBaseV2.sol";
+import {VRFConsumerBaseV2Plus} from "@chainlink/contracts/src/v0.8/vrf/dev/VRFConsumerBaseV2Plus.sol";
+import {VRFV2PlusClient} from "@chainlink/contracts/src/v0.8/vrf/dev/libraries/VRFV2PlusClient.sol";
 
 /**
- * @title The RandomNumberConsumerV2 contract
- * @notice A contract that gets random values from Chainlink VRF V2
+ * @title The RandomNumberConsumerV2_5 contract
+ * @notice A contract that gets random values from Chainlink VRF V2_5
  */
-contract RandomNumberConsumerV2 is VRFConsumerBaseV2 {
-    VRFCoordinatorV2Interface immutable COORDINATOR;
-
+contract RandomNumberConsumerV2Plus is VRFConsumerBaseV2Plus {
     // Your subscription ID.
-    uint64 immutable s_subscriptionId;
+    uint256 immutable s_subscriptionId;
 
     // The gas lane to use, which specifies the maximum gas price to bump to.
     // For a list of available gas lanes on each network,
@@ -37,25 +35,22 @@ contract RandomNumberConsumerV2 is VRFConsumerBaseV2 {
 
     uint256[] public s_randomWords;
     uint256 public s_requestId;
-    address s_owner;
 
     event ReturnedRandomness(uint256[] randomWords);
 
     /**
-     * @notice Constructor inherits VRFConsumerBaseV2
+     * @notice Constructor inherits VRFConsumerBaseV2Plus
      *
      * @param subscriptionId - the subscription ID that this contract uses for funding requests
      * @param vrfCoordinator - coordinator, check https://docs.chain.link/docs/vrf-contracts/#configurations
      * @param keyHash - the gas lane to use, which specifies the maximum gas price to bump to
      */
     constructor(
-        uint64 subscriptionId,
+        uint256 subscriptionId,
         address vrfCoordinator,
         bytes32 keyHash
-    ) VRFConsumerBaseV2(vrfCoordinator) {
-        COORDINATOR = VRFCoordinatorV2Interface(vrfCoordinator);
+    ) VRFConsumerBaseV2Plus(vrfCoordinator) {
         s_keyHash = keyHash;
-        s_owner = msg.sender;
         s_subscriptionId = subscriptionId;
     }
 
@@ -65,12 +60,18 @@ contract RandomNumberConsumerV2 is VRFConsumerBaseV2 {
      */
     function requestRandomWords() external onlyOwner {
         // Will revert if subscription is not set and funded.
-        s_requestId = COORDINATOR.requestRandomWords(
-            s_keyHash,
-            s_subscriptionId,
-            REQUEST_CONFIRMATIONS,
-            CALLBACK_GAS_LIMIT,
-            NUM_WORDS
+        s_requestId = s_vrfCoordinator.requestRandomWords(
+            VRFV2PlusClient.RandomWordsRequest({
+                keyHash: s_keyHash,
+                subId: s_subscriptionId,
+                requestConfirmations: REQUEST_CONFIRMATIONS,
+                callbackGasLimit: CALLBACK_GAS_LIMIT,
+                numWords: NUM_WORDS,
+                extraArgs: VRFV2PlusClient._argsToBytes(
+                    // Set nativePayment to true to pay for VRF requests with Sepolia ETH instead of LINK
+                    VRFV2PlusClient.ExtraArgsV1({nativePayment: false})
+                )
+            })
         );
     }
 
@@ -80,16 +81,11 @@ contract RandomNumberConsumerV2 is VRFConsumerBaseV2 {
      * @param requestId - id of the request
      * @param randomWords - array of random results from VRF Coordinator
      */
-    function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords)
+    function fulfillRandomWords(uint256 requestId, uint256[] calldata randomWords)
         internal
         override
     {
         s_randomWords = randomWords;
         emit ReturnedRandomness(randomWords);
-    }
-
-    modifier onlyOwner() {
-        require(msg.sender == s_owner);
-        _;
     }
 }
