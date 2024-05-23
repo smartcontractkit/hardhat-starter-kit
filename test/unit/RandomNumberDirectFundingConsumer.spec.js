@@ -12,16 +12,28 @@ const { assert, expect } = require("chai")
           const oneHundredLink = BigNumber.from("100000000000000000000") // 100 LINK
           const oneHundredGwei = BigNumber.from("100000000000")
 
+          const BASE_FEE = "1000000000000000" // 0.001 ether as base fee
+          const GAS_PRICE = "50000000000" // 50 gwei 
+          const WEI_PER_UNIT_LINK = "10000000000000000" // 0.01 ether per LINK
+
           // Configuration
 
           // This value is the worst-case gas overhead from the wrapper contract under the following
           // conditions, plus some wiggle room:
           //   - 10 words requested
           //   - Refund issued to consumer
-          const wrapperGasOverhead = BigNumber.from(60_000)
-          const coordinatorGasOverhead = BigNumber.from(52_000)
-          const wrapperPremiumPercentage = 10
+          const wrapperGasOverhead = BigNumber.from("13400")
+          const coordinatorGasOverheadNative = BigNumber.from("90000")
+          const coordinatorGasOverheadLink = BigNumber.from("112000")
+          const coordinatorGasOverheadPerWord = BigNumber.from("435")
+          const coordinatorNativePremiumPercentage = 24
+          const coordinatorLinkPremiumPercentage = 20
           const maxNumWords = 10
+          const stalenessSeconds = BigNumber.from("172800")
+          const fallbackWeiPerUnitLink = BigNumber.from("5347462396894712")
+          const fulfillmentFlatFeeNativePPM = BigNumber.from("0")
+          const fulfillmentFlatFeeLinkDiscountPPM = BigNumber.from("0")
+
           const weiPerUnitLink = pointZeroZeroThreeLink
           const flatFee = pointOneLink
 
@@ -29,27 +41,46 @@ const { assert, expect } = require("chai")
               await expect(link.connect(linkOwner).transfer(receiver, amount)).to.not.be.reverted
           }
 
-          // This should match implementation in VRFV2Wrapper::calculateGasPriceInternal
-          const calculatePrice = (
-              gasLimit,
-              _wrapperGasOverhead = wrapperGasOverhead,
-              _coordinatorGasOverhead = coordinatorGasOverhead,
-              _gasPriceWei = oneHundredGwei,
-              _weiPerUnitLink = weiPerUnitLink,
-              _wrapperPremium = wrapperPremiumPercentage,
-              _flatFee = flatFee
-          ) => {
-              const totalGas = BigNumber.from(0)
-                  .add(gasLimit)
-                  .add(_wrapperGasOverhead)
-                  .add(_coordinatorGasOverhead)
-              const baseFee = BigNumber.from("1000000000000000000")
-                  .mul(_gasPriceWei)
-                  .mul(totalGas)
-                  .div(_weiPerUnitLink)
-              const withPremium = baseFee.mul(BigNumber.from(100).add(_wrapperPremium)).div(100)
-              return withPremium.add(_flatFee)
-          }
+        const estimateRequestPriceNative  = (
+            _callbackGasLimit, 
+            _numWords, 
+            _requestGasPriceWei = oneHundredGwei
+        ) => {
+            const wrapperCostWei = _requestGasPriceWei.mul(wrapperGasOverhead)
+            const coordinatorOverhead = coordinatorGasOverheadPerWord.mul(_numWords).add(coordinatorGasOverheadNative)
+            
+            const coordinatorCostWei = _requestGasPriceWei
+                .mul((_callbackGasLimit.add(coordinatorOverhead)));
+            
+            const coordinatorCostWithPremiumAndFlatFeeWei = 
+                (coordinatorCostWei
+                    .mul((coordinatorNativePremiumPercentage.add(100)))
+                    .div(100))
+                .add(BigNumber.from(1000000000000).mul(fulfillmentFlatFeeNativePPM))
+
+            return wrapperCostWei.add(coordinatorCostWithPremiumAndFlatFeeWei);
+        }
+
+        const estimateRequestPrice = (
+                _callbackGasLimit,
+                _numWords,
+                _requestGasPriceWei = oneHundredGwei,
+                _weiPerUnitLink = WEI_PER_UNIT_LINK
+        ) => {
+            const wrapperCostWei = _requestGasPriceWei.mul(wrapperGasOverhead)
+            const coordinatorOverhead = coordinatorGasOverheadPerWord.mul(_numWords).add(coordinatorGasOverheadLink)
+            
+            const coordinatorCostWei = _requestGasPriceWei
+                .mul((BigNumber.from(_callbackGasLimit).add(coordinatorOverhead)));
+            
+            const coordinatorCostWithPremiumAndFlatFeeWei = 
+                (coordinatorCostWei
+                    .mul((BigNumber.from(coordinatorLinkPremiumPercentage).add(100)))
+                    .div(100))
+                .add(BigNumber.from(1000000000000).mul(fulfillmentFlatFeeNativePPM.sub(fulfillmentFlatFeeLinkDiscountPPM)))
+            
+            return (BigNumber.from("1000000000000000000").mul(wrapperCostWei.add(coordinatorCostWithPremiumAndFlatFeeWei))).div(_weiPerUnitLink)
+        }
 
           // We define a fixture to reuse the same setup in every test.
           // We use loadFixture to run this setup once, snapshot that state,
@@ -65,29 +96,35 @@ const { assert, expect } = require("chai")
               const chainId = network.config.chainId
 
               const coordinatorFactory = await ethers.getContractFactory(
-                  "VRFCoordinatorV2Mock",
+                  "VRFCoordinatorV2_5Mock",
                   owner
               )
               const coordinator = await coordinatorFactory.deploy(
-                  pointOneLink,
-                  1e9 // 0.000000001 LINK per gas
+                BASE_FEE,
+                GAS_PRICE,
+                WEI_PER_UNIT_LINK
               )
 
+              const transaction = await coordinator.createSubscription()
+              const transactionReceipt = await transaction.wait(1)
+              const subscriptionId = ethers.BigNumber.from(transactionReceipt.events[0].topics[1])
+
               const linkEthFeedFactory = await ethers.getContractFactory("MockV3Aggregator", owner)
-              const linkEthFeed = await linkEthFeedFactory.deploy(18, weiPerUnitLink) // 1 LINK = 0.003 ETH
+              const linkEthFeed = await linkEthFeedFactory.deploy(18, WEI_PER_UNIT_LINK) // 1 LINK = 0.01 ETH
 
               const linkFactory = await ethers.getContractFactory("MockLinkToken", owner)
               const link = await linkFactory.deploy()
 
-              const wrapperFactory = await ethers.getContractFactory("VRFV2Wrapper", owner)
+              const wrapperFactory = await ethers.getContractFactory("VRFV2PlusWrapper", owner)
               const wrapper = await wrapperFactory.deploy(
                   link.address,
                   linkEthFeed.address,
-                  coordinator.address
+                  coordinator.address,
+                  subscriptionId,
               )
 
               const consumerFactory = await ethers.getContractFactory(
-                  "RandomNumberDirectFundingConsumerV2",
+                  "RandomNumberDirectFundingConsumerV2Plus",
                   consumerOwner
               )
               const consumer = await consumerFactory.deploy(link.address, wrapper.address)
@@ -98,14 +135,22 @@ const { assert, expect } = require("chai")
                   .connect(owner)
                   .setConfig(
                       wrapperGasOverhead,
-                      coordinatorGasOverhead,
-                      wrapperPremiumPercentage,
+                      coordinatorGasOverheadNative,
+                      coordinatorGasOverheadLink,
+                      coordinatorGasOverheadPerWord,
+                      coordinatorNativePremiumPercentage,
+                      coordinatorLinkPremiumPercentage,
                       keyHash,
-                      maxNumWords
+                      maxNumWords,
+                      stalenessSeconds,
+                      fallbackWeiPerUnitLink,
+                      fulfillmentFlatFeeNativePPM,
+                      fulfillmentFlatFeeLinkDiscountPPM
                   )
 
               // fund subscription. The Wrapper's subscription id is 1
-              await coordinator.connect(owner).fundSubscription(1, oneHundredLink)
+              await coordinator.connect(owner).fundSubscription(subscriptionId, oneHundredLink)
+              await coordinator.connect(owner).addConsumer(subscriptionId, wrapper.address)
 
               return {
                   coordinator,
@@ -116,6 +161,7 @@ const { assert, expect } = require("chai")
                   requester,
                   consumerOwner,
                   withdrawRecipient,
+                  subscriptionId,
               }
           }
 
@@ -125,17 +171,17 @@ const { assert, expect } = require("chai")
                       const { consumer, wrapper, coordinator, link, owner, consumerOwner } =
                           await loadFixture(deployRandomNumberConsumerFixture)
                       await fund(link, owner, consumer.address, oneHundredLink)
+                      const numWords = 2
                       const gasLimit = 100_000
-                      const price = calculatePrice(gasLimit)
+                      const price = estimateRequestPrice(gasLimit, numWords)
+                      
 
                       // estimate price from wrapper side
-                      const estimatedWrapperPrice = await wrapper.calculateRequestPrice(gasLimit, {
-                          gasPrice: oneHundredGwei,
-                      })
+                      const estimatedWrapperPrice = await wrapper.estimateRequestPrice(gasLimit, numWords, oneHundredGwei)
+
                       expect(price).to.eq(estimatedWrapperPrice)
 
                       const requestId = 1
-                      const numWords = 1
 
                       await expect(
                           consumer
@@ -157,16 +203,16 @@ const { assert, expect } = require("chai")
                   })
 
                   it("Should successfully request a random number and get a result", async () => {
-                      const { consumer, wrapper, coordinator, link, owner, consumerOwner } =
+                      const { consumer, wrapper, coordinator, link, owner, consumerOwner, subscriptionId } =
                           await loadFixture(deployRandomNumberConsumerFixture)
                       await fund(link, owner, consumer.address, oneHundredLink)
+                      
                       // check initial balance of wrapper
-                      const subscriptionId = 1
                       const { balance: initialSubscriptionbalance } =
                           await coordinator.getSubscription(subscriptionId)
                       const gasLimit = 100_000
-                      const price = calculatePrice(gasLimit)
                       const numWords = 1
+                      const price = estimateRequestPrice(gasLimit, numWords)
 
                       await consumer
                           .connect(consumerOwner)
@@ -230,8 +276,8 @@ const { assert, expect } = require("chai")
                       await fund(link, owner, consumer.address, oneHundredLink)
 
                       const gasLimit = 250_000
-                      const price = calculatePrice(gasLimit)
                       const numWords = 7
+                      const price = estimateRequestPrice(gasLimit, numWords)
 
                       await consumer
                           .connect(consumerOwner)
@@ -280,6 +326,7 @@ const { assert, expect } = require("chai")
                           })
                       ).to.reverted
                   })
+
                   it("Cannot request more than maxNumWords ", async () => {
                       const { consumer, link, owner, consumerOwner } = await loadFixture(
                           deployRandomNumberConsumerFixture
