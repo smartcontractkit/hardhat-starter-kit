@@ -6,7 +6,7 @@ const LINK_TOKEN_ABI = require("@chainlink/contracts/abi/v0.8/LinkToken.json")
 developmentChains.includes(network.name)
     ? describe.skip
     : describe("Random Number Direct Funding Consumer Staging Tests", async () => {
-          let randomNumberConsumerV2, linkToken, deployer
+          let randomNumberConsumerV2Plus, linkToken, deployer
 
           before(async () => {
               ;[deployer] = await ethers.getSigners()
@@ -15,18 +15,18 @@ developmentChains.includes(network.name)
 
               const vrfWrapperAddress = networkConfig[chainId]["vrfWrapper"]
 
-              const randomNumberConsumerV2Factory = await ethers.getContractFactory(
-                  "RandomNumberDirectFundingConsumerV2"
+              const randomNumberConsumerV2PlusFactory = await ethers.getContractFactory(
+                  "RandomNumberDirectFundingConsumerV2Plus"
               )
               const linkTokenAddress = networkConfig[chainId]["linkToken"]
               linkToken = new ethers.Contract(linkTokenAddress, LINK_TOKEN_ABI, deployer)
-              randomNumberConsumerV2 = await randomNumberConsumerV2Factory
+              randomNumberConsumerV2Plus = await randomNumberConsumerV2PlusFactory
                   .connect(deployer)
                   .deploy(linkTokenAddress, vrfWrapperAddress)
-              await randomNumberConsumerV2.deployed()
+              await randomNumberConsumerV2Plus.deployed()
               const fundAmount = "2000000000000000000" // 2
 
-              const tx = await linkToken.transfer(randomNumberConsumerV2.address, fundAmount)
+              const tx = await linkToken.transfer(randomNumberConsumerV2Plus.address, fundAmount)
               // wait until the transaction is mined
               await tx.wait()
           })
@@ -37,12 +37,12 @@ developmentChains.includes(network.name)
               // we setup a promise so we can wait for our callback from the `once` function
               await new Promise(async (resolve, reject) => {
                   // setup listener for our event
-                  randomNumberConsumerV2.once("RequestFulfilled", async () => {
+                  randomNumberConsumerV2Plus.once("RequestFulfilled", async () => {
                       console.log("RequestFulfilled event fired!")
-                      const requestId = await randomNumberConsumerV2.lastRequestId()
-                      const numberOfRequests = await randomNumberConsumerV2.getNumberOfRequests()
+                      const requestId = await randomNumberConsumerV2Plus.lastRequestId()
+                      const numberOfRequests = await randomNumberConsumerV2Plus.getNumberOfRequests()
                       const { fulfilled, randomWords } =
-                          await randomNumberConsumerV2.getRequestStatus(requestId)
+                          await randomNumberConsumerV2Plus.getRequestStatus(requestId)
 
                       try {
                           assert(
@@ -60,7 +60,7 @@ developmentChains.includes(network.name)
                       }
                   })
                   try {
-                      const tx = await randomNumberConsumerV2.requestRandomWords(
+                      const tx = await randomNumberConsumerV2Plus.requestRandomWords(
                           gasLimit,
                           3,
                           numWords,

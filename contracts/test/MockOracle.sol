@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-import "@chainlink/contracts/src/v0.8/operatorforwarder/dev/LinkTokenReceiver.sol";
+import "@chainlink/contracts/src/v0.8/operatorforwarder/LinkTokenReceiver.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/ChainlinkRequestInterface.sol";
 import "@chainlink/contracts/src/v0.8/shared/interfaces/LinkTokenInterface.sol";
 
@@ -104,11 +104,10 @@ contract MockOracle is ChainlinkRequestInterface, LinkTokenReceiver {
      * @param _data The data to return to the consuming contract
      * @return Status if the external call was successful
      */
-    function fulfillOracleRequest(bytes32 _requestId, bytes32 _data)
-        external
-        isValidRequest(_requestId)
-        returns (bool)
-    {
+    function fulfillOracleRequest(
+        bytes32 _requestId,
+        bytes32 _data
+    ) external isValidRequest(_requestId) returns (bool) {
         Request memory req = commitments[_requestId];
         delete commitments[_requestId];
         require(
@@ -162,11 +161,10 @@ contract MockOracle is ChainlinkRequestInterface, LinkTokenReceiver {
     }
 
     // @notice Validate the function called on token transfer.
-    function _validateTokenTransferAction(bytes4 funcSelector, bytes memory)
-        internal
-        pure
-        override
-    {
+    function _validateTokenTransferAction(
+        bytes4 funcSelector,
+        bytes memory
+    ) internal pure override {
         require(
             funcSelector == this.oracleRequest.selector,
             "Must use oracleRequest function"
