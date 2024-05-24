@@ -68,9 +68,7 @@ developmentChains.includes(network.name)
                   randomNumberConsumerV2Plus.once("ReturnedRandomness", async () => {
                       console.log("ReturnedRandomness event fired!")
                       const firstRandomNumber = await randomNumberConsumerV2Plus.s_randomWords(0)
-                      console.log(`first random number is ${firstRandomNumber}`)
                       const secondRandomNumber = await randomNumberConsumerV2Plus.s_randomWords(1)
-                      console.log(`second random number is ${secondRandomNumber}`)
                       // assert throws an error if it fails, so we need to wrap
                       // it in a try/catch so that the promise returns event
                       // if it fails.
