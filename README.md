@@ -48,6 +48,10 @@
  - [Chainlink Automation](https://docs.chain.link/chainlink-automation/introduction)
  
 
+ For [Chainlink Functions](https://docs.chain.link/chainlink-functions) please go to these tarter kits: [Hardhat](https://github.com/smartcontractkit/functions-hardhat-starter-kit)  |  [Foundry (coming soon)](https://github.com/smartcontractkit/functions-foundry-starter-kit)
+
+For [Chainlink CCIP (Cross Chain Interoperability Prototocol)](https://docs.chain.link/ccip) please go to these starter kits: [Hardhat](https://github.com/smartcontractkit/ccip-starter-kit-hardhat) | [Foundry](https://github.com/smartcontractkit/ccip-starter-kit-foundry)
+
 # Getting Started 
 
 It's recommended that you've gone through the [hardhat getting started documentation](https://hardhat.org/getting-started/) before proceeding here. 
