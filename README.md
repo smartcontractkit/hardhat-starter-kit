@@ -39,10 +39,11 @@
   - [Resources](#resources)
 
 # Chainlink Hardhat Starter Kit
- Implementation of the following 4 Chainlink features using the [Hardhat](https://hardhat.org/) development environment:
+ Implementation of the following 3 Chainlink features using the [Hardhat](https://hardhat.org/) development environment:
  - [Chainlink Price Feeds](https://docs.chain.link/docs/using-chainlink-reference-contracts)
  - [Chainlink VRF](https://docs.chain.link/docs/chainlink-vrf)
  - [Chainlink Automation](https://docs.chain.link/chainlink-automation/introduction)
+ Chainlink Any API is removed from this starter kit because Chainlink Any API is currently replaced by [Chainlink Functions](https://docs.chain.link/chainlink-functions). Please find the starter kit for Chainlink Functions [here](https://github.com/smartcontractkit/functions-hardhat-starter-kit)
 
 # Getting Started 
 
