@@ -5,6 +5,9 @@
 </a>
 </p>
 <br/>
+ 
+ ## Tip
+> Please be attention that Chainlink Any API is removed from this starter kit because Chainlink Any API is currently replaced by [Chainlink Functions](https://docs.chain.link/chainlink-functions). Please find the starter kit for Chainlink Functions [here](https://github.com/smartcontractkit/functions-hardhat-starter-kit)
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/smartcontractkit/hardhat-starter-kit)
 
@@ -44,7 +47,6 @@
  - [Chainlink VRF](https://docs.chain.link/docs/chainlink-vrf)
  - [Chainlink Automation](https://docs.chain.link/chainlink-automation/introduction)
  
- Tip: Chainlink Any API is removed from this starter kit because Chainlink Any API is currently replaced by [Chainlink Functions](https://docs.chain.link/chainlink-functions). Please find the starter kit for Chainlink Functions [here](https://github.com/smartcontractkit/functions-hardhat-starter-kit)
 
 # Getting Started 
 
