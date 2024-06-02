@@ -48,7 +48,7 @@ const networkConfig = {
     80002: {
         name: "amoy",
         linkToken: "0x0fd9e8d3af1aaee056eb9e802c3a762a667b1904",
-        ethUsdPriceFeed: "0x0715A7794a1dc8e42615F059dD6e406A6594651A",
+        ethUsdPriceFeed: "0xF0d50568e3A7e8259E16663972b11910F89BD8e7",
         keyHash: "0x816bedba8a50b294e5cbd47842baf240c2385f2eaf719edbd4f250a137a8c899",
         vrfCoordinator: "0x343300b5d84D444B2ADc9116FEF1bED02BE49Cf2",
         vrfWrapper: "0x6e6c366a1cd1F92ba87Fd6f96F743B0e6c967Bf0",
