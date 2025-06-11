@@ -13,9 +13,10 @@ async function deployRandomNumberConsumer(chainId) {
     if (chainId == 31337) {
         const BASE_FEE = "100000000000000000"
         const GAS_PRICE_LINK = "1000000000" // 0.000000001 LINK per gas
+        const WEI_PER_UNIT_LINK = "4000000000000000"
 
-        const VRFCoordinatorV2MockFactory = await ethers.getContractFactory("VRFCoordinatorV2Mock")
-        VRFCoordinatorV2Mock = await VRFCoordinatorV2MockFactory.deploy(BASE_FEE, GAS_PRICE_LINK)
+        const VRFCoordinatorV2MockFactory = await ethers.getContractFactory("VRFCoordinatorV2_5Mock")
+        VRFCoordinatorV2Mock = await VRFCoordinatorV2MockFactory.deploy(BASE_FEE, GAS_PRICE_LINK, WEI_PER_UNIT_LINK)
         vrfCoordinatorAddress = VRFCoordinatorV2Mock.address
 
         const fundAmount = networkConfig[chainId]["fundAmount"] || "1000000000000000000"
@@ -30,7 +31,7 @@ async function deployRandomNumberConsumer(chainId) {
 
     const keyHash = networkConfig[chainId]["keyHash"]
 
-    const randomNumberConsumerV2Factory = await ethers.getContractFactory("RandomNumberConsumerV2")
+    const randomNumberConsumerV2Factory = await ethers.getContractFactory("RandomNumberConsumerV2Plus")
     const randomNumberConsumerV2 = await randomNumberConsumerV2Factory.deploy(
         subscriptionId,
         vrfCoordinatorAddress,
