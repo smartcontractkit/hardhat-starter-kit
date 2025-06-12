@@ -18,9 +18,16 @@ async function deployRandomNumberDirectFundingConsumer(chainId) {
     //   - 10 words requested
     //   - Refund issued to consumer
     const wrapperGasOverhead = BigNumber.from(60_000)
-    const coordinatorGasOverhead = BigNumber.from(52_000)
-    const wrapperPremiumPercentage = 10
+    const coordinatorGasOverheadNative = BigNumber.from(52_000)
+    const coordinatorGasOverheadLink = BigNumber.from(52_000)
+    const coordinatorGasOverheadPerWord = BigNumber.from(325)
+    const coordinatorNativePremiumPercentage = 10
+    const coordinatorLinkPremiumPercentage = 10
     const maxNumWords = 10
+    const stalenessSeconds = 86400 // 24 hours
+    const fallbackWeiPerUnitLink = pointZeroZeroThreeLink
+    const fulfillmentFlatFeeNativePPM = 500000 // 0.5 USD flat fee
+    const fulfillmentFlatFeeLinkDiscountPPM = 100000 // 0.1 USD discount for LINK payment
     const weiPerUnitLink = pointZeroZeroThreeLink
 
     let wrapper, wrapperAddress, linkAddress
@@ -30,11 +37,12 @@ async function deployRandomNumberDirectFundingConsumer(chainId) {
          * @dev Read more at https://docs.chain.link/docs/chainlink-vrf/
          */
 
-        const coordinatorFactory = await ethers.getContractFactory("VRFCoordinatorV2Mock")
-        const coordinator = await coordinatorFactory.deploy(
-            pointOneLink,
-            1e9 // 0.000000001 LINK per gas
-        )
+        const BASE_FEE = "100000000000000000"
+        const GAS_PRICE_LINK = "1000000000" // 0.000000001 LINK per gas
+        const WEI_PER_UNIT_LINK = "4000000000000000"
+
+        const coordinatorFactory = await ethers.getContractFactory("VRFCoordinatorV2_5Mock")
+        const coordinator = await coordinatorFactory.deploy(BASE_FEE, GAS_PRICE_LINK, WEI_PER_UNIT_LINK)
 
         const linkEthFeedFactory = await ethers.getContractFactory("MockV3Aggregator")
         const linkEthFeed = await linkEthFeedFactory.deploy(18, weiPerUnitLink) // 1 LINK = 0.003 ETH
@@ -43,29 +51,41 @@ async function deployRandomNumberDirectFundingConsumer(chainId) {
         const link = await linkFactory.deploy()
         linkAddress = link.address
 
-        const wrapperFactory = await ethers.getContractFactory("VRFV2Wrapper")
-        wrapper = await wrapperFactory.deploy(linkAddress, linkEthFeed.address, coordinator.address)
+        // Create subscription first
+        const createSubTx = await coordinator.createSubscription()
+        const createSubReceipt = await createSubTx.wait()
+        const subId = createSubReceipt.events[0].args.subId
+
+        const wrapperFactory = await ethers.getContractFactory("VRFV2PlusWrapper")
+        wrapper = await wrapperFactory.deploy(linkAddress, linkEthFeed.address, coordinator.address, subId)
         wrapperAddress = wrapper.address
 
         // configure wrapper
         const keyHash = networkConfig[chainId]["keyHash"]
         await wrapper.setConfig(
             wrapperGasOverhead,
-            coordinatorGasOverhead,
-            wrapperPremiumPercentage,
+            coordinatorGasOverheadNative,
+            coordinatorGasOverheadLink,
+            coordinatorGasOverheadPerWord,
+            coordinatorNativePremiumPercentage,
+            coordinatorLinkPremiumPercentage,
             keyHash,
-            maxNumWords
+            maxNumWords,
+            stalenessSeconds,
+            fallbackWeiPerUnitLink,
+            fulfillmentFlatFeeNativePPM,
+            fulfillmentFlatFeeLinkDiscountPPM
         )
 
-        // fund subscription. The Wrapper's subscription id is 1
-        await coordinator.fundSubscription(1, oneHundredLink)
+        // fund subscription. The Wrapper's subscription id is the created subId
+        await coordinator.fundSubscription(subId, oneHundredLink)
     } else {
         wrapperAddress = networkConfig[chainId]["vrfWrapper"]
         linkAddress = networkConfig[chainId]["linkToken"]
     }
 
     const randomNumberConsumerV2Factory = await ethers.getContractFactory(
-        "RandomNumberDirectFundingConsumerV2"
+        "RandomNumberDirectFundingConsumerV2Plus"
     )
     const randomNumberConsumerV2 = await randomNumberConsumerV2Factory.deploy(
         linkAddress,
