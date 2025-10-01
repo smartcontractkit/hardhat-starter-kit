@@ -29,6 +29,7 @@
     "ethers": "^5.7.1",
     "hardhat": "^2.22.3",
     "hardhat-gas-reporter": "^1.0.9",
+    "hardhat-preprocessor": "^0.1.5",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
@@ -39,8 +40,7 @@
     "typechain": "^8.1.0"
   },
   "dependencies": {
-    "dotenv": "^16.0.3",
-    "hardhat-preprocessor": "^0.1.5"
+    "dotenv": "^16.0.3"
   },
   "lint-staged": {
     "*.{js,json,yml,yaml}": [
