@@ -5,8 +5,11 @@
 </a>
 </p>
 <br/>
- 
- ## Tip
+
+> [!IMPORTANT]
+> This branch contains the Hardhat 2 starter kit. For Hardhat 3, see the [hardhat-3 branch](https://github.com/smartcontractkit/hardhat-starter-kit/tree/hardhat-3).
+
+## Tip
 > Please be attention that Chainlink Any API is removed from this starter kit because Chainlink Any API is currently replaced by [Chainlink Functions](https://docs.chain.link/chainlink-functions). Please find the starter kit for Chainlink Functions [here](https://github.com/smartcontractkit/functions-hardhat-starter-kit)
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/smartcontractkit/hardhat-starter-kit)
@@ -35,6 +38,7 @@
 - [Estimating Gas](#estimating-gas)
 - [Code Coverage](#code-coverage)
 - [Fuzzing](#fuzzing)
+- [Remapping](#remapping)
 - [Contributing](#contributing)
 - [Thank You!](#thank-you)
   - [Resources](#resources)
@@ -435,6 +439,24 @@ To exit Echidna type
 ```bash
 exit
 ```
+
+# Remapping
+
+In Solidity, [remapping](https://docs.soliditylang.org/en/latest/path-resolution.html#import-remapping) is a way to define shorthand import paths so that developers can avoid writing long relative paths when importing contracts. For example, instead of writing `import "../../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";`, you could define a remapping such as `@openzeppelin/=node_modules/@openzeppelin/` and simply use `import "@openzeppelin/contracts/token/ERC20/ERC20.sol";`. This makes contract imports cleaner, easier to maintain, and more consistent across different projects. Remappings are commonly used in development environments like [Foundry](https://getfoundry.sh/guides/project-setup/dependencies/#remapping-dependencies) or [Hardhat 3](https://hardhat.org/docs/), but Hardhat 2 does not support them natively.
+
+To work around this limitation, you can use the [hardhat-preprocessor](https://www.npmjs.com/package/hardhat-preprocessor) plugin, which preprocesses Solidity files before compilation and rewrites the imports according to your remapping rules. This plugin works by extending the available configuration options of the expected [`HardhatUserConfig`](https://v2.hardhat.org/hardhat-runner/docs/config) object to include a preprocess property. 
+
+This starter kit contains example code of this in action within the [`remappings-helper.js`](./remappings-helper.js) file using the included remappings located within [`remappings.txt`](./remappings.txt). 
+
+> [!WARNING]
+> The [hardhat-preprocessor](https://www.npmjs.com/package/hardhat-preprocessor) plugin is a third-party plugin. 
+> Use it at your own discretion and review its source before adopting it in any production environments. 
+
+## Adding your own remappings
+
+As your project expands, you may find the need for more dependencies. This may result in the requirement of additional remappings. To include more remappings, simply add your remapping to the `remappings.txt` file.
+
+The expected syntax is: `<prefix>=<resolved-path>`
 
 # Contributing
 
