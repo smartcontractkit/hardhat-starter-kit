@@ -1,8 +1,8 @@
 const { network, ethers } = require("hardhat")
 const { networkConfig, developmentChains } = require("../../helper-hardhat-config")
 const { assert } = require("chai")
-const VRF_COORDINATOR_ABI = require("@chainlink/contracts/abi/v0.8/VRFCoordinatorV2_5.json")
-const LINK_TOKEN_ABI = require("@chainlink/contracts/abi/v0.8/LinkToken.json")
+const VRF_COORDINATOR_ABI = require("@chainlink/contracts/abi/v0.8/vrf/VRFCoordinatorV2_5.abi.json")
+const LINK_TOKEN_ABI = require("@chainlink/contracts/abi/v0.8/shared/LinkToken.abi.json")
 
 developmentChains.includes(network.name)
     ? describe.skip
