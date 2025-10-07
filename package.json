@@ -15,7 +15,7 @@
     "fuzzing": "docker run -it --rm -v $PWD:/src trailofbits/eth-security-toolbox"
   },
   "devDependencies": {
-    "@chainlink/contracts": "^1.4.0",
+    "@chainlink/contracts": "1.5.0",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/providers": "^5.7.1",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.3",
@@ -29,6 +29,7 @@
     "ethers": "^5.7.1",
     "hardhat": "^2.22.3",
     "hardhat-gas-reporter": "^1.0.9",
+    "hardhat-preprocessor": "^0.1.5",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",

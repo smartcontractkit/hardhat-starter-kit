@@ -1,0 +1,5 @@
+@openzeppelin/contracts@4.7.3/=node_modules/@openzeppelin/contracts-4.7.3/
+@openzeppelin/contracts@4.8.3/=node_modules/@openzeppelin/contracts-4.8.3/
+@openzeppelin/contracts@4.9.6/=node_modules/@openzeppelin/contracts-4.9.6/
+@openzeppelin/contracts@5.0.2/=node_modules/@openzeppelin/contracts-5.0.2/
+@openzeppelin/contracts@5.1.0/=node_modules/@openzeppelin/contracts-5.1.0/

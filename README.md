@@ -5,8 +5,11 @@
 </a>
 </p>
 <br/>
- 
- ## Tip
+
+> [!IMPORTANT]
+> This branch contains the Hardhat 2 starter kit. For Hardhat 3, see the [hardhat-3 branch](https://github.com/smartcontractkit/hardhat-starter-kit/tree/hardhat-3). This branch uses Solidity [Remapping](#import-remapping) and the [hardhat-preprocessor](https://www.npmjs.com/package/hardhat-preprocessor) plugin to resolve imports correctly. <b>If you have errors when compiling dependencies please consult the [Remapping](#import-remapping) section of this README.  </b>
+
+## Tip
 > Please be attention that Chainlink Any API is removed from this starter kit because Chainlink Any API is currently replaced by [Chainlink Functions](https://docs.chain.link/chainlink-functions). Please find the starter kit for Chainlink Functions [here](https://github.com/smartcontractkit/functions-hardhat-starter-kit)
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/smartcontractkit/hardhat-starter-kit)
@@ -35,6 +38,7 @@
 - [Estimating Gas](#estimating-gas)
 - [Code Coverage](#code-coverage)
 - [Fuzzing](#fuzzing)
+- [Import Remapping](#import-remapping)
 - [Contributing](#contributing)
 - [Thank You!](#thank-you)
   - [Resources](#resources)
@@ -176,7 +180,7 @@ You can get one for free from [Alchemy](https://www.alchemy.com/), [Infura](http
 
 This is your private key from your wallet, ie [MetaMask](https://metamask.io/). This is needed for deploying contracts to public networks. You can optionally set your `MNEMONIC` environment variable instead with some changes to the `hardhat.config.js`.
 
-![WARNING](https://via.placeholder.com/15/f03c15/000000?text=+) **WARNING** ![WARNING](https://via.placeholder.com/15/f03c15/000000?text=+)
+**⚠️ WARNING ⚠️** 
 
 When developing, it's best practice to use a Metamask that isn't associated with any real money. A good way to do this is to make a new browser profile (on Chrome, Brave, Firefox, etc) and install Metamask on that browser, and never send this wallet money.  
 
@@ -435,6 +439,24 @@ To exit Echidna type
 ```bash
 exit
 ```
+
+# Import Remapping
+
+In Solidity, [remapping](https://docs.soliditylang.org/en/latest/path-resolution.html#import-remapping) is a way to define shorthand import paths so that developers can avoid writing long relative paths when importing contracts. For example, instead of writing `import "../../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";`, you could define a remapping such as `@openzeppelin/=node_modules/@openzeppelin/` and simply use `import "@openzeppelin/contracts/token/ERC20/ERC20.sol";`. This makes contract imports cleaner, easier to maintain, and more consistent across different projects. Remappings are commonly used in development environments like [Foundry](https://getfoundry.sh/guides/project-setup/dependencies/#remapping-dependencies) or [Hardhat 3](https://hardhat.org/docs/), but Hardhat 2 does not support them natively.
+
+To work around this limitation, you can use the [hardhat-preprocessor](https://www.npmjs.com/package/hardhat-preprocessor) plugin, which preprocesses Solidity files before compilation and rewrites the imports according to your remapping rules. This plugin works by extending the available configuration options of the expected [`HardhatUserConfig`](https://v2.hardhat.org/hardhat-runner/docs/config) object to include a preprocess property. 
+
+This starter kit contains example code of this workaround in action within the [`remappings-helper.js`](./remappings-helper.js) file, and uses the remappings located within [`remappings.txt`](./remappings.txt). 
+
+> [!WARNING]
+> The [hardhat-preprocessor](https://www.npmjs.com/package/hardhat-preprocessor) plugin is a third-party plugin. 
+> Use it at your own discretion and review its source before adopting it in any production environments. 
+
+## Adding your own remappings
+
+As your project expands, you may find the need for more dependencies. This may result in the requirement of additional remappings. To include more remappings, simply add your remapping to the `remappings.txt` file.
+
+The expected syntax is: `<prefix>=<resolved-path>`
 
 # Contributing
 

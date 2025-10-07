@@ -1,6 +1,7 @@
 require("@nomicfoundation/hardhat-toolbox")
 require("./tasks")
 require("dotenv").config()
+const {remapImportPaths} = require("./remappings-helper.js")
 
 const COMPILER_SETTINGS = {
     optimizer: {
@@ -132,4 +133,5 @@ module.exports = {
     mocha: {
         timeout: 300000, // 300 seconds max for running tests
     },
+    preprocess: remapImportPaths()
 }
