@@ -12,7 +12,7 @@ task("transfer-link", "Transfer LINK tokens to a recipient")
         const { recipient: recipientAddress, amount } = taskArgs
         const networkId = network.config.chainId
 
-        //Get signer information
+        // Get signer information
         const accounts = await hre.ethers.getSigners()
         const signer = accounts[0]
 

@@ -11,10 +11,10 @@ task("balance", "Prints an account's balances of native and LINK tokens")
         const networkId = network.config.chainId
         const provider = signer.provider
 
-        // native token
+        // Get native token balance
         const balance = await provider.getBalance(account)
 
-        // fetch link balance
+        // Fetch LINK token balance
         const linkTokenAddress = networkConfig[networkId]["linkToken"] || taskArgs.linkaddress
         const LinkToken = await ethers.getContractFactory("MockLinkToken")
         const linkTokenContract = await LinkToken.attach(linkTokenAddress)
