@@ -15,7 +15,7 @@ task(
             networkId
         )
 
-        //Get signer information
+        // Get signer information
         const accounts = await ethers.getSigners()
         const signer = accounts[0]
         const automationCounterContract = await new ethers.Contract(

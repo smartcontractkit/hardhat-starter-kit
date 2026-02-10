@@ -18,7 +18,7 @@ task(
         const accounts = await hre.ethers.getSigners()
         const signer = accounts[0]
 
-        // Create connection to VRF Contract and call the getRandomNumber function
+        // Create connection to VRF Contract and call the requestRandomWords function
         const vrfConsumerContractV2 = new ethers.Contract(
             contractAddr,
             RandomNumberConsumerV2.interface,

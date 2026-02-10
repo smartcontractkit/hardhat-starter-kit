@@ -12,7 +12,7 @@ task("read-price-feed", "Gets the latest price from a Chainlink Price Feed")
             `Reading data from Price Feed consumer contract ${contractAddr} on network ${networkId}`
         )
 
-        //Get signer information
+        // Get signer information
         const accounts = await ethers.getSigners()
         const signer = accounts[0]
 
