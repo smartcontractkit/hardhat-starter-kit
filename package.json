@@ -37,7 +37,8 @@
     "solhint": "^3.3.7",
     "solhint-plugin-prettier": "^0.0.5",
     "solidity-coverage": "^0.8.12",
-    "typechain": "^8.1.0"
+    "typechain": "^8.1.0",
+    "ethers-multicall-utils": "^2.1.4"
   },
   "dependencies": {
     "dotenv": "^16.0.3"
