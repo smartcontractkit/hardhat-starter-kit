@@ -25,7 +25,7 @@ task("withdraw-link", "Returns any LINK left in deployed contract")
             // Could also be a RandomNumberConsumer contract, but in either case the function signature is the same, so we just need to use one
             const RandomNumberConsumer = await ethers.getContractFactory("RandomNumberConsumer")
 
-            //Create connection to Consumer Contract and call the withdraw function
+            // Create connection to Consumer Contract and call the withdraw function
             const ConsumerContract = new ethers.Contract(
                 contractAddr,
                 RandomNumberConsumer.interface,

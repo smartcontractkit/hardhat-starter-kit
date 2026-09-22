@@ -22,16 +22,16 @@ task("transfer-link", "Transfer LINK tokens to a recipient")
         console.log("linktokenaddress", linkTokenAddress)
         const balance = await linkTokenContract.balanceOf(signer.address)
         console.log(
-            `LINK balance of sender ${signer.address} is + ${ethers.utils.formatEther(balance)}`
+            `LINK balance of sender ${signer.address} is ${ethers.utils.formatEther(balance)}`
         )
         const amountBN = BigNumber.from(amount)
         if (balance.gte(amountBN)) {
             const result = await linkTokenContract.transfer(recipientAddress, amount)
             await result.wait()
             console.log(
-                `${ethers.utils.formatEther(amountBN)} LINK where sent from sender ${
+                `${ethers.utils.formatEther(amountBN)} LINK were sent from sender ${
                     signer.address
-                } to ${recipientAddress}.Transaction Hash: ${result.hash}`
+                } to ${recipientAddress}. Transaction Hash: ${result.hash}`
             )
         } else {
             console.log(
